@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html class="no-js fuelux">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <%- include opengraph %>
+
+    <title><%- title %></title>
+
+    <%- include css-common %>
+    <%- include js-common %>
+
+    <script>window.location.hash = '#signup'</script>
+
+    <script src="js/main.js"></script>
+
+    <script>
+        var user;
+        $.getJSON('/me', function(json) {
+            user = json;
+
+            console.log(JSON.stringify(user));
+        });
+    </script>
+
+</head>
+<body>
+<!-- Facebook JavaScript -->
+<div id="fb-root"></div>
+
+<!-- Main menu page -->
+<div class="container">
+    <div id="my-wizard" class="wizard">
+        <ul class="steps">
+            <li data-target="#step1" class="active"><span class="badge badge-info">1</span>Step 1<span class="chevron"></span></li>
+            <li data-target="#step2"><span class="badge">2</span>Step 2<span class="chevron"></span></li>
+            <li data-target="#step3"><span class="badge">3</span>Step 3<span class="chevron"></span></li>
+            <li data-target="#step4"><span class="badge">4</span>Step 4<span class="chevron"></span></li>
+            <li data-target="#step5"><span class="badge">5</span>Step 5<span class="chevron"></span></li>
+        </ul>
+        <div class="actions">
+            <button class="btn btn-mini btn-prev"> <i class="icon-arrow-left"></i>Prev</button>
+            <button class="btn btn-mini btn-next" data-last="Finish">Next<i class="icon-arrow-right"></i></button>
+        </div>
+    </div>
+    <div class="step-content">
+        <div class="step-pane active" id="step1">
+            step1
+        </div>
+        <div class="step-pane" id="step2">
+            step2
+        </div>
+        <div class="step-pane" id="step3">
+            step3
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function(){
+
+        $('#my-wizard').on('change', function(e, data) {
+            console.log('change');
+            if(data.step===3 && data.direction==='next') {
+// return e.preventDefault();
+            }
+        });
+
+        $('#my-wizard').on('changed', function(e, data) {
+            console.log('changed');
+        });
+
+        $('#my-wizard').on('finished', function(e, data) {
+            console.log('finished');
+        });
+
+        $('.btn-prev').on('click', function() {
+            console.log('prev');
+        });
+
+        $('.btn-next').on('click', function() {
+            console.log('next');
+        });
+    });
+</script>
+
+
+<img src=<%- %>
+<script>
+    var url = 'http://graph.facebook.com/'+user.id+"picture?type=large";
+    console.log(url);
+    document.write('<img src="'+url+'"></img>');
+</script>
+
+
+<!-- Select a Meal page -->
+<div data-role="page" id="meals" class="type-menu-drilldown">
+    <div data-role="header">
+        <a data-rel="back" data-icon="back">Back</a>
+        <h1>Select a Meal</h1>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" data-inset="false" data-theme="c" id="meal-list"></ul>
+    </div>
+</div>
+
+<!-- Details for a meal page -->
+<div data-role="page" id="meal-details" class="type-meal-details">
+    <div data-role="header">
+        <a data-rel="back" data-icon="back">Back</a>
+        <h1>Meal</h1>
+    </div>
+
+    <div data-role="content">
+        <div id="selected_meal"></div>
+        <div class="submit-button">
+            <a id="detail-meal-select" href="#menu" data-role="button">Select</a>
+        </div>
+    </div>
+</div>
+
+<!-- Select a Place page -->
+<div data-role="page" id="places" class="type-menu-drilldown">
+    <div data-role="header">
+        <a data-rel="back" data-icon="back">Back</a>
+        <h1>Nearby</h1>
+        <a id="places-done" href="#menu" class="ui-btn-right">Done</a>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" data-inset="false" data-theme="c" data-filter="true" id="places-list"></ul>
+    </div>
+</div>
+
+<!-- Select friends page -->
+<div data-role="page" id="friends" class="type-menu-drilldown">
+    <div data-role="header">
+        <a data-rel="back" data-icon="back">Back</a>
+        <h1>Select Friends</h1>
+        <a id="friends-done" href="#menu" class="ui-btn-right">Done</a>
+    </div>
+
+    <div data-role="content">
+        <ul data-role="listview" data-inset="false" data-theme="c" data-filter="true" id="friends-list"></ul>
+    </div>
+</div>
+
+
+<script type="x-mustache-template" id="meal_list_tmpl">
+    {{#.}}
+    <li><a href="#meal-details" data-name="{{ title }}" data-transition="slide"><img src="images/meals/{{ id }}.png"></img>{{ title }}</a></li>
+    {{/.}}
+</script>
+
+<script type="x-mustache-template" id="selected_meal_tmpl">
+    <h3>{{ title }}</h3>
+    <br>
+    <img src="images/meals/{{ id }}-full.png"></img>
+    <br><br>
+</script>
+
+<script type="x-mustache-template" id="places_list_tmpl">
+    {{#.}}
+    <li data-icon="false" data-name="{{ id }}"><a href="#" data-transition="slide"><img src="{{ picture.data.url }}"></img>{{ name }}</a></li>
+    {{/.}}
+</script>
+
+<script type="x-mustache-template" id="friends_list_tmpl">
+    {{#.}}
+    <li data-icon="false" data-name="{{ id }}"><a href="#" data-transition="slide"><img src="{{ picture.data.url }}"></img>{{ name }}</a></li>
+    {{/.}}
+</script>
+
+
+
+</body>
+</html>
