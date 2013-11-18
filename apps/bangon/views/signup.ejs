@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html class="no-js fuelux">
+<!DOCTYPE html lang="en">
+<html class="fuelux">
 <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <%- include opengraph %>
@@ -14,15 +13,6 @@
     <script>window.location.hash = '#signup'</script>
 
     <script src="js/main.js"></script>
-
-    <script>
-        var user;
-        $.getJSON('/me', function(json) {
-            user = json;
-
-            console.log(JSON.stringify(user));
-        });
-    </script>
 
 </head>
 <body>
@@ -46,7 +36,7 @@
     </div>
     <div class="step-content">
         <div class="step-pane active" id="step1">
-            step1
+            <%- include step1 %>
         </div>
         <div class="step-pane" id="step2">
             step2
@@ -84,14 +74,6 @@
             console.log('next');
         });
     });
-</script>
-
-
-<img src=<%- %>
-<script>
-    var url = 'http://graph.facebook.com/'+user.id+"picture?type=large";
-    console.log(url);
-    document.write('<img src="'+url+'"></img>');
 </script>
 
 

@@ -35,14 +35,15 @@ exports.index = function(req, res) {
                 console.log(JSON.stringify(result));
 
                 res.render('signup', {
-                    title:                  'bang.on',
-                    loginUrl:                FB.getLoginUrl({ scope: config.facebook.scope }),
-                    fb_scope:                config.facebook.scope,
-                    user_first_name:         result.first_name,
-                    user_last_name:          result.last_name,
-                    user_profile_url_large:  'http://graph.facebook.com/'+result.id+'picture?type=large',
-                    user_profile_url_medium: 'http://graph.facebook.com/'+result.id+'picture?type=medium',
-                    user_profile_url_small:  'http://graph.facebook.com/'+result.id+'picture?type=small'
+                    title:                   'bang.on',
+                    loginUrl:                 FB.getLoginUrl({ scope: config.facebook.scope }),
+                    fb_scope:                 config.facebook.scope,
+                    user_first_name:          result.first_name,
+                    user_last_name:           result.last_name,
+                    user_profile_url_140x140: 'https://graph.facebook.com/'+result.id+'/picture?width=140&height=140',
+                    user_profile_url_large:   'https://graph.facebook.com/'+result.id+'/picture?type=large',
+                    user_profile_url_medium:  'https://graph.facebook.com/'+result.id+'/picture?type=medium',
+                    user_profile_url_small:   'https://graph.facebook.com/'+result.id+'/picture?type=small'
                 });
             }
         );
