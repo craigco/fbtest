@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <title><%- title %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
     <%- include css-common %>
     <link rel="stylesheet"  href="formhelpers/css/bootstrap-formhelpers.min.css" />
+    <link rel="stylesheet"  href="bootstrap-switch/stylesheets/bootstrap-switch.css" />
+    <link rel="stylesheet"  href="bootstrap-multiselect/css/bootstrap-multiselect.css" />
 
     <%- include opengraph %>
 
@@ -15,84 +18,86 @@
     <script>window.location.hash = '#signup'</script>
 
 
-</head>
-<body>
-<!-- Facebook JavaScript -->
-<div id="fb-root"></div>
+  </head>
+  <body>
+  <!-- Facebook JavaScript -->
+  <div id="fb-root"></div>
 
-<!-- Main menu page -->
-<div class='container'>
-  <div class="span12">
-    <section id="wizard">
-      <div class="page-header">
-        <img src="images/bang.on_100w.png">
-      </div>
+  <!-- Main menu page -->
+  <div class='container'>
+    <div class="span12">
+      <section id="wizard">
+        <div class="page-header">
+          <img src="images/bang.on_100w.png">
+        </div>
 
-      <div id="rootwizard">
-        <div class="navbar">
-          <div class="navbar-inner">
-            <div class="container">
-              <ul>
-                <li><a href="#tab1" data-toggle="tab">Basic Info</a></li>
-                <li><a href="#tab2" data-toggle="tab">Second</a></li>
-                <li><a href="#tab3" data-toggle="tab">Third</a></li>
-                <li><a href="#tab4" data-toggle="tab">Forth</a></li>
-                <li><a href="#tab5" data-toggle="tab">Fifth</a></li>
-                <li><a href="#tab6" data-toggle="tab">Sixth</a></li>
-                <li><a href="#tab7" data-toggle="tab">Seventh</a></li>
-              </ul>
+        <div id="rootwizard">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="container">
+                <ul>
+                  <li><a href="#tab1" data-toggle="tab">Basic Info</a></li>
+                  <li><a href="#tab2" data-toggle="tab">Languages</a></li>
+                  <li><a href="#tab3" data-toggle="tab">Care</a></li>
+                  <li><a href="#tab4" data-toggle="tab">Cooking</a></li>
+                  <li><a href="#tab5" data-toggle="tab">Fifth</a></li>
+                  <li><a href="#tab6" data-toggle="tab">Sixth</a></li>
+                  <li><a href="#tab7" data-toggle="tab">Seventh</a></li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div id="bar" class="progress progress-striped active">
-          <div class="bar"></div>
-        </div>
+          <div id="bar" class="progress progress-striped active">
+            <div class="bar"></div>
+          </div>
 
-        <div class="tab-content">
-          <div class="tab-pane" id="tab1">
-            <%- include step1 %>
+          <div class="tab-content">
+            <div class="tab-pane" id="tab1">
+              <%- include basicInfo %>
+            </div>
+            <div class="tab-pane" id="tab2">
+              <%- include languages %>
+            </div>
+            <div class="tab-pane" id="tab3">
+              <%- include care %>
+            </div>
+            <div class="tab-pane" id="tab4">
+              <%- include cooking %>
+            </div>
+            <div class="tab-pane" id="tab5">
+              5
+            </div>
+            <div class="tab-pane" id="tab6">
+              6
+            </div>
+            <div class="tab-pane" id="tab7">
+              7
+            </div>
+            <ul class="pager wizard">
+                <li class="previous first" style="display:none;"><a href="#">First</a></li>
+                <li class="previous"><a href="#">Previous</a></li>
+                <li class="next last" style="display:none;"><a href="#">Last</a></li>
+                <li class="next"><a href="#">Next</a></li>
+            </ul>
           </div>
-          <div class="tab-pane" id="tab2">
-            2
-          </div>
-          <div class="tab-pane" id="tab3">
-            3
-          </div>
-          <div class="tab-pane" id="tab4">
-            4
-          </div>
-          <div class="tab-pane" id="tab5">
-            5
-          </div>
-          <div class="tab-pane" id="tab6">
-            6
-          </div>
-          <div class="tab-pane" id="tab7">
-            7
-          </div>
-          <ul class="pager wizard">
-              <li class="previous first" style="display:none;"><a href="#">First</a></li>
-              <li class="previous"><a href="#">Previous</a></li>
-              <li class="next last" style="display:none;"><a href="#">Last</a></li>
-              <li class="next"><a href="#">Next</a></li>
-          </ul>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
-</div>
 
 
 
-<%- include js-common %>
-<script src="twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
-<script src="formhelpers/js/bootstrap-formhelpers.min.js"></script>
-<script src="js/main.js"></script>
+  <%- include js-common %>
+  <script src="twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+  <script src="formhelpers/js/bootstrap-formhelpers.min.js"></script>
+  <script src="bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <script src="bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+  <script src="js/main.js"></script>
 
-<script>
+  <script>
 
-    $(document).ready(function(){
+      $(document).ready(function(){
 
         $('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
             var $total = navigation.find('li').length;
@@ -100,12 +105,22 @@
             var $percent = ($current/$total) * 100;
             $('#rootwizard').find('.bar').css({width:$percent+'%'});
         }});
-    });
 
-    $('#nationality li').on('click', function() {
-        $('#dropdown_title').html($(this).find('a').html());
-    });
-</script>
+        $('.multiselect').multiselect();
+      });
 
-</body>
+      $('#nationality li').on('click', function() {
+          $('#nationalityTitle').html($(this).find('a').html());
+      });
+
+      $('#age li').on('click', function() {
+        $('#ageTitle').html($(this).find('a').html());
+      });
+
+      $('#maritalStatus li').on('click', function() {
+        $('#maritalStatusTitle').html($(this).find('a').html());
+      });
+  </script>
+
+  </body>
 </html>
