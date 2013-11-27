@@ -31,57 +31,53 @@
           <img src="images/bang.on_100w.png">
         </div>
 
-        <div id="rootwizard">
-          <div class="navbar">
-            <div class="navbar-inner">
-              <div class="container">
-                <ul>
-                  <li><a href="#tab1" data-toggle="tab">Basic Info</a></li>
-                  <li><a href="#tab2" data-toggle="tab">Languages</a></li>
-                  <li><a href="#tab3" data-toggle="tab">Care</a></li>
-                  <li><a href="#tab4" data-toggle="tab">Cooking</a></li>
-                  <li><a href="#tab5" data-toggle="tab">Fifth</a></li>
-                  <li><a href="#tab6" data-toggle="tab">Sixth</a></li>
-                  <li><a href="#tab7" data-toggle="tab">Seventh</a></li>
-                </ul>
+        <form class="form-horizontal" name="formSignUp" action="http://localhost:3000/signup" method="POST">
+          <div id="rootwizard">
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="container">
+                  <ul>
+                    <li><a href="#basicInfo" data-toggle="tab">Basic Info</a></li>
+                    <li><a href="#languages" data-toggle="tab">Languages</a></li>
+                    <li><a href="#care" data-toggle="tab">Care</a></li>
+                    <li><a href="#cooking" data-toggle="tab">Cooking</a></li>
+                    <li><a href="#visa" data-toggle="tab">Visa</a></li>
+                    <li><a href="#complete" data-toggle="tab">Complete</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div id="bar" class="progress progress-striped active">
-            <div class="bar"></div>
-          </div>
+            <div id="bar" class="progress progress-striped active">
+              <div class="bar"></div>
+            </div>
 
-          <div class="tab-content">
-            <div class="tab-pane" id="tab1">
-              <%- include basicInfo %>
-            </div>
-            <div class="tab-pane" id="tab2">
-              <%- include languages %>
-            </div>
-            <div class="tab-pane" id="tab3">
-              <%- include care %>
-            </div>
-            <div class="tab-pane" id="tab4">
-              <%- include cooking %>
-            </div>
-            <div class="tab-pane" id="tab5">
-              5
-            </div>
-            <div class="tab-pane" id="tab6">
-              6
-            </div>
-            <div class="tab-pane" id="tab7">
-              7
-            </div>
-            <ul class="pager wizard">
-                <li class="previous first" style="display:none;"><a href="#">First</a></li>
+            <div class="tab-content">
+              <div class="tab-pane" id="basicInfo">
+                <%- include basicInfo %>
+              </div>
+              <div class="tab-pane" id="languages">
+                <%- include languages %>
+              </div>
+              <div class="tab-pane" id="care">
+                <%- include care %>
+              </div>
+              <div class="tab-pane" id="cooking">
+                <%- include cooking %>
+              </div>
+              <div class="tab-pane" id="visa">
+                <%- include visa %>
+              </div>
+              <div class="tab-pane" id="complete">
+                <%- include complete %>
+              </div>
+              <ul class="pager wizard">
                 <li class="previous"><a href="#">Previous</a></li>
-                <li class="next last" style="display:none;"><a href="#">Last</a></li>
                 <li class="next"><a href="#">Next</a></li>
-            </ul>
+              </ul>
+            </div>
           </div>
-        </div>
+        </form>
       </section>
     </div>
   </div>
@@ -124,6 +120,11 @@
       $('#maritalStatus li').on('click', function() {
         $('#maritalStatusTitle').html($(this).find('a').html());
       });
+
+      $('#visaSituation li').on('click', function() {
+        $('#visaSituationTitle').html($(this).find('a').html());
+      });
+
   </script>
 
   </body>
