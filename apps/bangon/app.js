@@ -20,8 +20,8 @@ if(!config.facebook.appId || !config.facebook.appSecret) {
     throw new Error('facebook appId and appSecret required in config.js');
 }
 
-var privateKey  = fs.readFileSync('cert/server.key', 'utf8');
-var certificate = fs.readFileSync('cert/server.crt', 'utf8');
+//var privateKey  = fs.readFileSync('cert/server.key', 'utf8');
+//var certificate = fs.readFileSync('cert/server.crt', 'utf8');
 
 app.configure(function() {
     app.set('port', process.env.PORT || 3000);
@@ -60,15 +60,15 @@ app.get( '/winjs/meals/:id', meals.showWinJs); // this is used for facebook-winj
 * Start Server
 */
 
-var credentials = {key: privateKey, cert: certificate};
+//var credentials = {key: privateKey, cert: certificate};
 
 var httpServer = http.createServer(app);
-var httpsServer = https.createServer(credentials, app);
+//var httpsServer = https.createServer(credentials, app);
 
 httpServer.listen(app.get('port'), function() {
     console.log('http Listening on ' + app.get('port'))
 });
 
-httpsServer.listen(3443, function() {
-    console.log('https Listening on ' + 3443)
-});
+//httpsServer.listen(3443, function() {
+//    console.log('https Listening on ' + 3443)
+//});
