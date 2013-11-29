@@ -31,13 +31,8 @@ exports.index = function(req, res) {
             // signedRequest.user.age.min
             // signedRequest.user.age.max
 
-            var fbLoginURL = FB.getLoginUrl({ scope: config.facebook.scope });
+            res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
 
-            fbLoginURL += "&display=page";
-            console.log("showing permissions dialog");
-            console.log(fbLoginURL);
-
-            res.redirect(fbLoginURL);
         } else {
             // this user has installed the app
             accessToken = signedRequest.oauth_token;
