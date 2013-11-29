@@ -12,7 +12,7 @@ FB.options({
 
 exports.index = function(req, res) {
 
-    console.log(req);
+    //console.log(req);
 
     var signedRequest  = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
@@ -20,9 +20,29 @@ exports.index = function(req, res) {
 
     if (signedRequest) {
         console.log(signedRequest);
-        accessToken = signedRequest.oauth_token;
-        var userId = signedRequest.user_id;
-        var userCountry = signedRequest.user.country;
+
+        if (!signedRequest.oauth_token) {
+            // uninstalled user
+
+            // log known user information
+
+            // signedRequest.user.country
+            // signedRequest.user.locale
+            // signedRequest.user.age.min
+            // signedRequest.user.age.max
+
+            // then login
+            var fbLoginURL = FB.getLoginUrl({ scope: config.facebook.scope });
+
+            console.log("showing permissions dialog");
+
+            res.redirect(fbLoginURL);
+        } else {
+            // this user has installed the app
+            accessToken = signedRequest.oauth_token;
+            var userId = signedRequest.user_id;
+            var userCountry = signedRequest.user.country;
+        }
     } else {
         accessToken = req.session.access_token;
     }
