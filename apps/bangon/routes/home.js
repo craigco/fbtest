@@ -1,7 +1,8 @@
 
 var FB              = require('../../../fb'),
     Step            = require('step'),
-    http
+    https           = require('https');
+
     config          = require('../config');
 
 FB.options({
@@ -32,6 +33,27 @@ exports.index = function(req, res) {
             // signedRequest.user.age.max
 
             // then login
+            var options = {
+                hostname: 'www.facebook.com',
+                port: 443,
+                path: 'dialog/oauth',
+                method: 'POST'
+            };
+
+            var request = https.request(options, function(res) {
+                console.log("statusCode: ", res.statusCode);
+                console.log("headers: ", res.headers);
+
+                res.on('data', function(d) {
+                    process.stdout.write(d);
+                });
+            });
+            request.end();
+
+            request.on('error', function(e) {
+                console.error(e);
+            });
+
             var fbLoginURL = FB.getLoginUrl({ scope: config.facebook.scope });
 
             fbLoginURL += "&display=page";
