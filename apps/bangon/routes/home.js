@@ -1,7 +1,6 @@
 
 var FB              = require('../../../fb'),
     Step            = require('step'),
-    https           = require('https');
 
     config          = require('../config');
 
@@ -31,28 +30,6 @@ exports.index = function(req, res) {
             // signedRequest.user.locale
             // signedRequest.user.age.min
             // signedRequest.user.age.max
-
-            // then login
-            var options = {
-                hostname: 'www.facebook.com',
-                port: 443,
-                path: 'dialog/oauth?response_type=code&scope=email%2Cuser_about_me%2Cuser_birthday%2Cuser_education_history%2Cuser_location%2Cpublish_actions%2Cuser_likes&redirect_uri=https%3A%2F%2Fbangon.herokuapp.com%2Flogin%2Fcallback&client_id=719182394777999&display=page',
-                method: 'POST'
-            };
-
-            var request = https.request(options, function(res) {
-                console.log("statusCode: ", res.statusCode);
-                console.log("headers: ", res.headers);
-
-                res.on('data', function(d) {
-                    process.stdout.write(d);
-                });
-            });
-            request.end();
-
-            request.on('error', function(e) {
-                console.error(e);
-            });
 
             var fbLoginURL = FB.getLoginUrl({ scope: config.facebook.scope });
 
