@@ -1,0 +1,1 @@
+web: node apps/bangon/app.js
