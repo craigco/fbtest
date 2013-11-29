@@ -145,3 +145,7 @@ exports.logout = function (req, res) {
     req.session = null; // clear session
     res.redirect('/');
 };
+
+exports.tos = function (req, res) {
+    res.render('tos');
+}

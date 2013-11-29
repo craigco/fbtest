@@ -44,8 +44,10 @@ app.configure('development', function() {
 app.get( '/',                home.index);
 app.post('/',		         home.index);
 
-app.get( '/login/callback',  home.loginCallback);
-app.get( '/logout',          home.logout);
+app.get('/login/callback',   home.loginCallback);
+app.get('/logout',           home.logout);
+
+app.get('/tos',              home.tos);
 
 app.get( '/search',          fb_api.search);
 app.get( '/friends',         fb_api.friends);
