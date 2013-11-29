@@ -35,6 +35,7 @@ exports.index = function(req, res) {
             var fbLoginURL = FB.getLoginUrl({ scope: config.facebook.scope });
 
             console.log("showing permissions dialog");
+            console.log(fbLoginURL);
 
             res.redirect(fbLoginURL);
         } else {
