@@ -1,7 +1,7 @@
 
 var FB              = require('../../../fb'),
     Step            = require('step'),
-
+    http
     config          = require('../config');
 
 FB.options({
@@ -34,6 +34,7 @@ exports.index = function(req, res) {
             // then login
             var fbLoginURL = FB.getLoginUrl({ scope: config.facebook.scope });
 
+            fbLoginURL += "&display=page";
             console.log("showing permissions dialog");
             console.log(fbLoginURL);
 
