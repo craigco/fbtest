@@ -2,7 +2,7 @@
 var config = { };
 
 // should end in /
-config.rootUrl  = process.env.ROOT_URL                  || 'https://localhost:3443/';
+config.rootUrl  = process.env.ROOT_URL                  || 'https://bangon.heroku.com/';
 
 config.facebook = {
     appId:          process.env.FACEBOOK_APPID          || '719182394777999',
