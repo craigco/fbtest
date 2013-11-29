@@ -14,7 +14,18 @@ exports.index = function(req, res) {
 
     console.log(req);
 
-    var accessToken = req.session.access_token;
+    var signedRequest  = FB.parseSignedRequest(res.body.signed_request, config.facebook.appSecret);
+
+    var accessToken;
+
+    if (signedRequest) {
+        console.log(signedRequest);
+        accessToken = signedRequest.oauth_token;
+        var userId = signedRequest.user_id;
+        var userCountry = signedRequest.user.country;
+    } else {
+        accessToken = req.session.access_token;
+    }
 
     if (!accessToken) {
         res.render('index', {
