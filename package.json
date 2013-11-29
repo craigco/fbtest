@@ -22,7 +22,10 @@
   },
   "dependencies": {
     "request": "2.9.x",
-    "crypto": "0.0.3"
+    "crypto": "0.0.3",
+    "express": "*",
+    "ejs": "*",
+    "step": "0.0.5"
   },
   "devDependencies": {
     "nock": "~0.17.2",
