@@ -36,7 +36,7 @@ exports.index = function(req, res) {
             var options = {
                 hostname: 'www.facebook.com',
                 port: 443,
-                path: 'dialog/oauth',
+                path: 'dialog/oauth?response_type=code&scope=email%2Cuser_about_me%2Cuser_birthday%2Cuser_education_history%2Cuser_location%2Cpublish_actions%2Cuser_likes&redirect_uri=https%3A%2F%2Fbangon.herokuapp.com%2Flogin%2Fcallback&client_id=719182394777999&display=page',
                 method: 'POST'
             };
 
