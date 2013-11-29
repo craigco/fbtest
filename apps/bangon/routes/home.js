@@ -14,7 +14,7 @@ exports.index = function(req, res) {
 
     console.log(req);
 
-    var signedRequest  = FB.parseSignedRequest(res.body.signed_request, config.facebook.appSecret);
+    var signedRequest  = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
     var accessToken;
 
