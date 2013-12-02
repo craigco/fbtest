@@ -154,10 +154,6 @@ exports.tos = function (req, res) {
     res.render('tos');
 };
 
-exports.privacy = function (req, res) {
-    res.render('privacy');
-};
-
 
 function internalLog(data) {
     if (verbose) {
