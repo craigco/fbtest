@@ -68,16 +68,10 @@ exports.index = function(req, res) {
 
                 console.log(JSON.stringify(result));
 
-                res.render('signup', {
+                res.render('signedup', {
                     title:                   'bang.on',
-                    loginUrl:                 FB.getLoginUrl({ scope: config.facebook.scope }),
-                    fb_scope:                 config.facebook.scope,
                     user_first_name:          result.first_name,
-                    user_last_name:           result.last_name,
-                    user_profile_url_140x140: 'https://graph.facebook.com/'+result.id+'/picture?width=140&height=140',
-                    user_profile_url_large:   'https://graph.facebook.com/'+result.id+'/picture?type=large',
-                    user_profile_url_medium:  'https://graph.facebook.com/'+result.id+'/picture?type=medium',
-                    user_profile_url_small:   'https://graph.facebook.com/'+result.id+'/picture?type=small'
+                    user_last_name:           result.last_name
                 });
             }
         );
@@ -118,10 +112,12 @@ exports.loginCallback = function (req, res, next) {
         },
         function (err, result) {
             internalLog("final function");
-            if(err) return next(err);
+            if (err) {
+                return next(err);
+            }
 
-            req.session.access_token    = result.access_token;
-            req.session.expires         = result.expires || 0;
+            req.session.access_token = result.access_token;
+            req.session.expires      = result.expires || 0;
 
             if(req.query.state) {
                 var parameters              = JSON.parse(req.query.state);
@@ -138,9 +134,9 @@ exports.loginCallback = function (req, res, next) {
 
                     return res.redirect('/');
                 });
-            } else {
-                return res.redirect('/');
             }
+
+            return res.redirect('/');
         }
     );
 };
