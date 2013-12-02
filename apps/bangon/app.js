@@ -48,7 +48,6 @@ app.get('/login/callback',   home.loginCallback);
 app.get('/logout',           home.logout);
 
 app.get('/tos',              home.tos);
-app.get('/privacy',          home.privacy);
 
 app.get( '/search',          fb_api.search);
 app.get( '/friends',         fb_api.friends);
