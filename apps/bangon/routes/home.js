@@ -89,8 +89,6 @@ exports.loginCallback = function (req, res, next) {
         console.log(signedRequest);
     }
 
-    return;
-
     if(req.query.error) {
         // user might have disallowed the app
         return res.send('login-error ' + req.query.error_description);
