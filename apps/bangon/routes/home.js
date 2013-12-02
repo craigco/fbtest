@@ -83,6 +83,13 @@ exports.index = function(req, res) {
 
 exports.loginCallback = function (req, res, next) {
     var code            = req.query.code;
+    var signedRequest  = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
+
+    if (signedRequest) {
+        console.log(signedRequest);
+    }
+
+    return;
 
     if(req.query.error) {
         // user might have disallowed the app
