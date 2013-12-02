@@ -84,7 +84,6 @@ exports.index = function(req, res) {
 exports.loginCallback = function (req, res, next) {
     var code            = req.query.code;
     console.log(req.body);
-    var signedRequest  = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
     if (signedRequest) {
         console.log(signedRequest);
@@ -92,9 +91,40 @@ exports.loginCallback = function (req, res, next) {
         console.log("no signed request");
     }
 
-    if(req.query.error) {
+    var signedRequest  = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
+
+    if (req.query.error) {
         // user might have disallowed the app
         return res.send('login-error ' + req.query.error_description);
+    } else if (signedRequest) {
+        if (signedRequest.oauth_token) {
+            Step(
+                function extendAccessToken(err, result) {
+                    console.log("extendAccessToken");
+                    if (err) {
+                        throw(err);
+                    }
+
+                    FB.napi('oauth/access_token', {
+                        client_id:          FB.options('appId'),
+                        client_secret:      FB.options('appSecret'),
+                        grant_type:         'fb_exchange_token',
+                        fb_exchange_token:  signedRequest.oauth_token
+                    }, this);
+                },
+                function (err, result) {
+                    console.log("final function");
+                    if (err) {
+                        return next(err);
+                    }
+
+                    req.session.access_token    = result.access_token;
+                    req.session.expires         = result.expires || 0;
+
+                    return res.redirect('/');
+                }
+            );
+        }
     } else if(!code) {
         return res.redirect('/');
     }
