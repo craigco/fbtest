@@ -10,6 +10,9 @@ FB.options({
     redirectUri:    config.facebook.redirectUri
 });
 
+
+var verbose = true;
+
 exports.index = function(req, res) {
 
     //console.log(req);
@@ -19,9 +22,10 @@ exports.index = function(req, res) {
     var accessToken;
 
     if (signedRequest) {
-        console.log(signedRequest);
+        internalLog(signedRequest);
 
         if (!signedRequest.oauth_token) {
+            internalLog("no auth token in signed request");
             // uninstalled user
 
             // log known user information
@@ -84,55 +88,16 @@ exports.index = function(req, res) {
 exports.loginCallback = function (req, res, next) {
     var code            = req.query.code;
 
-    console.log(req);
-
-    var signedRequest  = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
-
-    if (signedRequest) {
-        console.log(signedRequest);
-    } else {
-        console.log("no signed request");
-    }
-
     if (req.query.error) {
         // user might have disallowed the app
         return res.send('login-error ' + req.query.error_description);
-    } else if (signedRequest) {
-        if (signedRequest.oauth_token) {
-            Step(
-                function extendAccessToken(err, result) {
-                    console.log("extendAccessToken");
-                    if (err) {
-                        throw(err);
-                    }
-
-                    FB.napi('oauth/access_token', {
-                        client_id:          FB.options('appId'),
-                        client_secret:      FB.options('appSecret'),
-                        grant_type:         'fb_exchange_token',
-                        fb_exchange_token:  signedRequest.oauth_token
-                    }, this);
-                },
-                function (err, result) {
-                    console.log("final function");
-                    if (err) {
-                        return next(err);
-                    }
-
-                    req.session.access_token    = result.access_token;
-                    req.session.expires         = result.expires || 0;
-
-                    return res.redirect('/');
-                }
-            );
-        }
     } else if(!code) {
         return res.redirect('/');
     }
 
     Step(
         function exchangeCodeForAccessToken() {
-            console.log("exchangeCodeForAccessToken");
+            internalLog("exchangeCodeForAccessToken");
 
             FB.napi('oauth/access_token', {
                 client_id:      FB.options('appId'),
@@ -142,7 +107,7 @@ exports.loginCallback = function (req, res, next) {
             }, this);
         },
         function extendAccessToken(err, result) {
-            console.log("extendAccessToken");
+            internalLog("extendAccessToken");
             if(err) throw(err);
             FB.napi('oauth/access_token', {
                 client_id:          FB.options('appId'),
@@ -152,7 +117,7 @@ exports.loginCallback = function (req, res, next) {
             }, this);
         },
         function (err, result) {
-            console.log("final function");
+            internalLog("final function");
             if(err) return next(err);
 
             req.session.access_token    = result.access_token;
@@ -162,10 +127,10 @@ exports.loginCallback = function (req, res, next) {
                 var parameters              = JSON.parse(req.query.state);
                 parameters.access_token     = req.session.access_token;
 
-                console.log(parameters);
+                internalLog(parameters);
 
                 FB.api('/me/' + config.facebook.appNamespace +':eat', 'post', parameters , function (result) {
-                    console.log(result);
+                    internalLog(result);
                     if(!result || result.error) {
                         return res.send(500, result || 'error');
                         // return res.send(500, 'error');
@@ -187,4 +152,15 @@ exports.logout = function (req, res) {
 
 exports.tos = function (req, res) {
     res.render('tos');
+};
+
+exports.privacy = function (req, res) {
+    res.render('privacy');
+};
+
+
+function internalLog(data) {
+    if (verbose) {
+        console.log(data);
+    }
 }
