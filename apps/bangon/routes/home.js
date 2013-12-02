@@ -83,10 +83,13 @@ exports.index = function(req, res) {
 
 exports.loginCallback = function (req, res, next) {
     var code            = req.query.code;
+    console.log(req.body);
     var signedRequest  = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
     if (signedRequest) {
         console.log(signedRequest);
+    } else {
+        console.log("no signed request");
     }
 
     if(req.query.error) {
