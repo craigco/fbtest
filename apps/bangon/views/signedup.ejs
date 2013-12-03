@@ -12,6 +12,17 @@
   <!-- Facebook JavaScript -->
   <div id="fb-root"></div>
 
+  <script>
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : <%- appID %>, // Set YOUR APP ID
+        status     : true, // check login status
+        //cookie     : true, // enable cookies to allow the server to access the session
+        frictionlessRequests : true,
+        xfbml      : true  // parse XFBML
+      });
+  </script>
+
   <!-- Main menu page -->
   <div class="container">
     <div class="span12">
@@ -19,10 +30,19 @@
     </div>
     <h3>Thank you for signing up to bang.on</h3>
     <p>Help us help you</p>
-    <p><a href="#" class="btn btn-primary btn-large">Invite your friends &raquo;</a></p>
+    <p><a id="invitefriends_button" href="#" class="btn btn-primary btn-large">Invite your friends &raquo;</a></p>
 
   </div>
-
+  <script>
+    // Load the SDK asynchronously
+    (function(d){
+      var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      ref.parentNode.insertBefore(js, ref);
+    }(document));
+  </script>
   <%- include js-common %>
   <script src="bootstrap-switch/js/bootstrap-switch.min.js"></script>
   <script src="bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
@@ -32,6 +52,12 @@
 
       $(document).ready(function() {
       });
+
+      $('#invitefriends_button').on('click', function(e) {
+        FB.ui({method: 'apprequests',
+        message: 'Join me in bang.on',
+        })
+      })
 
   </script>
 
