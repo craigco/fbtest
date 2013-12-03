@@ -74,7 +74,7 @@
               request_ids.push(temp);
             }
             var requests = request_ids.join(',');
-            $.post('/invitefriends/callback', {uid: <%- uid %>, request_ids: requests}, function (response) {
+            $.post('/invitefriends/callback', {uid: <%- uid %>, request_ids: requests}, function(response) {
 
             });
           }
