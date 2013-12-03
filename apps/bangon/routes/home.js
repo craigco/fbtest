@@ -72,7 +72,8 @@ exports.index = function(req, res) {
                     title:                   'bang.on',
                     user_first_name:          result.first_name,
                     user_last_name:           result.last_name,
-                    appID:                    config.facebook.appId
+                    appID:                    config.facebook.appId,
+                    uid:                      result.id
                 });
             }
         );
