@@ -12,17 +12,6 @@
   <!-- Facebook JavaScript -->
   <div id="fb-root"></div>
 
-  <script>
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : <%- appID %>, // Set YOUR APP ID
-        status     : true, // check login status
-        //cookie     : true, // enable cookies to allow the server to access the session
-        frictionlessRequests : true,
-        xfbml      : true  // parse XFBML
-      });
-  </script>
-
   <!-- Main menu page -->
   <div class="container">
     <div class="span12">
@@ -51,6 +40,15 @@
   <script>
 
       $(document).ready(function() {
+        $.ajaxSetup({ cache: true });
+        $.getScript('//connect.facebook.net/en_US/all.js', function(){
+          FB.init({
+            appId      : '<%- appID %>', // Set YOUR APP ID
+            status     : true, // check login status
+            //cookie     : true, // enable cookies to allow the server to access the session
+            frictionlessRequests : true,
+            xfbml      : true  // parse XFBML
+          });
       });
 
       $('#invitefriends_button').on('click', function(e) {
