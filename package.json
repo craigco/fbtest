@@ -25,7 +25,8 @@
     "crypto": "0.0.3",
     "express": "*",
     "ejs": "*",
-    "step": "0.0.5"
+    "step": "0.0.5",
+    "mongodo": "*"
   },
   "devDependencies": {
     "nock": "~0.17.2",

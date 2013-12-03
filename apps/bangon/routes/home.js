@@ -3,7 +3,8 @@ var FB              = require('../../../fb'),
     Step            = require('step'),
 
     config          = require('../config'),
-    tracking        = require('./tracking.js');
+    tracking        = require('./tracking.js'),
+    mongodbprovider = require('../mongodbprovider.js').MongoDBProvider;
 
 FB.options({
     appId:          config.facebook.appId,
@@ -13,6 +14,8 @@ FB.options({
 
 
 var verbose = true;
+
+mongodbprovider = new MongoDBProvider();
 
 exports.index = function(req, res) {
 
@@ -72,6 +75,8 @@ exports.index = function(req, res) {
                     appID:                    config.facebook.appId,
                     uid:                      result.id
                 });
+
+                mongodbprovider.saveNewUser(result);
 
                 tracking.logReturningUser(result.id);
             }
