@@ -67,7 +67,17 @@
         title: 'Join bang.on with me!',
         message: 'I just joined bang.on! We help you find help, Check it out.'
         }, function(res) {
-          console.log(res);
+          if (res && res.request && res.to) {
+            var request_ids=[];
+            for (i = 0; i < res.to.length; ++i) {
+              var temp = res.request + '_' + res.to[i];
+              request_ids.push(temp);
+            }
+            var requests = request_ids.join(',');
+            $.post('/invitefriends', {uid: <%- uid %>, request_ids: requests}, function (response) {
+
+            });
+          }
         });
       });
   </script>
