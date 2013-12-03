@@ -17,6 +17,8 @@ var verbose = true;
 
 var mongodbprovider = new MongoDBProvider();
 
+tracking.setDB(mongodbprovider);
+
 exports.index = function(req, res) {
 
     //console.log(req);
@@ -34,7 +36,9 @@ exports.index = function(req, res) {
 
             // log given user information
 
-            tracking.logNewUser(signedRequest.user);
+            tracking.logNewUser(signedRequest.user, function() {
+
+            });
 
             res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
 

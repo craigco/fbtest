@@ -19,25 +19,29 @@ MongoDBProvider.prototype.setActiveCollection = function(collection) {
   activeCollection = collection;
 };
 
-MongoDBProvider.prototype.getCollection = function(callback) {
+MongoDBProvider.prototype.getActiveCollection = function(callback) {
   if (activeCollection == null) {
-      console.log("MongdoDBProvide: activeCollection not set");
-      callback(error);
+    console.log("MongdoDBProvide: activeCollection not set");
+    callback(error);
   } else {
-    database.collection(activeCollection, function(error, collection) {
-      if (error) {
-        console.log(error);
-        callback(error);
-      } else {
-        callback(null, collection);
-      }
-    });
+    this.getCollection(activeCollection, callback);
   }
+};
+
+MongoDBProvider.prototype.getCollection = function(collectionToGet, callback) {
+  database.collection(collectionToGet, function(error, collection) {
+    if (error) {
+      console.log(error);
+      callback(error);
+    } else {
+      callback(null, collection);
+    }
+  });
 };
 
 //find all users
 MongoDBProvider.prototype.findAll = function(callback) {
-  this.getCollection(function(error, user_collection) {
+  this.getActiveCollection(function(error, user_collection) {
     if (error) {
       callback(error);
     } else {
@@ -55,7 +59,7 @@ MongoDBProvider.prototype.findAll = function(callback) {
 //save new user
 MongoDBProvider.prototype.saveNewFacebookUser = function(user, callback) {
   console.log("MongoDBProvider: saveNewUser");
-  this.getCollection(function(error, collection) {
+  this.getActiveCollection(function(error, collection) {
     if (error) {
       callback(error);
     } else {
@@ -69,6 +73,18 @@ MongoDBProvider.prototype.saveNewFacebookUser = function(user, callback) {
       console.log("MongoDBProvider: saveNewUser insert()");
       collection.insert(modified_user, function() {
         callback(null, modified_user);
+      });
+    }
+  });
+};
+
+MongoDBProvider.prototype.save = function(data, collection, callback) {
+  this.getCollection(collection, function(error, collection) {
+    if (error) {
+      callback(error);
+    } else {
+      collection.insert(data, function() {
+        callback();
       });
     }
   });
