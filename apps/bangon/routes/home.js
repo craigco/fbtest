@@ -117,11 +117,12 @@ exports.loginCallback = function (req, res, next) {
             }, this);
         },
         function getUserDataFromGraphAPI(err, result) {
+            internalLog("getUserDataFromGraphAPI");
             req.session.access_token = result.access_token;
             req.session.expires      = result.expires || 0;
 
             var parameters = {
-                access_token: result.accessToken
+                access_token: result.access_token
             };
 
             FB.napi('/me', 'get', parameters, this);
