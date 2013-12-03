@@ -3,8 +3,8 @@ var FB              = require('../../../fb'),
     Step            = require('step'),
 
     config          = require('../config'),
-    tracking        = require('./tracking.js'),
-    mongodbprovider = require('../mongodbprovider.js').MongoDBProvider;
+    tracking        = require('./tracking'),
+    MongoDBProvider = require('../mongodbprovider').MongoDBProvider;
 
 FB.options({
     appId:          config.facebook.appId,
@@ -15,7 +15,7 @@ FB.options({
 
 var verbose = true;
 
-mongodbprovider = new MongoDBProvider();
+var mongodbprovider = new MongoDBProvider();
 
 exports.index = function(req, res) {
 
