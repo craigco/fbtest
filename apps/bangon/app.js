@@ -48,7 +48,7 @@ app.get('/logout',           home.logout);
 
 app.get('/tos',              home.tos);
 
-app.post('invitefriends/callback', home.invitefriendsCallback);
+app.post('/invitefriends/callback', home.invitefriendsCallback);
 
 app.get( '/search',          fb_api.search);
 app.get( '/friends',         fb_api.friends);
