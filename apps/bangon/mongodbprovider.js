@@ -45,12 +45,14 @@ MongoDBProvider.prototype.findAll = function(callback) {
 
 //save new user
 MongoDBProvider.prototype.saveNewUser = function(user, callback) {
+  console.log("MongoDBProvider: saveNewUser");
   this.getCollection(function(error, user_collection) {
     if (error) {
         callback(error);
     } else {
       user.created_at = new Date();
 
+      console.log("MongoDBProvider: saveNewUser insert()");
       user_collection.insert(user, function() {
         callback(null, user);
       });
