@@ -45,7 +45,7 @@ MongoDBProvider.prototype.findAll = function(callback) {
 };
 
 //save new user
-MongoDBProvider.prototype.saveNewUser = function(user, callback) {
+MongoDBProvider.prototype.saveNewFacebookUser = function(user, callback) {
   console.log("MongoDBProvider: saveNewUser");
   this.getCollection(function(error, user_collection) {
     if (error) {
