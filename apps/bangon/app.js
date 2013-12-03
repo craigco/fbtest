@@ -9,6 +9,7 @@ var express       = require('express'),
 
     fb_api        = require('./routes/fb_api'),
     home          = require('./routes/home'),
+    tracking      = require('./routes/tracking'),
     meals         = require('./routes/meals'),
 
     https         = require('https');
@@ -49,6 +50,8 @@ app.get('/logout',           home.logout);
 app.get('/tos',              home.tos);
 
 app.post('/invitefriends/callback', home.invitefriendsCallback);
+
+app.post('/tracking/invitessent',   tracking.invitesSent);
 
 app.get( '/search',          fb_api.search);
 app.get( '/friends',         fb_api.friends);
