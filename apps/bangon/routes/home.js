@@ -76,8 +76,6 @@ exports.index = function(req, res) {
                     uid:                      result.id
                 });
 
-                mongodbprovider.saveNewUser(result);
-
                 tracking.logReturningUser(result.id);
             }
         );
@@ -94,6 +92,8 @@ exports.loginCallback = function (req, res, next) {
     } else if(!code) {
         return res.redirect('/');
     }
+
+    var accessToken;
 
     Step(
         function exchangeCodeForAccessToken() {
@@ -116,16 +116,25 @@ exports.loginCallback = function (req, res, next) {
                 fb_exchange_token:  result.access_token
             }, this);
         },
+        function getUserDataFromGraphAPI(err, result) {
+            req.session.access_token = result.access_token;
+            req.session.expires      = result.expires || 0;
+
+            var parameters = {
+                access_token: result.accessToken
+            };
+
+            FB.napi('/me', 'get', parameters, this);
+        },
         function (err, result) {
             internalLog("final function");
             if (err) {
                 return next(err);
             }
 
-            req.session.access_token = result.access_token;
-            req.session.expires      = result.expires || 0;
+            mongodbprovider.saveNewFacebookUser(result);
 
-            if(req.query.state) {
+           /*if(req.query.state) {
                 var parameters              = JSON.parse(req.query.state);
                 parameters.access_token     = req.session.access_token;
 
@@ -140,7 +149,7 @@ exports.loginCallback = function (req, res, next) {
 
                     return res.redirect('/');
                 });
-            }
+            }*/
 
             return res.redirect('/');
         }
