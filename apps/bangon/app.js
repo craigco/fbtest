@@ -48,10 +48,13 @@ app.get('/logout',           home.logout);
 
 app.get('/tos',              home.tos);
 
+app.post('invitefriends/callback', home.invitefriendsCallback);
+
 app.get( '/search',          fb_api.search);
 app.get( '/friends',         fb_api.friends);
 app.get( '/me',              fb_api.me);
 app.post('/announce',        fb_api.announce);
+
 
 app.get( '/meals/:id',       meals.show);
 app.get( '/winjs/meals/:id', meals.showWinJs); // this is used for facebook-winjs-sdk sample and not required to actually run this sample
