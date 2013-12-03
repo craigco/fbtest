@@ -154,7 +154,12 @@ exports.tos = function (req, res) {
 
 exports.invitefriendsCallback = function(req, res) {
   internalLog(req);
-  res.redirect('/');
+  var uid = req.body.uid;
+  var request_ids = req.body.request_ids;
+  internalLog("UID: " + uid);
+  internalLog("REQUEST_IDS: " + request_ids);
+
+  res.end();
 };
 
 
