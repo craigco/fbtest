@@ -133,6 +133,7 @@ exports.loginCallback = function (req, res, next) {
                 return next(err);
             }
 
+            mongodbprovider.setActiveCollection("users");
             mongodbprovider.saveNewFacebookUser(result);
 
            /*if(req.query.state) {

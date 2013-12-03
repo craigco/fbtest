@@ -1,9 +1,9 @@
 var mongo = require('mongodb').MongoClient;
 
-var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL ||
-    'mongodb://localhost/helperapp';
+var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL;
 
 var database = null;
+var activeCollection = null;
 
 MongoDBProvider = function() {
     mongo.connect(mongoUri, {}, function(error, db) {
@@ -15,16 +15,24 @@ MongoDBProvider = function() {
     });
 };
 
+MongoDBProvider.prototype.setActiveCollection = function(collection) {
+  activeCollection = collection;
+};
 
 MongoDBProvider.prototype.getCollection = function(callback) {
-    database.collection('usercollection', function(error, user_collection) {
-        if (error) {
-            console.log(error);
-            callback(error);
-        } else {
-            callback(null, user_collection);
-        }
+  if (activeCollection == null) {
+      console.log("MongdoDBProvide: activeCollection not set");
+      callback(error);
+  } else {
+    database.collection(activeCollection, function(error, collection) {
+      if (error) {
+        console.log(error);
+        callback(error);
+      } else {
+        callback(null, collection);
+      }
     });
+  }
 };
 
 //find all users
@@ -47,7 +55,7 @@ MongoDBProvider.prototype.findAll = function(callback) {
 //save new user
 MongoDBProvider.prototype.saveNewFacebookUser = function(user, callback) {
   console.log("MongoDBProvider: saveNewUser");
-  this.getCollection(function(error, user_collection) {
+  this.getCollection(function(error, collection) {
     if (error) {
       callback(error);
     } else {
@@ -59,7 +67,7 @@ MongoDBProvider.prototype.saveNewFacebookUser = function(user, callback) {
       };
 
       console.log("MongoDBProvider: saveNewUser insert()");
-      user_collection.insert(modified_user, function() {
+      collection.insert(modified_user, function() {
         callback(null, modified_user);
       });
     }
