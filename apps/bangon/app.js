@@ -11,7 +11,6 @@ var express       = require('express'),
     home          = require('./routes/home'),
     meals         = require('./routes/meals'),
 
-    http          = require('http'),
     https         = require('https');
 
 var app = express();
