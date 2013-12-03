@@ -59,6 +59,12 @@ exports.logNewUser = function(user) {
     internalLog("AGE_MAX: " + ageMax);
 };
 
+exports.logReturningUser = function(userid) {
+
+    internalLog("RETURNING_USER");
+    internalLog("ID: " + userid);
+};
+
 
 
 function internalLog(data) {

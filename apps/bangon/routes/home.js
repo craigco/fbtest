@@ -52,7 +52,6 @@ exports.index = function(req, res) {
             fb_scope: config.facebook.scope
         });
     } else {
-
         Step(
             function getUserDataFromGraphAPI() {
                 var parameters = {
@@ -73,6 +72,8 @@ exports.index = function(req, res) {
                     appID:                    config.facebook.appId,
                     uid:                      result.id
                 });
+
+                tracking.logReturningUser(result.id);
             }
         );
 
