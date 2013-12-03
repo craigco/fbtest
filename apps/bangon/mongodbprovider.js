@@ -19,6 +19,7 @@ MongoDBProvider = function() {
 MongoDBProvider.prototype.getCollection = function(callback) {
     database.collection('usercollection', function(error, user_collection) {
         if (error) {
+            console.log(error);
             callback(error);
         } else {
             callback(null, user_collection);
