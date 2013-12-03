@@ -71,7 +71,8 @@ exports.index = function(req, res) {
                 res.render('signedup', {
                     title:                   'bang.on',
                     user_first_name:          result.first_name,
-                    user_last_name:           result.last_name
+                    user_last_name:           result.last_name,
+                    appID:                    config.facebook.appId
                 });
             }
         );
