@@ -152,6 +152,11 @@ exports.tos = function (req, res) {
     res.render('tos');
 };
 
+exports.invitefriendsCallback = function(req, res) {
+  internalLog(req);
+  res.redirect('/');
+};
+
 
 function internalLog(data) {
     if (verbose) {
