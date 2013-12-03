@@ -49,13 +49,18 @@ MongoDBProvider.prototype.saveNewUser = function(user, callback) {
   console.log("MongoDBProvider: saveNewUser");
   this.getCollection(function(error, user_collection) {
     if (error) {
-        callback(error);
+      callback(error);
     } else {
       user.created_at = new Date();
 
+      // wrap in facebook node
+      var modified_user = {
+          fb: user
+      };
+
       console.log("MongoDBProvider: saveNewUser insert()");
-      user_collection.insert(user, function() {
-        callback(null, user);
+      user_collection.insert(modified_user, function() {
+        callback(null, modified_user);
       });
     }
   });
