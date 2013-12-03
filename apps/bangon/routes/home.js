@@ -2,7 +2,8 @@
 var FB              = require('../../../fb'),
     Step            = require('step'),
 
-    config          = require('../config');
+    config          = require('../config'),
+    tracking        = require('./tracking.js');
 
 FB.options({
     appId:          config.facebook.appId,
@@ -28,12 +29,9 @@ exports.index = function(req, res) {
             internalLog("no auth token in signed request");
             // uninstalled user
 
-            // log known user information
+            // log given user information
 
-            // signedRequest.user.country
-            // signedRequest.user.locale
-            // signedRequest.user.age.min
-            // signedRequest.user.age.max
+            tracking.logNewUser(signedRequest.user);
 
             res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
 
@@ -153,7 +151,6 @@ exports.tos = function (req, res) {
 };
 
 exports.invitefriendsCallback = function(req, res) {
-  internalLog(req);
   var uid = req.body.uid;
   var request_ids = req.body.request_ids;
   internalLog("UID: " + uid);
