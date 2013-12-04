@@ -39,7 +39,11 @@ exports.logNewUser = function(user, callback) {
 };
 
 exports.logReturningUser = function(userid, callback) {
-  mongodb.save(userid, "sitevisits", function(error) {
+  var visit = {
+    fbid: userid
+  };
+
+  mongodb.save(visit, "sitevisits", function(error) {
     if (error) {
       console.log("Error logging site visit information");
       callback(error);
