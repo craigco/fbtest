@@ -158,8 +158,8 @@ exports.loginCallback = function (req, res, next) {
 
       FB.napi('/me', 'get', parameters, this);
     },
-    function getUserFriends(err, result) {
-      console.log("getUserFriends");
+    function checkExtendedPermissions(err, result) {
+      console.log("checkExtendedPermissions");
       if (err) {
         throw(err);
       }
@@ -168,6 +168,23 @@ exports.loginCallback = function (req, res, next) {
       user = {
         fb: result
       };
+
+      // check if publish_actions is granted
+      FB.setAccessToken(result.access_token);
+
+      FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id }, this);
+    },
+    function getUserFriends(result) {
+      console.log("getUserFriends");
+
+      if (!result || result.error) {
+        console.log(!result ? 'error occurred' : result.error);
+      }
+
+      // if publish_actions permission is missing - go to login dialog
+      if (!result.data.publish_actions || result.data.publish_actions == 0) {
+        return res.redirect('/');
+      }
 
       var parameters = {
         access_token: req.session.access_token
