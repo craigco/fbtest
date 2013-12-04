@@ -48,8 +48,7 @@ exports.indexPost = function (req, res) {
   if (!accessToken) {
     console.log("!accessToken");
     res.render('index', {
-      title: 'bang.on',
-      loginUrl: FB.getLoginUrl({ scope: config.facebook.scope })
+      title: 'bang.on'
     });
   } else {
     Step(
@@ -84,8 +83,7 @@ exports.indexPost = function (req, res) {
 exports.indexGet = function (req, res) {
   console.log("indexGet");
   res.render('index', {
-    title: 'bang.on',
-    loginUrl: FB.getLoginUrl({ scope: config.facebook.scope })
+    title: 'bang.on'
     });
 };
 
