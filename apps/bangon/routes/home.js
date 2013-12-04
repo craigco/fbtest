@@ -232,7 +232,8 @@ exports.loginCallback = function (req, res, next) {
 
       // trigger open graph
       var parameters = {
-        access_token: req.session.access_token
+        access_token: req.session.access_token,
+        club: 'https://bangon.herokuapp.com/og/club.html'
       };
 
       FB.api('/me/' + config.facebook.appNamespace +':join', 'post', parameters , function (resultFromOG) {
