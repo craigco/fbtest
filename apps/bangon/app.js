@@ -41,8 +41,8 @@ app.configure('development', function() {
     app.use(express.errorHandler());
 });
 
-app.get( '/',                home.index);
-app.post('/',		         home.index);
+app.get( '/',                home.indexGet);
+app.post('/',		             home.indexPost);
 
 app.get('/login/callback',   home.loginCallback);
 app.post('/login/callback',  home.loginCallback);

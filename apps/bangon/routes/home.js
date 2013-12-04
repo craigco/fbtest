@@ -19,7 +19,7 @@ var mongodbprovider = new MongoDBProvider();
 
 tracking.setDB(mongodbprovider);
 
-exports.index = function (req, res) {
+exports.indexPost = function (req, res) {
   var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
   var accessToken;
@@ -41,6 +41,7 @@ exports.index = function (req, res) {
     }
   } else {
     console.log("!signedRequest");
+
     accessToken = req.session.access_token;
   }
 
@@ -48,8 +49,7 @@ exports.index = function (req, res) {
     console.log("!accessToken");
     res.render('index', {
       title: 'bang.on',
-      loginUrl: FB.getLoginUrl({ scope: config.facebook.scope }),
-      fb_scope: config.facebook.scope
+      loginUrl: FB.getLoginUrl({ scope: config.facebook.scope })
     });
   } else {
     Step(
@@ -79,6 +79,14 @@ exports.index = function (req, res) {
       }
     );
   }
+};
+
+exports.indexGet = function (req, res) {
+  console.log("indexGet");
+  res.render('index', {
+    title: 'bang.on',
+    loginUrl: FB.getLoginUrl({ scope: config.facebook.scope })
+    });
 };
 
 exports.loginCallback = function (req, res, next) {
