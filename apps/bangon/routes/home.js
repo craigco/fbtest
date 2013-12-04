@@ -247,6 +247,12 @@ exports.loginCallback = function (req, res, next) {
   );
 };
 
+exports.opengraph = function (req, res) {
+
+  console.log(req);
+  return res.redirect('https://apps.facebook.com/bang-on');
+};
+
 exports.logout = function (req, res) {
   req.session = null; // clear session
   res.redirect('/');
