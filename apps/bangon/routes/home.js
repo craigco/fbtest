@@ -75,7 +75,6 @@ exports.index = function (req, res) {
         });
       }
     );
-
   }
 };
 
@@ -88,6 +87,7 @@ exports.loginCallback = function (req, res, next) {
 
     tracking.logNoPermissions(function(error) {
       if (error) {
+        console.log("error: " + error);
         throw(error);
       }
     });
@@ -96,6 +96,8 @@ exports.loginCallback = function (req, res, next) {
       title: 'bang.on',
       loginUrl: FB.getLoginUrl({ scope: config.facebook.scope })
     });
+
+    return;
   } else if(!code) {
       return res.redirect('/');
   }
