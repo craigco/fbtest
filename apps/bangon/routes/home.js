@@ -176,7 +176,7 @@ exports.loginCallback = function (req, res, next) {
     },
     function getUserFriends(result) {
       console.log("getUserFriends");
-      console.log("result: " + result);
+      console.log("result: " + JSON.stringify(result));
       if (!result || result.error) {
         console.log(!result ? 'error occurred' : result.error);
       }
