@@ -20,15 +20,15 @@ var mongodbprovider = new MongoDBProvider();
 tracking.setDB(mongodbprovider);
 
 exports.indexPost = function (req, res) {
-  console.log("indexPost");
+  //console.log("indexPost");
   var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
   var accessToken;
 
   if (signedRequest) {
-    console.log("signedRequest");
+    //console.log("signedRequest");
     if (!signedRequest.oauth_token) {
-      console.log("!oauth_token");
+      //console.log("!oauth_token");
       // uninstalled user
       // log given user information
 
@@ -40,14 +40,14 @@ exports.indexPost = function (req, res) {
     } else {
       // this user has installed the app
       accessToken = signedRequest.oauth_token;
-      console.log("oauth_token");
+      //console.log("oauth_token");
 
       // check if publish_actions is granted
       FB.setAccessToken(accessToken);
 
       FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + signedRequest.user_id }, function(queryResponse) {
         if (!queryResponse || queryResponse.error) {
-          console.log(!queryResponse ? 'error occurred' : queryResponse.error);
+          //console.log(!queryResponse ? 'error occurred' : queryResponse.error);
         }
 
         // if publish_actions permission is missing - go to login dialog
@@ -59,13 +59,13 @@ exports.indexPost = function (req, res) {
       });
     }
   } else {
-    console.log("!signedRequest");
+    //console.log("!signedRequest");
     accessToken = req.session.access_token;
-    console.log("accessToken= " + accessToken);
+    //console.log("accessToken= " + accessToken);
   }
 
   if (!accessToken) {
-    console.log("!accessToken");
+    //console.log("!accessToken");
     res.render('index', {
       title: 'bang.on'
     });
@@ -100,14 +100,14 @@ exports.indexPost = function (req, res) {
 };
 
 exports.indexGet = function (req, res) {
-  console.log("indexGet");
+  //console.log("indexGet");
   res.render('index', {
     title: 'bang.on'
     });
 };
 
 exports.loginCallback = function (req, res, next) {
-  console.log('loginCallback');
+  //console.log('loginCallback');
   var code            = req.query.code;
 
   if (req.query.error) {
@@ -131,7 +131,7 @@ exports.loginCallback = function (req, res, next) {
 
   Step(
     function exchangeCodeForAccessToken() {
-      console.log("exchangeCodeForAccessToken");
+      //console.log("exchangeCodeForAccessToken");
       FB.napi('oauth/access_token', {
         client_id: FB.options('appId'),
         client_secret: FB.options('appSecret'),
@@ -140,7 +140,7 @@ exports.loginCallback = function (req, res, next) {
       }, this);
     },
     function extendAccessToken(err, result) {
-      console.log("extendAccessToken");
+      //console.log("extendAccessToken");
       if (err) throw(err);
       FB.napi('oauth/access_token', {
         client_id: FB.options('appId'),
@@ -150,7 +150,7 @@ exports.loginCallback = function (req, res, next) {
       }, this);
     },
     function getUserData(err, result) {
-      console.log("getUserData");
+      //console.log("getUserData");
       if (err) {
         throw(err);
       }
@@ -165,7 +165,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('/me', 'get', parameters, this);
     },
     function checkExtendedPermissions(err, result) {
-      console.log("checkExtendedPermissions");
+      //console.log("checkExtendedPermissions");
       if (err) {
         throw(err);
       }
@@ -181,15 +181,15 @@ exports.loginCallback = function (req, res, next) {
       FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id }, this);
     },
     function getUserFriends(result) {
-      console.log("getUserFriends");
-      console.log("result: " + JSON.stringify(result));
+      //console.log("getUserFriends");
+      //console.log("result: " + JSON.stringify(result));
       if (!result || result.error) {
-        console.log(!result ? 'error occurred' : result.error);
+        //console.log(!result ? 'error occurred' : result.error);
       }
 
       // if publish_actions permission is missing - go to login dialog
       if (!result.data[0] || !result.data[0].publish_actions || result.data[0].publish_actions == 0) {
-        console.log("publish_actions: " + result.data[0].publish_actions);
+        //console.log("publish_actions: " + result.data[0].publish_actions);
         req.session = null; // clear session
         return res.redirect('/');
       }
@@ -201,7 +201,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('/me/friends', 'get', parameters, this);
     },
     function getUserLikes(err, result) {
-      console.log("getUserLikes");
+      //console.log("getUserLikes");
       if (err) {
         throw(err);
       }
@@ -215,7 +215,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('/me/likes', 'get', parameters, this);
     },
     function saveNewUser(err, result) {
-      console.log("saveNewUser");
+      //console.log("saveNewUser");
       if (err) {
         throw(err);
       }
@@ -248,8 +248,7 @@ exports.loginCallback = function (req, res, next) {
 };
 
 exports.opengraph = function (req, res) {
-
-  console.log(req);
+  //console.log(req);
   return res.redirect('https://apps.facebook.com/bang-on');
 };
 
@@ -265,15 +264,15 @@ exports.tos = function (req, res) {
 exports.invitefriendsCallback = function (req, res) {
   var uid = req.body.uid;
   var request_ids = req.body.request_ids;
-  internalLog("UID: " + uid);
-  internalLog("REQUEST_IDS: " + request_ids);
+  //internalLog("UID: " + uid);
+  //internalLog("REQUEST_IDS: " + request_ids);
 
   res.end();
 };
 
 
-function internalLog(data) {
-  if (verbose) {
-    console.log(data);
-  }
-}
+//function internalLog(data) {
+//  if (verbose) {
+//    console.log(data);
+//  }
+//}
