@@ -92,6 +92,8 @@ exports.loginCallback = function (req, res, next) {
       }
     });
 
+    res.redirect('/');
+
     res.render('index', {
       title: 'bang.on',
       loginUrl: FB.getLoginUrl({ scope: config.facebook.scope })
