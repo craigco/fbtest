@@ -181,6 +181,7 @@ exports.loginCallback = function (req, res, next) {
         console.log(!result ? 'error occurred' : result.error);
       }
 
+      console.log(result.data);
       // if publish_actions permission is missing - go to login dialog
       if (!result.data.publish_actions || result.data.publish_actions == 0) {
         console.log("publish_actions: " + result.data.publish_actions);
