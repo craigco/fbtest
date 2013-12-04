@@ -47,7 +47,7 @@ app.post('/',		             home.indexPost);
 app.get('/login/callback',   home.loginCallback);
 app.post('/login/callback',  home.loginCallback);
 app.get('/logout',           home.logout);
-app.get('/og/*'              home.opengraph);
+app.get('/og/*',             home.opengraph);
 app.get('/tos',              home.tos);
 
 app.post('/invitefriends/callback', home.invitefriendsCallback);
