@@ -47,7 +47,9 @@ exports.indexPost = function (req, res) {
           console.log(!res ? 'error occurred' : res.error);
         }
 
-        console.log(res.data);
+        if (!res.data.publish_actions || res.data.publish_actions == 0) {
+          res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
+        }
       });
     }
   } else {
