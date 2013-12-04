@@ -43,13 +43,13 @@ exports.indexPost = function (req, res) {
       // check if publish_actions is granted
       FB.setAccessToken(accessToken);
 
-      FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + signedRequest.user_id }, function(res) {
-        if (!res || res.error) {
-          console.log(!res ? 'error occurred' : res.error);
+      FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + signedRequest.user_id }, function(queryResponse) {
+        if (!queryResponse || queryResponse.error) {
+          console.log(!queryResponse ? 'error occurred' : queryResponse.error);
         }
 
         // if publish_actions permission is missing - go to login dialog
-        if (!res.data.publish_actions || res.data.publish_actions == 0) {
+        if (!queryResponse.data.publish_actions || queryResponse.data.publish_actions == 0) {
           res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
         }
       });
