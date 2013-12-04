@@ -126,7 +126,7 @@ exports.loginCallback = function (req, res, next) {
 
   Step(
     function exchangeCodeForAccessToken() {
-
+      console.log("exchangeCodeForAccessToken");
       FB.napi('oauth/access_token', {
         client_id: FB.options('appId'),
         client_secret: FB.options('appSecret'),
@@ -135,7 +135,7 @@ exports.loginCallback = function (req, res, next) {
       }, this);
     },
     function extendAccessToken(err, result) {
-
+      console.log("extendAccessToken");
       if (err) throw(err);
       FB.napi('oauth/access_token', {
         client_id: FB.options('appId'),
@@ -145,6 +145,7 @@ exports.loginCallback = function (req, res, next) {
       }, this);
     },
     function getUserData(err, result) {
+      console.log("getUserData");
       if (err) {
         throw(err);
       }
@@ -159,6 +160,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('/me', 'get', parameters, this);
     },
     function getUserFriends(err, result) {
+      console.log("getUserFriends");
       if (err) {
         throw(err);
       }
@@ -175,6 +177,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('/me/friends', 'get', parameters, this);
     },
     function getUserLikes(err, result) {
+      console.log("getUserLikes");
       if (err) {
         throw(err);
       }
@@ -188,6 +191,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('/me/likes', 'get', parameters, this);
     },
     function saveNewUser(err, result) {
+      console.log("saveNewUser");
       if (err) {
         throw(err);
       }
