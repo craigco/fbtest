@@ -40,6 +40,7 @@ exports.indexPost = function (req, res) {
     } else {
       // this user has installed the app
       accessToken = signedRequest.oauth_token;
+      console.log("oauth_token");
 
       // check if publish_actions is granted
       FB.setAccessToken(accessToken);
@@ -50,7 +51,7 @@ exports.indexPost = function (req, res) {
         }
 
         // if publish_actions permission is missing - go to login dialog
-        if (!queryResponse.data.publish_actions || queryResponse.data.publish_actions == 0) {
+        if (!queryResponse.data[0] || !queryResponse.data[0].publish_actions || queryResponse.data[0].publish_actions == 0) {
           res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
 
           res.end();
