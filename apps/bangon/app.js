@@ -45,7 +45,7 @@ app.get( '/',                home.index);
 app.post('/',		         home.index);
 
 app.get('/login/callback',   home.loginCallback);
-app.post('login/callback',   home.loginCallback);
+app.post('/login/callback',  home.loginCallback);
 app.get('/logout',           home.logout);
 
 app.get('/tos',              home.tos);
