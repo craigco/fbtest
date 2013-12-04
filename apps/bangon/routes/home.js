@@ -88,78 +88,86 @@ exports.index = function(req, res) {
 };
 
 exports.loginCallback = function (req, res, next) {
-    var code            = req.query.code;
+  var code            = req.query.code;
 
-    if (req.query.error) {
-        // user might have disallowed the app
-        return res.send('login-error ' + req.query.error_description);
-    } else if(!code) {
-        return res.redirect('/');
-    }
+  if (req.query.error) {
+      // user might have disallowed the app
+      return res.send('login-error ' + req.query.error_description);
+  } else if(!code) {
+      return res.redirect('/');
+  }
 
-    var accessToken;
+  var accessToken;
 
-    Step(
-        function exchangeCodeForAccessToken() {
-            internalLog("exchangeCodeForAccessToken");
+  Step(
+    function exchangeCodeForAccessToken() {
+      internalLog("exchangeCodeForAccessToken");
 
-            FB.napi('oauth/access_token', {
-                client_id:      FB.options('appId'),
-                client_secret:  FB.options('appSecret'),
-                redirect_uri:   FB.options('redirectUri'),
-                code:           code
-            }, this);
-        },
-        function extendAccessToken(err, result) {
-            internalLog("extendAccessToken");
-            if(err) throw(err);
-            FB.napi('oauth/access_token', {
-                client_id:          FB.options('appId'),
-                client_secret:      FB.options('appSecret'),
-                grant_type:         'fb_exchange_token',
-                fb_exchange_token:  result.access_token
-            }, this);
-        },
-        function getUserDataFromGraphAPI(err, result) {
-            internalLog("getUserDataFromGraphAPI");
-            req.session.access_token = result.access_token;
-            req.session.expires      = result.expires || 0;
+      FB.napi('oauth/access_token', {
+        client_id: FB.options('appId'),
+        client_secret: FB.options('appSecret'),
+        redirect_uri: FB.options('redirectUri'),
+        code: code
+      }, this);
+    },
+    function extendAccessToken(err, result) {
+      internalLog("extendAccessToken");
+      if (err) throw(err);
+      FB.napi('oauth/access_token', {
+        client_id: FB.options('appId'),
+        client_secret: FB.options('appSecret'),
+        grant_type: 'fb_exchange_token',
+        fb_exchange_token: result.access_token
+      }, this);
+    },
+    function getUserDataFromGraphAPI(err, result) {
+      internalLog("getUserDataFromGraphAPI");
+      req.session.access_token = result.access_token;
+      req.session.expires = result.expires || 0;
 
-            var parameters = {
-                access_token: result.access_token
-            };
+      var parameters = {
+        access_token: result.access_token
+      };
 
-            FB.napi('/me', 'get', parameters, this);
-        },
-        function (err, result) {
-            internalLog("final function");
-            if (err) {
-                return next(err);
-            }
+      FB.napi('/me', 'get', parameters, this);
+    },
+    function (err, result) {
+      internalLog("final function");
+      if (err) {
+        return next(err);
+      }
 
-            mongodbprovider.setActiveCollection("users");
-            mongodbprovider.saveNewFacebookUser(result);
+      // wrap in facebook node
+      var newFacebookUser = {
+        fb: result
+      };
 
-           /*if(req.query.state) {
-                var parameters              = JSON.parse(req.query.state);
-                parameters.access_token     = req.session.access_token;
-
-                internalLog(parameters);
-
-                FB.api('/me/' + config.facebook.appNamespace +':eat', 'post', parameters , function (result) {
-                    internalLog(result);
-                    if(!result || result.error) {
-                        return res.send(500, result || 'error');
-                        // return res.send(500, 'error');
-                    }
-
-                    return res.redirect('/');
-                });
-            }*/
-
-            return res.redirect('/');
+      mongodbprovider.save(newFacebookUser, "users", function(error) {
+        if (error) {
+          console.log(error);
         }
-    );
+      });
+
+      /*if(req.query.state) {
+       var parameters              = JSON.parse(req.query.state);
+       parameters.access_token     = req.session.access_token;
+
+       internalLog(parameters);
+
+       FB.api('/me/' + config.facebook.appNamespace +':eat', 'post', parameters , function (result) {
+       internalLog(result);
+       if(!result || result.error) {
+       return res.send(500, result || 'error');
+       // return res.send(500, 'error');
+       }
+
+       return res.redirect('/');
+       });
+       }*/
+
+      return res.redirect('/');
+    }
+  );
 };
 
 exports.logout = function (req, res) {
