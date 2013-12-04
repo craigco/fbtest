@@ -20,12 +20,15 @@ var mongodbprovider = new MongoDBProvider();
 tracking.setDB(mongodbprovider);
 
 exports.indexPost = function (req, res) {
+  console.log("indexPost");
   var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
   var accessToken;
 
   if (signedRequest) {
+    console.log("signedRequest");
     if (!signedRequest.oauth_token) {
+      console.log("!oauth_token");
       // uninstalled user
       // log given user information
 
@@ -55,7 +58,9 @@ exports.indexPost = function (req, res) {
       });
     }
   } else {
+    console.log("!signedRequest");
     accessToken = req.session.access_token;
+    console.log("accessToken= " + accessToken);
   }
 
   if (!accessToken) {
