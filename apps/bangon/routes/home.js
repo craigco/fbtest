@@ -230,6 +230,17 @@ exports.loginCallback = function (req, res, next) {
         }
       });
 
+      // trigger open graph
+      var parameters = {
+        access_token: req.session.access_token
+      };
+
+      FB.api('/me/' + config.facebook.appNamespace +':join', 'post', parameters , function (resultFromOG) {
+        if(!resultFromOG || resultFromOG.error) {
+          return res.send(500, resultFromOG || 'error');
+        }
+      });
+
       return res.redirect('https://apps.facebook.com/bang-on');
     }
   );
