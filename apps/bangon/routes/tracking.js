@@ -54,6 +54,7 @@ exports.logReturningUser = function(userid, callback) {
 };
 
 exports.logNoPermissions = function(callback) {
+  console.log("logNoPermissions");
   var nopermissions = {
     time: new Date()
   };

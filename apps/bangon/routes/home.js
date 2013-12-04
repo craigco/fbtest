@@ -80,9 +80,9 @@ exports.index = function (req, res) {
 };
 
 exports.loginCallback = function (req, res, next) {
+  console.log('loginCallback');
   var code            = req.query.code;
 
-  console.log(code);
   if (req.query.error) {
     // user might have disallowed the app
 
