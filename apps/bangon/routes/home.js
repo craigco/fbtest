@@ -33,11 +33,22 @@ exports.indexPost = function (req, res) {
       tracking.logNewUser(signedRequest.user, function () {
       });
 
-      res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope, display: ''  }) + "'</script>");
+      res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
 
     } else {
       // this user has installed the app
       accessToken = signedRequest.oauth_token;
+
+      // check if publish_actions is granted
+      FB.setAccessToken(accessToken);
+
+      FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + signedRequest.user_id }, function(res) {
+        if (!res || res.error) {
+          console.log(!res ? 'error occurred' : res.error);
+        }
+
+        console.log(res.data);
+      });
     }
   } else {
     console.log("!signedRequest");
