@@ -33,7 +33,7 @@ exports.indexPost = function (req, res) {
       tracking.logNewUser(signedRequest.user, function () {
       });
 
-      res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
+      res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope, display: ''  }) + "'</script>");
 
     } else {
       // this user has installed the app
