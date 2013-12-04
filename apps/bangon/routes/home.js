@@ -25,7 +25,6 @@ exports.indexPost = function (req, res) {
   var accessToken;
 
   if (signedRequest) {
-    console.log("signedRequest");
     if (!signedRequest.oauth_token) {
       // uninstalled user
       // log given user information
@@ -38,7 +37,6 @@ exports.indexPost = function (req, res) {
     } else {
       // this user has installed the app
       accessToken = signedRequest.oauth_token;
-      console.log("accessToken: " + accessToken);
 
       // check if publish_actions is granted
       FB.setAccessToken(accessToken);
@@ -55,8 +53,6 @@ exports.indexPost = function (req, res) {
       });
     }
   } else {
-    console.log("!signedRequest");
-
     accessToken = req.session.access_token;
   }
 
@@ -105,6 +101,7 @@ exports.indexGet = function (req, res) {
 exports.loginCallback = function (req, res, next) {
   console.log('loginCallback');
   var code            = req.query.code;
+  console.log(req.query.error);
 
   if (req.query.error) {
     // user might have disallowed the app
@@ -116,6 +113,7 @@ exports.loginCallback = function (req, res, next) {
       }
     });
 
+    req.session = null;
     return res.redirect('/');
 
   } else if(!code) {
