@@ -170,7 +170,7 @@ exports.loginCallback = function (req, res, next) {
       };
 
       // check if publish_actions is granted
-      FB.setAccessToken(result.access_token);
+      FB.setAccessToken(req.session.access_token);
 
       FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id }, this);
     },
