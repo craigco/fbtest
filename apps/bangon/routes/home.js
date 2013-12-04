@@ -25,6 +25,7 @@ exports.index = function (req, res) {
   var accessToken;
 
   if (signedRequest) {
+    console.log("signedRequest");
     if (!signedRequest.oauth_token) {
       // uninstalled user
       // log given user information
@@ -39,10 +40,12 @@ exports.index = function (req, res) {
       accessToken = signedRequest.oauth_token;
     }
   } else {
+    console.log("!signedRequest");
     accessToken = req.session.access_token;
   }
 
   if (!accessToken) {
+    console.log("!accessToken");
     res.render('index', {
       title: 'bang.on',
       loginUrl: FB.getLoginUrl({ scope: config.facebook.scope }),
@@ -92,14 +95,8 @@ exports.loginCallback = function (req, res, next) {
       }
     });
 
-    res.redirect('/');
+    return res.redirect('/');
 
-    res.render('index', {
-      title: 'bang.on',
-      loginUrl: FB.getLoginUrl({ scope: config.facebook.scope })
-    });
-
-    return;
   } else if(!code) {
       return res.redirect('/');
   }
