@@ -182,7 +182,7 @@ exports.loginCallback = function (req, res, next) {
       }
 
       // if publish_actions permission is missing - go to login dialog
-      if (!result.data[0] || result.data[0].publish_actions || result.data[0].publish_actions == 0) {
+      if (!result.data[0] || !result.data[0].publish_actions || result.data[0].publish_actions == 0) {
         console.log("publish_actions: " + result.data[0].publish_actions);
         req.session = null; // clear session
         return res.redirect('/');
