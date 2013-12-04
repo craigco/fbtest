@@ -19,72 +19,65 @@ var mongodbprovider = new MongoDBProvider();
 
 tracking.setDB(mongodbprovider);
 
-exports.index = function(req, res) {
+exports.index = function (req, res) {
 
-    //console.log(req);
+  //console.log(req);
 
-    var signedRequest  = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
+  var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
-    var accessToken;
+  var accessToken;
 
-    if (signedRequest) {
-        internalLog(signedRequest);
+  if (signedRequest) {
+    if (!signedRequest.oauth_token) {
+      // uninstalled user
+      // log given user information
 
-        if (!signedRequest.oauth_token) {
-            internalLog("no auth token in signed request");
-            // uninstalled user
+      tracking.logNewUser(signedRequest.user, function () {
+      });
 
-            // log given user information
+      res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
 
-            tracking.logNewUser(signedRequest.user, function() {
-
-            });
-
-            res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
-
-        } else {
-            // this user has installed the app
-            accessToken = signedRequest.oauth_token;
-            var userId = signedRequest.user_id;
-            var userCountry = signedRequest.user.country;
-        }
     } else {
-        accessToken = req.session.access_token;
+      // this user has installed the app
+      accessToken = signedRequest.oauth_token;
     }
+  } else {
+    accessToken = req.session.access_token;
+  }
 
-    if (!accessToken) {
-        res.render('index', {
-            title: 'bang.on',
-            loginUrl: FB.getLoginUrl({ scope: config.facebook.scope }),
-            fb_scope: config.facebook.scope
+  if (!accessToken) {
+    res.render('index', {
+      title: 'bang.on',
+      loginUrl: FB.getLoginUrl({ scope: config.facebook.scope }),
+      fb_scope: config.facebook.scope
+    });
+  } else {
+    Step(
+      function getUserDataFromGraphAPI() {
+        var parameters = {
+          access_token: accessToken
+        };
+
+        FB.napi('/me', 'get', parameters, this);
+      },
+      function renderView(err, result) {
+        if (err) throw(err);
+
+        console.log(JSON.stringify(result));
+
+        res.render('signedup', {
+          title: 'bang.on',
+          user_first_name: result.first_name,
+          user_last_name: result.last_name,
+          appID: config.facebook.appId,
+          uid: result.id
         });
-    } else {
-        Step(
-            function getUserDataFromGraphAPI() {
-                var parameters = {
-                    access_token: accessToken
-                };
 
-                FB.napi('/me', 'get', parameters, this);
-            },
-            function renderView(err, result) {
-                if(err) throw(err);
+        tracking.logReturningUser(result.id);
+      }
+    );
 
-                console.log(JSON.stringify(result));
-
-                res.render('signedup', {
-                    title:                   'bang.on',
-                    user_first_name:          result.first_name,
-                    user_last_name:           result.last_name,
-                    appID:                    config.facebook.appId,
-                    uid:                      result.id
-                });
-
-                tracking.logReturningUser(result.id);
-            }
-        );
-
-    }
+  }
 };
 
 exports.loginCallback = function (req, res, next) {
@@ -97,8 +90,8 @@ exports.loginCallback = function (req, res, next) {
       return res.redirect('/');
   }
 
-  var accessToken;
   var user;
+
   Step(
     function exchangeCodeForAccessToken() {
 
@@ -183,15 +176,15 @@ exports.loginCallback = function (req, res, next) {
 };
 
 exports.logout = function (req, res) {
-    req.session = null; // clear session
-    res.redirect('/');
+  req.session = null; // clear session
+  res.redirect('/');
 };
 
 exports.tos = function (req, res) {
-    res.render('tos');
+  res.render('tos');
 };
 
-exports.invitefriendsCallback = function(req, res) {
+exports.invitefriendsCallback = function (req, res) {
   var uid = req.body.uid;
   var request_ids = req.body.request_ids;
   internalLog("UID: " + uid);
@@ -202,7 +195,7 @@ exports.invitefriendsCallback = function(req, res) {
 
 
 function internalLog(data) {
-    if (verbose) {
-        console.log(data);
-    }
+  if (verbose) {
+    console.log(data);
+  }
 }
