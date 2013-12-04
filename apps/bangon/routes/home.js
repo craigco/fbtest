@@ -63,8 +63,6 @@ exports.index = function (req, res) {
       function renderView(err, result) {
         if (err) throw(err);
 
-        console.log(JSON.stringify(result));
-
         res.render('signedup', {
           title: 'bang.on',
           user_first_name: result.first_name,
@@ -73,7 +71,11 @@ exports.index = function (req, res) {
           uid: result.id
         });
 
-        tracking.logReturningUser(result.id);
+        tracking.logReturningUser(result.id, function(error) {
+         if (error) {
+           throw(error);
+         }
+        });
       }
     );
 

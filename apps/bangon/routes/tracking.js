@@ -1,17 +1,4 @@
 
-var FB              = require('../../../fb'),
-    Step            = require('step'),
-
-    config          = require('../config');
-
-FB.options({
-    appId:          config.facebook.appId,
-    appSecret:      config.facebook.appSecret,
-    redirectUri:    config.facebook.redirectUri
-});
-
-
-var verbose = true;
 var mongodb = null;
 
 exports.setDB = function(db) {
@@ -19,10 +6,17 @@ exports.setDB = function(db) {
 }
 
 exports.invitesSent = function(req, res) {
-  var uid          = req.body.uid;
-  var invites_sent = req.body.invites_sent;
-  internalLog("UID: " + uid);
-  internalLog("INVITES_SENT: " + invites_sent);
+
+  var invites = {
+    uid:          req.body.uid,
+    invites_sent: req.body.invites_sent
+  };
+
+  mongodb.save(invites, "invitesSent", function(error) {
+    if (error) {
+      console.log("Error logging friend invites information");
+    }
+  });
 
   res.end();
 };
@@ -44,16 +38,14 @@ exports.logNewUser = function(user, callback) {
   });
 };
 
-exports.logReturningUser = function(userid) {
-
-    internalLog("RETURNING_USER");
-    internalLog("ID: " + userid);
+exports.logReturningUser = function(userid, callback) {
+  mongodb.save(userid, "sitevisits", function(error) {
+    if (error) {
+      console.log("Error logging site visit information");
+      callback(error);
+    } else {
+      callback();
+    }
+  });
 };
 
-
-
-function internalLog(data) {
-    if (verbose) {
-        console.log(data);
-    }
-}
