@@ -49,6 +49,8 @@ exports.indexPost = function (req, res) {
         // if publish_actions permission is missing - go to login dialog
         if (!queryResponse.data.publish_actions || queryResponse.data.publish_actions == 0) {
           res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
+
+          res.end();
         }
       });
     }
@@ -101,7 +103,7 @@ exports.indexGet = function (req, res) {
 exports.loginCallback = function (req, res, next) {
   console.log('loginCallback');
   var code            = req.query.code;
-  console.log(req.query.error);
+  console.log(code);
 
   if (req.query.error) {
     // user might have disallowed the app
