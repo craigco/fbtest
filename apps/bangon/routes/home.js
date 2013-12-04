@@ -20,9 +20,6 @@ var mongodbprovider = new MongoDBProvider();
 tracking.setDB(mongodbprovider);
 
 exports.index = function (req, res) {
-
-  //console.log(req);
-
   var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
   var accessToken;
@@ -85,9 +82,20 @@ exports.index = function (req, res) {
 exports.loginCallback = function (req, res, next) {
   var code            = req.query.code;
 
+  console.log(code);
   if (req.query.error) {
-      // user might have disallowed the app
-      return res.send('login-error ' + req.query.error_description);
+    // user might have disallowed the app
+
+    tracking.logNoPermissions(function(error) {
+      if (error) {
+        throw(error);
+      }
+    });
+
+    res.render('index', {
+      title: 'bang.on',
+      loginUrl: FB.getLoginUrl({ scope: config.facebook.scope })
+    });
   } else if(!code) {
       return res.redirect('/');
   }

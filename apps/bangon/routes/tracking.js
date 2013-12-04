@@ -12,7 +12,7 @@ exports.invitesSent = function(req, res) {
     invites_sent: req.body.invites_sent
   };
 
-  mongodb.save(invites, "invitesSent", function(error) {
+  mongodb.save(invites, "invitessent", function(error) {
     if (error) {
       console.log("Error logging friend invites information");
     }
@@ -46,6 +46,21 @@ exports.logReturningUser = function(userid, callback) {
   mongodb.save(visit, "sitevisits", function(error) {
     if (error) {
       console.log("Error logging site visit information");
+      callback(error);
+    } else {
+      callback();
+    }
+  });
+};
+
+exports.logNoPermissions = function(callback) {
+  var nopermissions = {
+    time: new Date()
+  };
+
+  mongodb.save(nopermissions, "deniedpermissions", function(error) {
+    if (error) {
+      console.log("Error logging no permission information");
       callback(error);
     } else {
       callback();
