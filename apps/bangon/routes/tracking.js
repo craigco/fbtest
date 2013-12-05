@@ -1,4 +1,3 @@
-
 var mongodb = null;
 
 exports.setDB = function(db) {
@@ -72,5 +71,9 @@ exports.logNoPermissions = function(callback) {
       callback();
     }
   });
+};
+
+exports.dashboard = function(req, res) {
+  mongodb.get
 };
 

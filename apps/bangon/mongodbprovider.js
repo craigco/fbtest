@@ -40,39 +40,17 @@ MongoDBProvider.prototype.getCollection = function(collectionToGet, callback) {
 };
 
 //find all users
-MongoDBProvider.prototype.findAll = function(callback) {
-  this.getActiveCollection(function(error, user_collection) {
+MongoDBProvider.prototype.findAll = function(collection, callback) {
+  this.getCollection(collection, function(error, collection) {
     if (error) {
       callback(error);
     } else {
-      user_collection.find().toArray(function(error, results) {
+      collection.find().toArray(function(error, results) {
         if (error) {
           callback(error)
         } else {
             callback(null, results)
         }
-      });
-    }
-  });
-};
-
-//save new user
-MongoDBProvider.prototype.saveNewFacebookUser = function(user, callback) {
-  console.log("MongoDBProvider: saveNewUser");
-  this.getActiveCollection(function(error, collection) {
-    if (error) {
-      callback(error);
-    } else {
-      user.created_at = new Date();
-
-      // wrap in facebook node
-      var modified_user = {
-          fb: user
-      };
-
-      console.log("MongoDBProvider: saveNewUser insert()");
-      collection.insert(modified_user, function() {
-        callback(null, modified_user);
       });
     }
   });

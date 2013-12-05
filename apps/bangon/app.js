@@ -9,9 +9,9 @@ var express       = require('express'),
 
     fb_api        = require('./routes/fb_api'),
     home          = require('./routes/home'),
-    tracking      = require('./routes/tracking'),
+    tracking      = require('./routes/tracking');
 
-    https         = require('https');
+//    https         = require('https');
 
 var app = express();
 
@@ -57,6 +57,8 @@ app.get( '/search',          fb_api.search);
 app.get( '/friends',         fb_api.friends);
 app.get( '/me',              fb_api.me);
 app.post('/announce',        fb_api.announce);
+
+app.get('/dashboard',        home.dashboard);
 
 
 /**

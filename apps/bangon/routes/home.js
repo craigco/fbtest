@@ -312,6 +312,18 @@ exports.invitefriendsCallback = function (req, res) {
   res.end();
 };
 
+exports.dashboard = function(req, res) {
+  mongodbprovider.findAll("users", function(error, results) {
+    if (error) {
+      console.log(error);
+      res.end();
+    } else {
+      console.log(JSON.stringify(results));
+      res.end();
+    }
+  });
+};
+
 
 //function internalLog(data) {
 //  if (verbose) {
