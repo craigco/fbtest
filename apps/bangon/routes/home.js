@@ -180,7 +180,29 @@ exports.loginCallback = function (req, res, next) {
 
       FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id }, this);
     },
-    function getUserFriends(result) {
+    function saveNewUser(result) {
+      if (!result || result.error) {
+        //console.log(!result ? 'error occurred' : result.error);
+      }
+
+      // if publish_actions permission is missing - go to login dialog
+      if (!result.data[0] || !result.data[0].publish_actions || result.data[0].publish_actions == 0) {
+        //console.log("publish_actions: " + result.data[0].publish_actions);
+        req.session = null; // clear session
+        return res.redirect('/');
+      }
+
+      mongodbprovider.save(user, "users", function(error) {
+        if (error) {
+          console.log(error);
+
+          throw(err);
+        }
+      });
+
+      return res.redirect('https://apps.facebook.com/bang-on');
+    }
+    /*function getUserFriends(result) {
       //console.log("getUserFriends");
       //console.log("result: " + JSON.stringify(result));
       if (!result || result.error) {
@@ -243,7 +265,7 @@ exports.loginCallback = function (req, res, next) {
       });
 
       return res.redirect('https://apps.facebook.com/bang-on');
-    }
+    }*/
   );
 };
 
