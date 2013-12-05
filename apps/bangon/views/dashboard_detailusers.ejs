@@ -46,7 +46,7 @@
   $(document).ready(function(){
 
     var tmpl = $("#users_list_tmpl").html();
-    var output = Mustache.to_html(tmpl, <%- users %>);
+    var output = Mustache.to_html(tmpl, <%- JSON.stringify(users) %>);
     $("#users-list").html(output).listview('refresh');
   });
 </script>
