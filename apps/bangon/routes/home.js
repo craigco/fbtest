@@ -314,30 +314,37 @@ exports.invitefriendsCallback = function (req, res) {
 
 exports.dashboard = function(req, res) {
   var numUsers;
-  mongodbprovider.findAll("users", function(error, results) {
-    if (error) {
-      console.log(error);
-      res.end();
-    } else {
-      numUsers = results.length;
-    }
-  });
-
   var numVisits;
-  mongodbprovider.findAll("sitevisits", function(error, results) {
-    if (error) {
-      console.log(error);
-      res.end();
-    } else {
-      numVisits = results.length;
-    }
-  });
 
-  res.render('dashboard', {
-    title: 'bang.on',
-    numUsersSignedUp: numUsers,
-    numSiteVisits: numVisits
-  });
+  Step(
+    function getAllUsers() {
+      mongodbprovider.findAll("users", this);
+    },
+    function findSiteVisits(error, results) {
+      if (error) {
+        console.log(error);
+        throw(error);
+      } else {
+        numUsers = results.length;
+      }
+
+      mongodbprovider.findAll("sitevisits", this);
+    },
+    function showDashboard(error, results) {
+      if (error) {
+        console.log(error);
+        throw(error);
+      } else {
+        numVisits = results.length;
+      }
+
+      res.render('dashboard', {
+        title: 'bang.on',
+        numUsersSignedUp: numUsers,
+        numSiteVisits: numVisits
+      });
+    }
+  );
 };
 
 
