@@ -319,6 +319,7 @@ exports.dashboard = function(req, res) {
       res.end();
     } else {
       console.log(JSON.stringify(results));
+      console.log(results.length);
       res.end();
     }
   });
