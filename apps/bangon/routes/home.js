@@ -47,7 +47,7 @@ exports.indexPost = function (req, res) {
 
       FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + signedRequest.user_id }, function(queryResponse) {
         if (!queryResponse || queryResponse.error) {
-          //console.log(!queryResponse ? 'error occurred' : queryResponse.error);
+          console.log(!queryResponse ? 'error occurred' : queryResponse.error);
         }
 
         // if publish_actions permission is missing - go to login dialog
