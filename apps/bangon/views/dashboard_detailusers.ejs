@@ -16,9 +16,7 @@
 
 <div data-role="page" id="users" class="type-menu-drilldown">
   <div data-role="header">
-    <a data-rel="back" data-icon="back">Back</a>
     <h1>Registered Users</h1>
-    <a id="users-done" href="#menu" class="ui-btn-right">Done</a>
   </div>
 
   <div data-role="content">
@@ -40,7 +38,7 @@
 
 <script type="x-mustache-template" id="users_list_tmpl">
   {{#.}}
-  <li data-icon="false" data-name="{{ id }}"><a href="#" data-transition="slide"><img src="{{ picture.data.url }}"></img>{{ name }}</a></li>
+  <li data-icon="false" data-name="{{ fb.id }}"><a href="#" data-transition="slide"><img src="http://graph.facebook.com/{{ fb.id }}/picture"></img>{{ fb.name }}</a></li>
   {{/.}}
 </script>
 
