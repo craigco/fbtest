@@ -320,7 +320,6 @@ exports.dashboard = function(req, res) {
       res.end();
     } else {
       numUsers = results.length;
-      res.end();
     }
   });
 
@@ -331,7 +330,6 @@ exports.dashboard = function(req, res) {
       res.end();
     } else {
       numVisits = results.length;
-      res.end();
     }
   });
 
