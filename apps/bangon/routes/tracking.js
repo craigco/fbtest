@@ -21,14 +21,19 @@ exports.invitesSent = function(req, res) {
   res.end();
 };
 
-exports.logNewUser = function(user, callback) {
+exports.logNewUser = function(user, useragent, callback) {
 
   // user.country
   // user.locale
   // user.age.min
   // user.age.max
 
-  mongodb.save(user, "tracking", function(error) {
+  var info = {
+    info: user,
+    agent: useragent
+  };
+
+  mongodb.save(info, "tracking", function(error) {
     if (error) {
       console.log("Error logging new user information");
       callback(error);
