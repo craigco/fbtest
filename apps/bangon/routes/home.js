@@ -313,15 +313,32 @@ exports.invitefriendsCallback = function (req, res) {
 };
 
 exports.dashboard = function(req, res) {
+  var numUsers;
   mongodbprovider.findAll("users", function(error, results) {
     if (error) {
       console.log(error);
       res.end();
     } else {
-      console.log(JSON.stringify(results));
-      console.log(results.length);
+      numUsers = results.length;
       res.end();
     }
+  });
+
+  var numVisits;
+  mongodbprovider.findAll("sitevisits", function(error, results) {
+    if (error) {
+      console.log(error);
+      res.end();
+    } else {
+      numVisits = results.length;
+      res.end();
+    }
+  });
+
+  res.render('dashboard', {
+    title: 'bang.on',
+    numUsersSignedUp: numUsers,
+    numSiteVisits: numVisits
   });
 };
 
