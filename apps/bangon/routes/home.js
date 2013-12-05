@@ -131,7 +131,7 @@ exports.loginCallback = function (req, res, next) {
 
   Step(
     function exchangeCodeForAccessToken() {
-      //console.log("exchangeCodeForAccessToken");
+      console.log("exchangeCodeForAccessToken");
       FB.napi('oauth/access_token', {
         client_id: FB.options('appId'),
         client_secret: FB.options('appSecret'),
@@ -140,7 +140,7 @@ exports.loginCallback = function (req, res, next) {
       }, this);
     },
     function extendAccessToken(err, result) {
-      //console.log("extendAccessToken");
+      console.log("extendAccessToken");
       if (err) throw(err);
       FB.napi('oauth/access_token', {
         client_id: FB.options('appId'),
@@ -150,7 +150,7 @@ exports.loginCallback = function (req, res, next) {
       }, this);
     },
     function getUserData(err, result) {
-      //console.log("getUserData");
+      console.log("getUserData");
       if (err) {
         throw(err);
       }
@@ -165,7 +165,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('/me', 'get', parameters, this);
     },
     function checkExtendedPermissions(err, result) {
-      //console.log("checkExtendedPermissions");
+      console.log("checkExtendedPermissions");
       if (err) {
         throw(err);
       }
@@ -191,7 +191,7 @@ exports.loginCallback = function (req, res, next) {
 
       // if publish_actions permission is missing - go to login dialog
       if (!result.data[0] || !result.data[0].publish_actions || result.data[0].publish_actions == 0) {
-        //console.log("publish_actions: " + result.data[0].publish_actions);
+        console.log("publish_actions: " + result.data[0].publish_actions);
         req.session = null; // clear session
         return res.redirect('/');
       }
