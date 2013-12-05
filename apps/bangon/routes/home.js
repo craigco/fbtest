@@ -67,9 +67,7 @@ exports.indexPost = function (req, res) {
       //console.log("oauth_token");
 
       // check if publish_actions is granted
-      FB.setAccessToken(accessToken);
-
-      FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + signedRequest.user_id }, function(queryResponse) {
+      FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + signedRequest.user_id, access_token: accessToken }, function(queryResponse) {
         if (!queryResponse || queryResponse.error) {
           console.log(!queryResponse ? 'error occurred' : queryResponse.error);
         }
@@ -96,11 +94,7 @@ exports.indexPost = function (req, res) {
   } else {
     Step(
       function getUserDataFromGraphAPI() {
-        var parameters = {
-          access_token: accessToken
-        };
-
-        FB.napi('/me', 'get', parameters, this);
+        FB.napi('/me', 'get', { access_token: accessToken }, this);
       },
       function renderView(err, result) {
         if (err) throw(err);
@@ -200,9 +194,7 @@ exports.loginCallback = function (req, res, next) {
       };
 
       // check if publish_actions is granted
-      FB.setAccessToken(req.session.access_token);
-
-      FB.napi('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id }, this);
+      FB.napi('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id, access_token: req.session.access_token }, this);
     },
     function saveNewUser(err, result) {
       if (err) {
