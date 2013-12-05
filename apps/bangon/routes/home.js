@@ -178,11 +178,15 @@ exports.loginCallback = function (req, res, next) {
       // check if publish_actions is granted
       FB.setAccessToken(req.session.access_token);
 
-      FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id }, this);
+      FB.napi('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id }, this);
     },
-    function saveNewUser(result) {
+    function saveNewUser(err, result) {
+      if (err) {
+        throw(err);
+      }
+
       if (!result || result.error) {
-        //console.log(!result ? 'error occurred' : result.error);
+        console.log(!result ? 'error occurred' : result.error);
       }
 
       // if publish_actions permission is missing - go to login dialog
