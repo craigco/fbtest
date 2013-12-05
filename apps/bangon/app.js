@@ -59,6 +59,8 @@ app.get( '/me',              fb_api.me);
 app.post('/announce',        fb_api.announce);
 
 app.get('/dashboard',        home.dashboard);
+app.get('/dashboard/detail/users', home.dashboardDetailUsers);
+app.get('/dashboard/detail/visits', home.dashboardDetailVisits);
 
 
 /**

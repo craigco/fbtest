@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><%- title %> Dashboard - User Detail</title>
+
+    <%- include css-common %>
+    <%- include js-common %>
+    <script src="js/mustache.js"></script>
+</head>
+<body>
+<!-- Facebook JavaScript -->
+<div id="fb-root"></div>
+
+<div data-role="page" id="users" class="type-menu-drilldown">
+  <div data-role="header">
+    <a data-rel="back" data-icon="back">Back</a>
+    <h1>Registered Users</h1>
+    <a id="users-done" href="#menu" class="ui-btn-right">Done</a>
+  </div>
+
+  <div data-role="content">
+    <ul data-role="listview" data-inset="false" data-theme="c" data-filter="true" id="users-list"></ul>
+  </div>
+</div>
+
+
+<!-- Login page -->
+<div class="jumbotron">
+    <div class="container">
+        <div class="row well well-lg">
+            <div class="col-md-6 col-md-offset-3 centerfy">
+                <img src="images/logos/bang.on_128x128.png" alt="bang.on" class="img-responsive text-center"/>
+                <p><a href="/dashboard/detail/users">Users signed up: <%- numUsersSignedUp %></a></p>
+                <p></p>
+                <p><a href="/dashboard/detail/visits">Total site visits: <%- numSiteVisits %></a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="x-mustache-template" id="users_list_tmpl">
+  {{#.}}
+  <li data-icon="false" data-name="{{ id }}"><a href="#" data-transition="slide"><img src="{{ picture.data.url }}"></img>{{ name }}</a></li>
+  {{/.}}
+</script>
+
+<script>
+  $(document).ready(function(){
+
+    var tmpl = $("#users_list_tmpl").html();
+    var output = Mustache.to_html(tmpl, <%- users %>);
+    $("#users-list").html(output).listview('refresh');
+  });
+</script>
+
+</body>
+</html>
