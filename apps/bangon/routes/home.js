@@ -373,7 +373,7 @@ exports.dashboardDetailUsersSpecific = function(req, res) {
 
   Step(
     function getAllUsers() {
-      mongodbprovider.find( { fb: { id: req.params.fbid } }, "users", this);
+      mongodbprovider.find( { "fb.id": req.params.fbid }, "users", this);
     },
     function showUserDetail(error, result) {
       if (error) {
