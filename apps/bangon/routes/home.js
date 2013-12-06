@@ -392,17 +392,15 @@ exports.dashboardDetailVisits = function(req, res) {
 
   Step(
     function getAllUsers() {
-      mongodbprovider.findAll("users", this);
+      mongodbprovider.findAll("visits", this);
     },
     function showDashboardDetail(error, results) {
       if (error) {
         console.log(error);
         throw(error);
       } else {
-        res.render('dashboard_detailusers', {
-          title: 'bang.on',
-          users: results
-        });
+        res.write(JSON.stringify(result));
+        res.end();
       }
     }
   );
