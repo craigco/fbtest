@@ -380,8 +380,8 @@ exports.dashboardDetailUsersSpecific = function(req, res) {
         console.log(error);
         throw(error);
       } else {
-        req.write(JSON.stringify(result));
-        req.end();
+        res.write(JSON.stringify(result));
+        res.end();
       }
     }
   );
