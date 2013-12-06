@@ -369,6 +369,25 @@ exports.dashboardDetailUsers = function(req, res) {
 };
 
 
+exports.dashboardDetailUsersSpecific = function(req, res) {
+
+  Step(
+    function getAllUsers() {
+      mongodbprovider.find(req.params.fbid, "users", this);
+    },
+    function showUserDetail(error, result) {
+      if (error) {
+        console.log(error);
+        throw(error);
+      } else {
+        req.write(JSON.stringify(result));
+        req.end();
+      }
+    }
+  );
+};
+
+
 exports.dashboardDetailVisits = function(req, res) {
 
   Step(

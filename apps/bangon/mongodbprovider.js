@@ -39,7 +39,6 @@ MongoDBProvider.prototype.getCollection = function(collectionToGet, callback) {
   });
 };
 
-//find all users
 MongoDBProvider.prototype.findAll = function(collection, callback) {
   this.getCollection(collection, function(error, collection) {
     if (error) {
@@ -50,6 +49,22 @@ MongoDBProvider.prototype.findAll = function(collection, callback) {
           callback(error)
         } else {
             callback(null, results)
+        }
+      });
+    }
+  });
+};
+
+MongoDBProvider.prototype.find = function(key, collection, callback) {
+  this.getCollection(collection, function(error, collection) {
+    if (error) {
+      callback(error);
+    } else {
+      collection.find(key, collection).toArray(function(error, results) {
+        if (error) {
+          callback(error)
+        } else {
+          callback(null, results)
         }
       });
     }
