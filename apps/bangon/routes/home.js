@@ -392,7 +392,7 @@ exports.dashboardDetailVisits = function(req, res) {
 
   Step(
     function getAllUsers() {
-      mongodbprovider.findAll("visits", this);
+      mongodbprovider.findAll("sitevisits", this);
     },
     function showDashboardDetail(error, results) {
       if (error) {
