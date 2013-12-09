@@ -390,7 +390,7 @@ exports.dashboardDetailUsersSpecific = function(req, res) {
 
 exports.dashboardDetailVisits = function(req, res) {
 
-  mongodbprovider.getCollection("sitevisits"), function(error, collection) {
+  mongodbprovider.getCollection("sitevisits", function(error, collection) {
     if (error) {
       console.log(error);
       throw(error);
@@ -410,7 +410,7 @@ exports.dashboardDetailVisits = function(req, res) {
         resultCursor.nextObject(processItem);
       });
     }
-  }
+  });
 };
 
 
