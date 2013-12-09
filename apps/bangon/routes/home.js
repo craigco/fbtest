@@ -382,7 +382,7 @@ exports.dashboardDetailUsersSpecific = function(req, res) {
       } else {
         res.writeHead(200, {'Content-type' : 'text/html'});
         res.write('<img src="http://graph.facebook.com/' + req.params.fbid + '/picture?type=large"></img><br>');
-        res.write(JSON.stringify(result, null, 4));
+        res.write(JSON.stringify(JSON.parse(result), null, 4));
         res.end();
       }
     }
