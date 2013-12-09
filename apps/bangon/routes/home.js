@@ -390,43 +390,27 @@ exports.dashboardDetailUsersSpecific = function(req, res) {
 
 exports.dashboardDetailVisits = function(req, res) {
 
-  Step(
-    function getAllUsers() {
-      mongodbprovider.getCollection("sitevisits"), function(error, collection) {
-        if (error) {
-          console.log(error);
-          throw(error);
-        } else {
-          collection.find({}, function(err, resultCursor) {
-            function processItem(err, item) {
-              if (item === null) {
-                res.end();
-                return;
-              }
+  mongodbprovider.getCollection("sitevisits"), function(error, collection) {
+    if (error) {
+      console.log(error);
+      throw(error);
+    } else {
+      collection.find({}, function(err, resultCursor) {
+        function processItem(err, item) {
+          if (item === null) {
+            res.end();
+            return;
+          }
 
-              res.write(resultCursor._id.getTimestamp().toISOString() + " : " + resultCursor.fbid.toString());
+          res.write(resultCursor._id.getTimestamp().toISOString() + " : " + resultCursor.fbid.toString());
 
-              resultCursor.nextObject(processItem);
-            }
-
-            resultCursor.nextObject(processItem);
-          });
-
+          resultCursor.nextObject(processItem);
         }
 
-      }
-      mongodbprovider.findAll("sitevisits", this);
-    },
-    function showDashboardDetail(error, result) {
-      if (error) {
-        console.log(error);
-        throw(error);
-      } else {
-        res.write(JSON.stringify(results));
-        res.end();
-      }
+        resultCursor.nextObject(processItem);
+      });
     }
-  );
+  }
 };
 
 
