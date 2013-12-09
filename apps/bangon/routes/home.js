@@ -395,7 +395,7 @@ exports.dashboardDetailVisits = function(req, res) {
       console.log(error);
       throw(error);
     } else {
-      res.writeHead(200, {'Content-type' : 'text/plain'});
+      res.writeHead(200, {'Content-type' : 'text/html'});
 
       //var cursor = collection.find();
       var stream = collection.find().stream();
