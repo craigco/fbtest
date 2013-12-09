@@ -399,19 +399,20 @@ exports.dashboardDetailVisits = function(req, res) {
 
       var cursor = collection.find();
 
-      cursor.each(function(err, item) {
-        if (error) {
-          console.log(error);
-          throw(error);
+      cursor.each(function(err, doc) {
+        if (err) {
+          console.log(err);
+          throw(err);
         } else {
           //res.write(JSON.stringify(item));
 
-          res.write(item._id.getTimestamp().toISOString() + " : " + item.fbid.toString());
-      }
+          if (doc != null) {
+            res.write(doc._id.getTimestamp().toISOString() + " : " + doc.fbid.toString());
+          }
+        }
+      });
 
       res.end();
-
-      });
     }
   });
 };
