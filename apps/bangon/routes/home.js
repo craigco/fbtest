@@ -402,7 +402,7 @@ exports.dashboardDetailVisits = function(req, res) {
 
       stream.on('data', function(doc) {
         //res.write(JSON.stringify(doc));
-        res.write(doc._id.getTimestamp().toISOString() + " : " + doc.fbid.toString() + "<br>");
+        res.write(doc._id.getTimestamp().toISOString() + " : " + doc.fbid.toString() + "\r\n");
       });
       stream.on('end', function() {
         res.end();
