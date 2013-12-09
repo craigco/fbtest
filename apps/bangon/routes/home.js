@@ -397,25 +397,21 @@ exports.dashboardDetailVisits = function(req, res) {
     } else {
       res.writeHead(200, {'Content-type' : 'text/plain'});
 
-      res.write("total records: " + collection.length);
+      var cursor = collection.find();
+
+      cursor.each(function(err, item) {
+      if (error) {
+        console.log(error);
+        throw(error);
+      } else {
+        res.write(JSON.stringify(item));
+
+        //res.write(item._id.getTimestamp().toISOString() + " : " + item.fbid.toString());
+      }
+
       res.end();
-      /*collection.find({}, function(err, cursor) {
 
-
-        cursor.each(function(err, item) {
-          if (error) {
-            console.log(error);
-            throw(error);
-          } else {
-            res.write(JSON.stringify(item));
-
-            //res.write(item._id.getTimestamp().toISOString() + " : " + item.fbid.toString());
-          }
-        });
-
-        res.end();
-
-      });*/
+      });
     }
   });
 };
