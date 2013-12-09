@@ -399,16 +399,14 @@ exports.dashboardDetailVisits = function(req, res) {
 
       var cursor = collection.find();
 
-      res.write("Number of visits: " + cursor.length);
-
       cursor.each(function(err, item) {
         if (error) {
           console.log(error);
           throw(error);
         } else {
-          res.write(JSON.stringify(item));
+          //res.write(JSON.stringify(item));
 
-        //res.write(item._id.getTimestamp().toISOString() + " : " + item.fbid.toString());
+          res.write(item._id.getTimestamp().toISOString() + " : " + item.fbid.toString());
       }
 
       res.end();
