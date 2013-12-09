@@ -422,7 +422,7 @@ exports.dashboardDetailVisits = function(req, res) {
         console.log(error);
         throw(error);
       } else {
-        res.write(JSON.stringify(result));
+        res.write(JSON.stringify(results));
         res.end();
       }
     }
