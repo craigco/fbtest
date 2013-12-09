@@ -395,8 +395,12 @@ exports.dashboardDetailVisits = function(req, res) {
       console.log(error);
       throw(error);
     } else {
-      collection.find({}, function(err, cursor) {
-        res.writeHead(200, {'Content-type' : 'text/plain'});
+      res.writeHead(200, {'Content-type' : 'text/plain'});
+
+      res.write("total records: " + collection.length);
+      res.end();
+      /*collection.find({}, function(err, cursor) {
+
 
         cursor.each(function(err, item) {
           if (error) {
@@ -411,7 +415,7 @@ exports.dashboardDetailVisits = function(req, res) {
 
         res.end();
 
-      });
+      });*/
     }
   });
 };
