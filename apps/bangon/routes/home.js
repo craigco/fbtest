@@ -399,9 +399,14 @@ exports.dashboardDetailVisits = function(req, res) {
         res.writeHead(200, {'Content-type' : 'text/plain'});
 
         cursor.each(function(err, item) {
-          res.write(JSON.stringify(item));
+          if (error) {
+            console.log(error);
+            throw(error);
+          } else {
+            res.write(JSON.stringify(item));
 
-          //res.write(item._id.getTimestamp().toISOString() + " : " + item.fbid.toString());
+            //res.write(item._id.getTimestamp().toISOString() + " : " + item.fbid.toString());
+          }
         });
 
         res.end();
