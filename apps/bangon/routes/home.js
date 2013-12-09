@@ -380,7 +380,9 @@ exports.dashboardDetailUsersSpecific = function(req, res) {
         console.log(error);
         throw(error);
       } else {
-        res.write(JSON.stringify(result));
+        res.writeHead(200, {'Content-type' : 'text/html'});
+        res.write('<img src="http://graph.facebook.com/' + req.params.fbid + '/picture?type=large"></img><br>');
+        res.write(JSON.stringify(result, null, 4));
         res.end();
       }
     }
@@ -407,21 +409,6 @@ exports.dashboardDetailVisits = function(req, res) {
       stream.on('end', function() {
         res.end();
       });
-
-      /*cursor.each(function(err, doc) {
-        if (err) {
-          console.log(err);
-          throw(err);
-        } else {
-          //res.write(JSON.stringify(item));
-
-          if (doc != null) {
-            res.write(doc._id.getTimestamp().toISOString() + " : " + doc.fbid.toString());
-          }
-        }
-      });
-
-      res.end();*/
     }
   });
 };
