@@ -402,7 +402,7 @@ exports.dashboardDetailVisits = function(req, res) {
 
       stream.on('data', function(doc) {
         var fbid = doc.fbid.toString();
-        res.write('<div><span>' +doc._id.getTimestamp().toISOString() + ' : ' + '<a href="/dashboard/detail/users/' + fbid + '">' + fbid + '</span><span><img src="http://graph.facebook.com/' + fbid + '/picture?type=small"></img></a></span></div><br>');
+        res.write('<div style="height:100px;"><span>' +doc._id.getTimestamp().toISOString() + ' : ' + '<a href="/dashboard/detail/users/' + fbid + '">' + fbid + '</span><span><img src="http://graph.facebook.com/' + fbid + '/picture?type=small"></img></a></span></div><br>');
       });
       stream.on('end', function() {
         res.end();
