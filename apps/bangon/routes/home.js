@@ -401,8 +401,8 @@ exports.dashboardDetailVisits = function(req, res) {
       var stream = collection.find().stream();
 
       stream.on('data', function(doc) {
-        //res.write(JSON.stringify(doc));
-        res.write(doc._id.getTimestamp().toISOString() + " : " + doc.fbid.toString() + "\r\n");
+        var fbid = doc.fbid.toString();
+        res.write(doc._id.getTimestamp().toISOString() + ' : ' + '<a href="dashboard/detail/users/' + fbid + '">' + fbid + '<img src="http://graph.facebook.com/' + fbid + '/picture?type=small"></img></a>\r\n');
       });
       stream.on('end', function() {
         res.end();
