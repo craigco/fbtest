@@ -26,8 +26,7 @@
     "express": "*",
     "ejs": "*",
     "step": "0.0.5",
-    "mongodb": "*",
-    "render": "*"
+    "mongodb": "*"
   },
   "devDependencies": {
     "nock": "~0.17.2",

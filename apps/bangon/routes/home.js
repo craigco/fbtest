@@ -4,7 +4,6 @@ var FB              = require('../../../fb'),
 
     config          = require('../config'),
     tracking        = require('./tracking'),
-    render          = require('render'),
     MongoDBProvider = require('../mongodbprovider').MongoDBProvider;
 
 FB.options({
@@ -383,7 +382,7 @@ exports.dashboardDetailUsersSpecific = function(req, res) {
       } else {
         res.writeHead(200, {'Content-type' : 'text/html'});
         res.write('<img src="http://graph.facebook.com/' + req.params.fbid + '/picture?type=large"></img><br>');
-        res.write(render.ctbn(result));
+        res.write(JSON.stringify(result, null, 4));
         res.end();
       }
     }
