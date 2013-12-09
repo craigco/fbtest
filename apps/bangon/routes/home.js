@@ -361,29 +361,13 @@ exports.dashboardDetailUsers = function(req, res) {
 
       stream.on('data', function(doc) {
         var fbid = doc.fb.id.toString();
-        res.write('<div><<span><a href="/dashboard/detail/users/' + fbid + '"><img style="vertical-align:middle" src="http://graph.facebook.com/' + fbid + '/picture?type=large"></img></a></span><span>' + doc.fb.name + '</span></div><br>');
+        res.write('<div><span><a href="/dashboard/detail/users/' + fbid + '"><img style="vertical-align:middle" src="http://graph.facebook.com/' + fbid + '/picture?type=large"></img></a></span><span>' + doc.fb.name + '</span></div><br>');
       });
       stream.on('end', function() {
         res.end();
       });
     }
   });
-  /*Step(
-    function getAllUsers() {
-      mongodbprovider.findAll("users", this);
-    },
-    function showDashboardDetail(error, results) {
-      if (error) {
-        console.log(error);
-        throw(error);
-      } else {
-        res.render('dashboard_detailusers', {
-        title: 'bang.on',
-        users: results
-        });
-      }
-    }
-  );*/
 };
 
 
