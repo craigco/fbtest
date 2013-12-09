@@ -326,6 +326,8 @@ exports.dashboard = function(req, res) {
         throw(error);
       } else {
         numUsers = collection.count();
+
+        console.log(numUsers);
       }
 
       mongodbprovider.getCollection("sitevisits", this);
@@ -336,6 +338,7 @@ exports.dashboard = function(req, res) {
         throw(error);
       } else {
         numVisits = collection.count();
+        console.log(numVisits);
       }
 
       res.render('dashboard', {
