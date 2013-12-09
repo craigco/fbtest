@@ -4,6 +4,7 @@ var FB              = require('../../../fb'),
 
     config          = require('../config'),
     tracking        = require('./tracking'),
+    prettyjson      = require('prettyjson'),
     MongoDBProvider = require('../mongodbprovider').MongoDBProvider;
 
 FB.options({
