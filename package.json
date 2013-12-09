@@ -27,7 +27,7 @@
     "ejs": "*",
     "step": "0.0.5",
     "mongodb": "*",
-    "prettyjson": "*"
+    "render": "*"
   },
   "devDependencies": {
     "nock": "~0.17.2",
