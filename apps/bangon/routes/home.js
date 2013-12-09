@@ -397,9 +397,17 @@ exports.dashboardDetailVisits = function(req, res) {
     } else {
       res.writeHead(200, {'Content-type' : 'text/plain'});
 
-      var cursor = collection.find();
+      //var cursor = collection.find();
+      var stream = collection.find().streamRecords();
 
-      cursor.each(function(err, doc) {
+      stream.on('data', function(item) {
+        res.write(JSON.stringify(item));
+      });
+      stream.on('end', function() {
+        res.end();
+      });
+
+      /*cursor.each(function(err, doc) {
         if (err) {
           console.log(err);
           throw(err);
@@ -412,7 +420,7 @@ exports.dashboardDetailVisits = function(req, res) {
         }
       });
 
-      res.end();
+      res.end();*/
     }
   });
 };
