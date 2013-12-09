@@ -355,12 +355,12 @@ exports.dashboardDetailUsers = function(req, res) {
       throw(error);
     } else {
       res.writeHead(200, {'Content-type' : 'text/html'});
-
+      res.write('<h2>Registered Users</h2>');
       //var cursor = collection.find();
       var stream = collection.find().stream();
 
       stream.on('data', function(doc) {
-        var fbid = doc.fbid.toString();
+        var fbid = doc.fb.id.toString();
         res.write('<div><span>' +doc.fb.name + ' : ' + '<a href="/dashboard/detail/users/' + fbid + '">' + fbid + '</span><span><img style="vertical-align:middle" src="http://graph.facebook.com/' + fbid + '/picture?type=large"></img></a></span></div><br>');
       });
       stream.on('end', function() {
