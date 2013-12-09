@@ -349,8 +349,26 @@ exports.dashboard = function(req, res) {
 
 
 exports.dashboardDetailUsers = function(req, res) {
+  mongodbprovider.getCollection("users", function(error, collection) {
+    if (error) {
+      console.log(error);
+      throw(error);
+    } else {
+      res.writeHead(200, {'Content-type' : 'text/html'});
 
-  Step(
+      //var cursor = collection.find();
+      var stream = collection.find().stream();
+
+      stream.on('data', function(doc) {
+        var fbid = doc.fbid.toString();
+        res.write('<div><span>' +doc.fb.name + ' : ' + '<a href="/dashboard/detail/users/' + fbid + '">' + fbid + '</span><span><img style="vertical-align:middle" src="http://graph.facebook.com/' + fbid + '/picture?type=large"></img></a></span></div><br>');
+      });
+      stream.on('end', function() {
+        res.end();
+      });
+    }
+  });
+  /*Step(
     function getAllUsers() {
       mongodbprovider.findAll("users", this);
     },
@@ -365,7 +383,7 @@ exports.dashboardDetailUsers = function(req, res) {
         });
       }
     }
-  );
+  );*/
 };
 
 
