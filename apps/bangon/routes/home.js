@@ -318,24 +318,24 @@ exports.dashboard = function(req, res) {
 
   Step(
     function getAllUsers() {
-      mongodbprovider.findAll("users", this);
+      mongodbprovider.getCollection("users", this);
     },
-    function findSiteVisits(error, results) {
+    function findSiteVisits(error, collection) {
       if (error) {
         console.log(error);
         throw(error);
       } else {
-        numUsers = results.length;
+        numUsers = collection.count();
       }
 
-      mongodbprovider.findAll("sitevisits", this);
+      mongodbprovider.getCollection("sitevisits", this);
     },
-    function showDashboard(error, results) {
+    function showDashboard(error, collection) {
       if (error) {
         console.log(error);
         throw(error);
       } else {
-        numVisits = results.length;
+        numVisits = collection.count();
       }
 
       res.render('dashboard', {
