@@ -400,8 +400,9 @@ exports.dashboardDetailVisits = function(req, res) {
       //var cursor = collection.find();
       var stream = collection.find().stream();
 
-      stream.on('data', function(item) {
-        res.write(JSON.stringify(item));
+      stream.on('data', function(doc) {
+        //res.write(JSON.stringify(doc));
+        res.write(doc._id.getTimestamp().toISOString() + " : " + doc.fbid.toString() + "<br>");
       });
       stream.on('end', function() {
         res.end();
