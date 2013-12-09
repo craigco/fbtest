@@ -395,19 +395,15 @@ exports.dashboardDetailVisits = function(req, res) {
       console.log(error);
       throw(error);
     } else {
-      collection.find({}, function(err, resultCursor) {
-        function processItem(err, item) {
-          if (item === null) {
-            res.end();
-            return;
-          }
+      collection.find({}, function(err, cursor) {
+        res.writeHead(200, {'Content-type' : 'text/plain'});
 
-          res.write(resultCursor._id.getTimestamp().toISOString() + " : " + resultCursor.fbid.toString());
+        cursor.each(function(err, item) {
+          res.write(item._id.getTimestamp().toISOString() + " : " + item.fbid.toString());
+        });
 
-          resultCursor.nextObject(processItem);
-        }
+        res.end();
 
-        resultCursor.nextObject(processItem);
       });
     }
   });
