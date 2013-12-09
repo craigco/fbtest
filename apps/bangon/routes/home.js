@@ -361,7 +361,7 @@ exports.dashboardDetailUsers = function(req, res) {
 
       stream.on('data', function(doc) {
         var fbid = doc.fb.id.toString();
-        res.write('<div><span>' +doc.fb.name + ' : ' + '<a href="/dashboard/detail/users/' + fbid + '">' + fbid + '</span><span><img style="vertical-align:middle" src="http://graph.facebook.com/' + fbid + '/picture?type=large"></img></a></span></div><br>');
+        res.write('<div><<span><a href="/dashboard/detail/users/' + fbid + '"><img style="vertical-align:middle" src="http://graph.facebook.com/' + fbid + '/picture?type=large"></img></a></span><span>' + doc.fb.name + '</span></div><br>');
       });
       stream.on('end', function() {
         res.end();
