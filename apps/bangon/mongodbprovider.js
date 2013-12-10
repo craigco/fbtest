@@ -29,7 +29,7 @@ MongoDBProvider.prototype.getActiveCollection = function(callback) {
 };
 
 MongoDBProvider.prototype.getCollectionCount = function(collectionToCount, callback) {
-  database.collection(collectionToGet, function(error, collection) {
+  database.collection(collectionToCount, function(error, collection) {
     if (error) {
       console.log(error);
       callback(error);
