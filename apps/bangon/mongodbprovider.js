@@ -28,6 +28,10 @@ MongoDBProvider.prototype.getActiveCollection = function(callback) {
   }
 };
 
+MongoDBProvider.prototype.db = function() {
+  return database;
+};
+
 MongoDBProvider.prototype.getCollection = function(collectionToGet, callback) {
   database.collection(collectionToGet, function(error, collection) {
     if (error) {

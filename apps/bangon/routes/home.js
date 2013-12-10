@@ -313,8 +313,11 @@ exports.invitefriendsCallback = function (req, res) {
 };
 
 exports.dashboard = function(req, res) {
-  var numUsers;
-  var numVisits;
+  var numUsers = mongodbprovider.db.users.count();
+  var numVisits = mongodbprovider.db.sitevisits.count();
+
+  console.log(numUsers);
+  console.log(numVisits);
 
   Step(
     function getAllUsers() {
