@@ -28,8 +28,17 @@ MongoDBProvider.prototype.getActiveCollection = function(callback) {
   }
 };
 
-MongoDBProvider.prototype.db = function() {
-  return database;
+MongoDBProvider.prototype.getCollectionCount = function(collectionToCount, callback) {
+  database.collection(collectionToGet, function(error, collection) {
+    if (error) {
+      console.log(error);
+      callback(error);
+    } else {
+      collection.find().count(function (e, count) {
+        callback(e, count);
+      });
+    }
+  });
 };
 
 MongoDBProvider.prototype.getCollection = function(collectionToGet, callback) {

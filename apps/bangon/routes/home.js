@@ -313,34 +313,31 @@ exports.invitefriendsCallback = function (req, res) {
 };
 
 exports.dashboard = function(req, res) {
-  var numUsers = mongodbprovider.db.users.count();
-  var numVisits = mongodbprovider.db.sitevisits.count();
-
-  console.log(numUsers);
-  console.log(numVisits);
+  var numUsers;
+  var numVisits;
 
   Step(
     function getAllUsers() {
-      mongodbprovider.getCollection("users", this);
+      mongodbprovider.getCollectionCount("users", this);
     },
-    function findSiteVisits(error, collection) {
+    function findSiteVisits(error, count) {
       if (error) {
         console.log(error);
         throw(error);
       } else {
-        numUsers = collection.count();
+        numUsers = count;
 
         console.log(numUsers);
       }
 
-      mongodbprovider.getCollection("sitevisits", this);
+      mongodbprovider.getCollectionCount("sitevisits", this);
     },
-    function showDashboard(error, collection) {
+    function showDashboard(error, count) {
       if (error) {
         console.log(error);
         throw(error);
       } else {
-        numVisits = collection.count();
+        numVisits = count;
         console.log(numVisits);
       }
 
