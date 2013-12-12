@@ -62,7 +62,7 @@
       $('#invitefriends_button').on('click', function(e) {
         FB.ui({method: 'apprequests',
         title: 'Join bang.on with me!',
-        message: 'I just joined bang.on, we help domestic helpers find employers and there are no fees. Join and please help us help you... tell your friends & bang.on'
+        message: 'I just joined bang.on, We help helpers find employers with no fees, sign up!'
         }, function(res) {
           var numInvites = 0;
           if (res && res.request && res.to) {
