@@ -100,8 +100,8 @@
     $('#nationality li').on('click', function() {
       var value = $(this).find('a').html();
       $('#nationalityTitle').html(value);
-      $('#input-nationality').value = value;
-    });
+      $('input:hidden[name="input-nationality"]').val(value);
+     });
 
     $('#age li').on('click', function() {
       $('#ageTitle').html($(this).find('a').html());
