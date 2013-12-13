@@ -1,0 +1,85 @@
+<div class="row-fluid span12">
+  <div class="span2 text-center">
+      <img src=<%- user_profile_url_140x140 %> class="img-polaroid" alt="Profile Image">
+      <h4><%- user_first_name%> <%-user_last_name%></h4>
+  </div>
+  <div class="span9">
+    <form class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="nationality">Nationality:</label>
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" id="nationality" href="#">
+            <span id="nationalityTitle">Select</span> <span class="caret"></span>
+          </a>
+          <ul id="nationality" class="dropdown-menu">
+            <li><a>Filipino</a></li>
+            <li><a>Indian</a></li>
+            <li><a>Indonesian</a></li>
+            <li><a>Nepalese</a></li>
+            <li><a>Thai</a></li>
+            <li><a>Sri Lankan</a></li>
+            <li><a>Other</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="age">Age:</label>
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" id="age" href="#">
+            <span id="ageTitle">Select</span> <span class="caret"></span>
+          </a>
+          <ul id="age" class="dropdown-menu">
+            <li><a>20-29</a></li>
+            <li><a>30-39</a></li>
+            <li><a>40-49</a></li>
+            <li><a>50+</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="age">Years in HK:</label>
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" id="yearsInHK" href="#">
+            <span id="yearsInHKTitle">Select</span> <span class="caret"></span>
+          </a>
+          <ul id="yearsInHK" class="dropdown-menu">
+            <li><a>Less than a year</a></li>
+            <li><a>1-5</a></li>
+            <li><a>6-10</a></li>
+            <li><a>11-15</a></li>
+            <li><a>16-20</a></li>
+            <li><a>20+</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="maritalStatus">Marital Status:</label>
+        <div class="btn-group">
+          <a class="btn dropdown-toggle" data-toggle="dropdown" id="maritalStatus" href="#">
+            <span id="maritalStatusTitle">Select</span> <span class="caret"></span>
+          </a>
+          <ul id="maritalStatus" class="dropdown-menu">
+            <li><a>Single</a></li>
+            <li><a>Engaged</a></li>
+            <li><a>Married</a></li>
+            <li><a>Separated</a></li>
+            <li><a>Divorced</a></li>
+            <li><a>Windowed</a></li>
+            <li><a>Other</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="control-group">
+        <label class="control-label" for="children">Children:</label>
+        <div class="make-switch" id="children" data-on-label="yes" data-off-label="no">
+          <input type="checkbox" checked="false">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+

@@ -92,26 +92,54 @@ exports.indexPost = function (req, res) {
       title: 'bang.on'
     });
   } else {
+    var userInfo;
+
     Step(
       function getUserDataFromGraphAPI() {
         FB.napi('/me', 'get', { access_token: accessToken }, this);
       },
-      function renderView(err, result) {
-        if (err) throw(err);
+      function checkForProfile(err, meAPIResult) {
+        if (err) {
+          throw(err);
+        }
 
-        res.render('signedup', {
-          title: 'bang.on',
-          user_first_name: result.first_name,
-          user_last_name: result.last_name,
-          appID: config.facebook.appId,
-          uid: result.id
-        });
+        userInfo = meAPIResult;
 
-        tracking.logReturningUser(result.id, function(error) {
-         if (error) {
-           throw(error);
-         }
-        });
+        mongodbprovider.find( { "fb.id": meAPIResult.id }, "users", this);
+      },
+      function getProfileInformationOrRenderView(error, result) {
+        if (error) {
+          console.log(error);
+          throw(error);
+        } else {
+          if (result.profile == null) {
+            // no profile
+            console.log("redirecting " + userInfo.id + " to get profile information");
+
+            res.render('createprofile', {
+              title: 'bang.on',
+              user_first_name: userInfo.first_name,
+              user_last_name: userInfo.last_name,
+              appID: config.facebook.appId,
+              uid: userInfo.id
+            });
+
+          } else {
+            res.render('signedup', {
+              title: 'bang.on',
+              user_first_name: userInfo.first_name,
+              user_last_name: userInfo.last_name,
+              appID: config.facebook.appId,
+              uid: userInfo.id
+            });
+
+            tracking.logReturningUser(userInfo.id, function(error) {
+              if (error) {
+                throw(error);
+              }
+            });
+          }
+        }
       }
     );
   }
