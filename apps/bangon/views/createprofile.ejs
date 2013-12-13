@@ -104,15 +104,21 @@
      });
 
     $('#age li').on('click', function() {
-      $('#ageTitle').html($(this).find('a').html());
+      var value = $(this).find('a').html();
+      $('#ageTitle').html(value);
+      $('#input-age').val(value);
     });
 
     $('#yearsInHK li').on('click', function() {
-      $('#yearsInHKTitle').html($(this).find('a').html());
+      var value = $(this).find('a').html();
+      $('#yearsInHKTitle').html(value);
+      $('#input-yearsInHK').val(value);
     });
 
     $('#maritalStatus li').on('click', function() {
+      var value = $(this).find('a').html();
       $('#maritalStatusTitle').html($(this).find('a').html());
+      $('#input-maritalStatus').val(value);
     });
 
     $('#visaSituation li').on('click', function() {
