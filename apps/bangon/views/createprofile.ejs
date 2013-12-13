@@ -29,21 +29,6 @@
   <section id="wizard">
     <form class="form-horizontal" name="formSignUp" action="http://localhost:3000/signup" method="POST">
       <div id="rootwizard">
-        <div class="navbar" style="visibility:hidden; height:1px;">
-          <div class="navbar-inner">
-            <div class="container">
-              <ul>
-                <li><a href="#basicInfo" data-toggle="tab">Basic Info</a></li>
-                <li><a href="#languages" data-toggle="tab">Languages</a></li>
-                <li><a href="#care" data-toggle="tab">Care</a></li>
-                <li><a href="#cooking" data-toggle="tab">Cooking</a></li>
-                <li><a href="#visa" data-toggle="tab">Visa</a></li>
-                <li><a href="#complete" data-toggle="tab">Complete</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
         <div id="bar" class="progress progress-striped active" style="height:7px;">
           <div class="bar"></div>
         </div>
@@ -71,6 +56,21 @@
           </div>
           <div class="tab-pane" id="complete">
             <%- include complete %>
+          </div>
+
+          <div class="navbar" style="visibility:hidden; height:1px;">
+            <div class="navbar-inner">
+              <div class="container">
+                <ul>
+                  <li><a href="#basicInfo" data-toggle="tab">Basic Info</a></li>
+                  <li><a href="#languages" data-toggle="tab">Languages</a></li>
+                  <li><a href="#care" data-toggle="tab">Care</a></li>
+                  <li><a href="#cooking" data-toggle="tab">Cooking</a></li>
+                  <li><a href="#visa" data-toggle="tab">Visa</a></li>
+                  <li><a href="#complete" data-toggle="tab">Complete</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
