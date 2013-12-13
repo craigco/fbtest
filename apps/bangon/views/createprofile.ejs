@@ -15,7 +15,8 @@
   <div id="fb-root"></div>
 
   <!-- Main menu page -->
-  <h2>Hello <%- user_first_name %>, please answer these questions to set up a profile</h2>
+  <h2>Hello <%- user_first_name %></h2>
+  <h4>Please answer these questions to set up a profile</h4>
   <div class='container'>
     <div class="span12">
       <section id="wizard">
@@ -74,7 +75,48 @@
     </div>
   </div>
 
+  <%- include js-common %>
+  <script src="twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+  <script src="formhelpers/js/bootstrap-formhelpers.min.js"></script>
+  <script src="bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <script src="bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+  <script src="js/main.js"></script>
 
+  <script>
+
+    $(document).ready(function(){
+
+      $('#rootwizard').bootstrapWizard({onTabShow: function(tab, navigation, index) {
+        var $total = navigation.find('li').length;
+        var $current = index+1;
+        var $percent = ($current/$total) * 100;
+        $('#rootwizard').find('.bar').css({width:$percent+'%'});
+      }});
+
+      $('.multiselect').multiselect();
+    });
+
+    $('#nationality li').on('click', function() {
+      $('#nationalityTitle').html($(this).find('a').html());
+    });
+
+    $('#age li').on('click', function() {
+      $('#ageTitle').html($(this).find('a').html());
+    });
+
+    $('#yearsInHK li').on('click', function() {
+      $('#yearsInHKTitle').html($(this).find('a').html());
+    });
+
+    $('#maritalStatus li').on('click', function() {
+      $('#maritalStatusTitle').html($(this).find('a').html());
+    });
+
+    $('#visaSituation li').on('click', function() {
+      $('#visaSituationTitle').html($(this).find('a').html());
+    });
+
+  </script>
 
   </body>
 </html>
