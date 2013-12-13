@@ -152,6 +152,12 @@ exports.indexGet = function (req, res) {
     });
 };
 
+
+exports.createProfile = function (req, res) {
+  console.log(req.body);
+  res.end();
+};
+
 exports.loginCallback = function (req, res, next) {
   //console.log('loginCallback');
   var code            = req.query.code;
