@@ -20,10 +20,10 @@
   <h4>Please answer these questions to set up a profile</h4>
   <section id="wizard">
     <form class="form-horizontal" name="formSignUp" action="http://localhost:3000/signup" method="POST">
-      <div id="rootwizard">
+      <div id="rootwizard" style="visibility:hidden;">
         <div class="navbar">
           <div class="navbar-inner">
-            <div class="container" style="visibility:hidden;">
+            <div class="container">
               <ul>
                 <li><a href="#basicInfo" data-toggle="tab">Basic Info</a></li>
                 <li><a href="#languages" data-toggle="tab">Languages</a></li>
@@ -36,8 +36,8 @@
           </div>
         </div>
 
-        <div id="bar" class="progress progress-striped active" style="height:20px;">
-          <div class="bar"></div>
+        <div id="bar" class="progress progress-striped active">
+          <div class="bar" style="height:20px;"></div>
         </div>
 
         <ul class="pager wizard">
