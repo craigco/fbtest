@@ -121,7 +121,7 @@
       $('#input-maritalStatus').val(value);
     });
 
-    $('#checkboxChildren').on('click', function() {
+    $('#checkboxChildren').on('change', function() {
         $('#input-children').val( $(this).is(':checked') ? 'yes' : 'no' );
     });
 
