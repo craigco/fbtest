@@ -116,13 +116,20 @@ exports.indexPost = function (req, res) {
             // no profile
             console.log("redirecting " + userInfo.id + " to get profile information");
 
-            res.render('createprofile', {
+            res.render('signedup', {
               title: 'bang.on',
               user_first_name: userInfo.first_name,
               user_last_name: userInfo.last_name,
               appID: config.facebook.appId,
               uid: userInfo.id
             });
+            /*res.render('createprofile', {
+              title: 'bang.on',
+              user_first_name: userInfo.first_name,
+              user_last_name: userInfo.last_name,
+              appID: config.facebook.appId,
+              uid: userInfo.id
+            });*/
 
           } else {
             res.render('signedup', {
