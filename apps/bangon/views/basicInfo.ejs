@@ -55,7 +55,7 @@
 
       <div class="control-group">
         <input type="hidden" id="input-maritalStatus" value="" name="marital_status" />
-          <label class="control-label" for="maritalStatus">Marital Status:</label>
+        <label class="control-label" for="maritalStatus">Marital Status:</label>
         <div class="btn-group">
           <a class="btn dropdown-toggle" data-toggle="dropdown" id="maritalStatus" href="#">
             <span id="maritalStatusTitle">Select</span> <span class="caret"></span>
@@ -73,9 +73,10 @@
       </div>
 
       <div class="control-group">
+        <input type="hidden" id="input-children" value="no" name="children" />
         <label class="control-label" for="children">Children:</label>
         <div class="make-switch" id="children" data-on-label="yes" data-off-label="no">
-          <input type="checkbox" checked="false">
+          <input id="checkboxChildren" type="checkbox" checked="false">
         </div>
       </div>
   </div>

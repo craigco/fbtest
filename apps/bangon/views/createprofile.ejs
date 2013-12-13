@@ -121,6 +121,10 @@
       $('#input-maritalStatus').val(value);
     });
 
+    $('#checkboxChildren').on('click', function() {
+        $('#input-children').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
     $('#visaSituation li').on('click', function() {
       $('#visaSituationTitle').html($(this).find('a').html());
     });
