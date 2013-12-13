@@ -14,17 +14,62 @@
   <!-- Facebook JavaScript -->
   <div id="fb-root"></div>
 
-  !-- Main menu page -->
+  <!-- Main menu page -->
+  <h2>Hello <%- user_first_name %>, please answer these questions to set up a profile</h2>
   <div class='container'>
     <div class="span12">
       <section id="wizard">
         <div class="page-header">
-          <img src="images/logos/bang.on_100w.png">
+          <img src="images/logos/bang.on_128x128.png">
         </div>
 
-        <h2>Hello <%- user_first_name %>, please answer these questions to set up a profile</h2>
+        <form class="form-horizontal" name="formSignUp" action="http://localhost:3000/signup" method="POST">
+          <div id="rootwizard">
+            <div class="navbar">
+              <div class="navbar-inner">
+                <div class="container">
+                  <ul>
+                    <li><a href="#basicInfo" data-toggle="tab">Basic Info</a></li>
+                    <li><a href="#languages" data-toggle="tab">Languages</a></li>
+                    <li><a href="#care" data-toggle="tab">Care</a></li>
+                    <li><a href="#cooking" data-toggle="tab">Cooking</a></li>
+                    <li><a href="#visa" data-toggle="tab">Visa</a></li>
+                    <li><a href="#complete" data-toggle="tab">Complete</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
 
+            <div id="bar" class="progress progress-striped active">
+              <div class="bar"></div>
+            </div>
 
+            <div class="tab-content">
+              <div class="tab-pane" id="basicInfo">
+                <%- include basicInfo %>
+              </div>
+              <div class="tab-pane" id="languages">
+                <%- include languages %>
+              </div>
+              <div class="tab-pane" id="care">
+                <%- include care %>
+              </div>
+              <div class="tab-pane" id="cooking">
+                <%- include cooking %>
+              </div>
+              <div class="tab-pane" id="visa">
+                <%- include visa %>
+              </div>
+              <div class="tab-pane" id="complete">
+                <%- include complete %>
+              </div>
+              <ul class="pager wizard">
+                <li class="previous"><a href="#">Previous</a></li>
+                <li class="next"><a href="#">Next</a></li>
+              </ul>
+            </div>
+          </div>
+        </form>
       </section>
     </div>
   </div>
