@@ -15,8 +15,16 @@
   <div id="fb-root"></div>
 
   <!-- Main menu page -->
-  <img src="images/logos/bang.on_128x128.png">
-  <h2>Hello <%- user_first_name %></h2>
+  <div class="container">
+    <div class="row">
+      <div class="span6">
+        <img src="images/logos/bang.on_128x128.png">
+      </div>
+      <div class="span6">
+        <h2>Hello <%- user_first_name %></h2>
+      </div>
+    </div>
+  </div>
   <h4>Please answer these questions to set up a profile</h4>
   <section id="wizard">
     <form class="form-horizontal" name="formSignUp" action="http://localhost:3000/signup" method="POST">
