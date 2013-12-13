@@ -23,7 +23,7 @@
       <div id="rootwizard">
         <div class="navbar">
           <div class="navbar-inner">
-            <div class="container">
+            <div class="container" style="visibility:hidden;">
               <ul>
                 <li><a href="#basicInfo" data-toggle="tab">Basic Info</a></li>
                 <li><a href="#languages" data-toggle="tab">Languages</a></li>
@@ -36,7 +36,7 @@
           </div>
         </div>
 
-        <div id="bar" class="progress progress-striped active">
+        <div id="bar" class="progress progress-striped active" style="height:20px;">
           <div class="bar"></div>
         </div>
 
@@ -45,7 +45,7 @@
           <li class="next"><a href="#">Next</a></li>
         </ul>
 
-        <div class="tab-content"  style="height:500px;">
+        <div class="tab-content"  style="height:530px;">
           <div class="tab-pane" id="basicInfo">
             <%- include basicInfo %>
           </div>
