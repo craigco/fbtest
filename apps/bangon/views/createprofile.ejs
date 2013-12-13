@@ -98,7 +98,9 @@
     });
 
     $('#nationality li').on('click', function() {
-      $('#nationalityTitle').html($(this).find('a').html());
+      var value = $(this).find('a').html();
+      $('#nationalityTitle').html(value);
+      $('#input-nationality').value = value;
     });
 
     $('#age li').on('click', function() {
