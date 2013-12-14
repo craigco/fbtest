@@ -163,8 +163,10 @@ exports.createProfile = function (req, res) {
         throw(err);
       }
 
+      var formData = JSON.parse(req.body);
+
       var newProfile = {
-        "profile" : JSON.stringify(req.body.slice(1, req.body.length))
+        "profile" : JSON.stringify(formData.slice(1, formData.length))
       };
 
       console.log(newProfile);
