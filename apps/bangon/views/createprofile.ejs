@@ -125,6 +125,27 @@
         $('#input-children').val( $(this).is(':checked') ? 'yes' : 'no' );
     });
 
+    // languages
+    $('#checkboxEnglish').on('change', function() {
+        $('#input-english').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxCantonese').on('change', function() {
+        $('#input-cantonese').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxMandarin').on('change', function() {
+        $('#input-mandarin').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxArabic').on('change', function() {
+        $('#input-arabic').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxOther').on('change', function() {
+        $('#input-other').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
     $('#visaSituation li').on('click', function() {
       $('#visaSituationTitle').html($(this).find('a').html());
     });
