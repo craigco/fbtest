@@ -164,7 +164,7 @@ exports.createProfile = function (req, res) {
       }
 
       var newProfile = {
-        "profile" : JSON.stringify(req.body.slice(1, req.body.lenth()))
+        "profile" : JSON.stringify(req.body.slice(1, req.body.length))
       };
 
       console.log(newProfile);
