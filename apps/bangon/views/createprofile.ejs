@@ -125,6 +125,7 @@
         $('#input-children').val( $(this).is(':checked') ? 'yes' : 'no' );
     });
 
+
     // languages
     $('#checkboxEnglish').on('change', function() {
         $('#input-english').val( $(this).is(':checked') ? 'yes' : 'no' );
@@ -144,6 +145,20 @@
 
     $('#checkboxOther').on('change', function() {
         $('#input-other').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+
+    // care
+    $('#childExperience').on('change', function() {
+        $('#input-childExperience').val($(this).val());
+    });
+
+    $('#checkboxElderly').on('change', function() {
+        $('#input-elderly').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxPets').on('change', function() {
+        $('#input-pets').val( $(this).is(':checked') ? 'yes' : 'no' );
     });
 
     $('#visaSituation li').on('click', function() {
