@@ -164,6 +164,8 @@ exports.createProfile = function (req, res) {
       }
 
       var keys = Object.keys(req.body);
+      // remove the id element
+      keys = keys.slice(1, keys.length());
       console.log(JSON.stringify(keys));
 
       /*var formData = JSON.parse(req.body);
