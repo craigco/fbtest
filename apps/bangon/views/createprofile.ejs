@@ -27,7 +27,7 @@
   </div>
   <h4>Please answer these questions to set up a profile</h4>
   <section id="wizard">
-    <form class="form-horizontal" name="formSignUp" action="https://bangon.herokuapp.com/createprofile" method="POST">
+    <form class="form-horizontal" id="formCreateProfile" name="formSignUp" action="https://bangon.herokuapp.com/createprofile" method="POST">
       <input type="hidden" id="input-id" value="<%- uid %>" name="id" />
       <div id="rootwizard">
         <div class="navbar" style="display:none; visibility:hidden; height:40px;">
@@ -39,7 +39,6 @@
                 <li><a href="#care" data-toggle="tab">Care</a></li>
                 <li><a href="#cooking" data-toggle="tab">Cooking</a></li>
                 <li><a href="#visa" data-toggle="tab">Visa</a></li>
-                <li><a href="#complete" data-toggle="tab">Complete</a></li>
               </ul>
             </div>
           </div>
@@ -68,9 +67,6 @@
           </div>
           <div class="tab-pane" id="visa">
             <%- include visa %>
-          </div>
-          <div class="tab-pane" id="complete">
-            <%- include complete %>
           </div>
         </div>
       </div>
@@ -117,7 +113,9 @@
             bootbox.alert('Please select your visa situation');
             $('#input-visaSituation').focus();
             return false;
-            }
+          } else {
+            $('#formCreateProfile').submit();
+          }
         }
       }, onTabShow: function(tab, navigation, index) {
         var $total = navigation.find('li').length;
