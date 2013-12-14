@@ -154,6 +154,23 @@ exports.indexGet = function (req, res) {
 
 
 exports.createProfile = function (req, res) {
+  Step(
+    function getUserDocument() {
+      mongodbprovider.find( { "fb.id": req.body.id }, "users", this);
+    },
+    function insertDataIntoUserDocument(err, result) {
+      if (err) {
+        throw(err);
+      }
+
+      var newProfile = {
+        "profile" : JSON.stringify(req.body.slice(1, req.body.lenth()))
+      };
+
+      console.log(newProfile);
+    }
+  );
+  console.log("");
   console.log(req.body);
   res.end();
 };
