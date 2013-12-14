@@ -169,7 +169,9 @@ exports.createProfile = function (req, res) {
       var keys = Object.keys(req.body);
       // remove the id element
 
-      for (key in keys) {
+      for (index in keys) {
+        var key = keys[index];
+
         console.log(key);
         if (key == 'id') {
           continue;
