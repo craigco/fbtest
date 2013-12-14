@@ -163,10 +163,20 @@ exports.createProfile = function (req, res) {
         throw(err);
       }
 
+      var newProfile = {
+        "profile" : ""
+      }
       var keys = Object.keys(req.body);
       // remove the id element
-      keys = keys.slice(1, keys.length());
-      console.log(JSON.stringify(keys));
+
+      for (key in keys) {
+        if (key == 'id') {
+          continue;
+        }
+
+        newProfile.profile[key] = req.body[key];
+      }
+      console.log(JSON.stringify(newProfile));
 
       /*var formData = JSON.parse(req.body);
 
