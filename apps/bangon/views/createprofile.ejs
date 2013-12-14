@@ -112,6 +112,12 @@
             $('#input-maritalStatus').focus();
             return false;
           }
+        } else if (index == 5) {
+          if (!$('#input-visaSituation').val()) {
+            bootbox.alert('Please select your visa situation');
+            $('#input-visaSituation').focus();
+            return false;
+            }
         }
       }, onTabShow: function(tab, navigation, index) {
         var $total = navigation.find('li').length;
