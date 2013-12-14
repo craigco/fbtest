@@ -170,12 +170,15 @@ exports.createProfile = function (req, res) {
       // remove the id element
 
       for (key in keys) {
+        console.log(key);
         if (key == 'id') {
           continue;
         }
 
         newProfile.profile[key] = req.body[key];
+        console.log(newProfile.profile[key]);
       }
+
       console.log(JSON.stringify(newProfile));
 
       /*var formData = JSON.parse(req.body);
@@ -187,8 +190,7 @@ exports.createProfile = function (req, res) {
       console.log(newProfile);*/
     }
   );
-  console.log("");
-  console.log(req.body);
+
   res.end();
 };
 
