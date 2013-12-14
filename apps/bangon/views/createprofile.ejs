@@ -90,9 +90,27 @@
       $('#rootwizard').bootstrapWizard({onNext: function(tab, navigation, index) {
         if (index == 1) {
           if (!$('#input-nationality').val()) {
-             alert('Please select your nationality');
+             bootbox.alert('Please select your nationality');
              $('#input-nationality').focus();
              return false;
+          }
+
+          if (!$('#input-age').val()) {
+            bootbox.alert('Please select your age');
+            $('#input-age').focus();
+            return false;
+          }
+
+          if (!$('#input-yearsInHK').val()) {
+            bootbox.alert('Please select your years in Hong Kong');
+            $('#input-yearsInHK').focus();
+            return false;
+          }
+
+          if (!$('#input-maritalStatus').val()) {
+            bootbox.alert('Please select your marital status');
+            $('#input-maritalStatus').focus();
+            return false;
           }
         }
       }, onTabShow: function(tab, navigation, index) {
