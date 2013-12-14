@@ -28,6 +28,7 @@
   <h4>Please answer these questions to set up a profile</h4>
   <section id="wizard">
     <form class="form-horizontal" name="formSignUp" action="https://bangon.herokuapp.com/createprofile" method="POST">
+      <input type="hidden" id="input-id" value="<%- uid %>" name="id" />
       <div id="rootwizard">
         <div class="navbar" style="display:none; visibility:hidden; height:40px;">
           <div class="navbar-inner" style="visibility:hidden;">
@@ -161,8 +162,23 @@
         $('#input-pets').val( $(this).is(':checked') ? 'yes' : 'no' );
     });
 
+
+    // cooking
+    $('#checkboxCooking').on('change', function() {
+        $('#input-cooking').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#cookingStyles').on('change', function() {
+        $('#input-cookingStyles').val($(this).val());
+    });
+
+
+    // visa
+
     $('#visaSituation li').on('click', function() {
-      $('#visaSituationTitle').html($(this).find('a').html());
+      var value = $(this).find('a').html();
+      $('#visaSituationTitle').html(value);
+      $('#input-visaSituation').val(value);
     });
 
   </script>
