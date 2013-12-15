@@ -112,6 +112,7 @@ exports.indexPost = function (req, res) {
           console.log(error);
           throw(error);
         } else {
+          console.log(result);
           var dataDocument = JSON.parse(result);
 
           console.log(dataDocument.profile);
