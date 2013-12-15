@@ -96,4 +96,16 @@ MongoDBProvider.prototype.save = function(data, collection, callback) {
   });
 };
 
+MongoDBProvider.prototype.update = function(selector, collection, document, options, callback) {
+  this.getCollection(collection, function(error, collection) {
+    if (error) {
+      callback(error);
+    } else {
+      collection.update(selector, document, options, function() {
+        callback(null);
+      });
+    }
+  });
+};
+
 exports.MongoDBProvider = MongoDBProvider;

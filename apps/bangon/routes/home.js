@@ -168,18 +168,17 @@ exports.createProfile = function (req, res) {
       delete formData["id"];
 
       var newProfile = {
-        "profile" : formData
+        "profile" : formData.toLowerCase()
       }
 
-      console.log(newProfile);
+      mongodbprovider.update( { "fb.id": req.body.id }, "users", newProfile, null, this);
+    },
+    function profileCreated(err) {
+      if (err) {
+        throw (err);
+      }
 
-      /*var formData = JSON.parse(req.body);
-
-      var newProfile = {
-        "profile" : JSON.stringify(formData.slice(1, formData.length))
-      };
-
-      console.log(newProfile);*/
+      return res.redirect('/');
     }
   );
 
