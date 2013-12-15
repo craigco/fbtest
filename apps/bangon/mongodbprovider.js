@@ -89,10 +89,13 @@ MongoDBProvider.prototype.findOne = function(key, collection, callback) {
     if (error) {
       callback(error);
     } else {
-      var document = collection.findOne(key);
-
-      callback(null, document)
-
+      collection.findOne(key, function (err, document) {
+        if (error) {
+          callback(error);
+        } else {
+          callback(null, document);
+        }
+      });
     }
   });
 };
