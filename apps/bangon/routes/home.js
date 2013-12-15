@@ -105,14 +105,13 @@ exports.indexPost = function (req, res) {
 
         userInfo = meAPIResult;
 
-        mongodbprovider.find( { "fb.id": meAPIResult.id }, "users", this);
+        mongodbprovider.findOne( { "fb.id": meAPIResult.id }, "users", this);
       },
-      function getProfileInformationOrRenderView(error, result) {
+      function getProfileInformationOrRenderView(error, document) {
         if (error) {
           console.log(error);
           throw(error);
         } else {
-          var document = result.next();
           console.log(document);
           console.log(document.profile);
           if (result.profile == null) {

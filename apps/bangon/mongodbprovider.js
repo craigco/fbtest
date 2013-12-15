@@ -84,6 +84,22 @@ MongoDBProvider.prototype.find = function(key, collection, callback) {
   });
 };
 
+MongoDBProvider.prototype.findOne = function(key, collection, callback) {
+  this.getCollection(collection, function(error, collection) {
+    if (error) {
+      callback(error);
+    } else {
+      collection.findOne(key, null, function(error, document) {
+        if (error) {
+          callback(error)
+        } else {
+          callback(null, document)
+        }
+      });
+    }
+  });
+};
+
 MongoDBProvider.prototype.save = function(data, collection, callback) {
   this.getCollection(collection, function(error, collection) {
     if (error) {
