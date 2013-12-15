@@ -112,7 +112,9 @@ exports.indexPost = function (req, res) {
           console.log(error);
           throw(error);
         } else {
-          console.log(result.profile);
+          var dataDocument = JSON.parse(result);
+
+          console.log(dataDocument.profile);
           if (result.profile == null) {
             // no profile
             console.log("redirecting " + userInfo.id + " to get profile information");
