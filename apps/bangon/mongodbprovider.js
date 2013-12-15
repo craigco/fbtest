@@ -97,13 +97,16 @@ MongoDBProvider.prototype.save = function(data, collection, callback) {
 };
 
 MongoDBProvider.prototype.update = function(selector, collection, document, options, callback) {
+  console.log("update");
   this.getCollection(collection, function(error, collection) {
     if (error) {
       callback(error);
     } else {
-      collection.update(selector, document, options, function() {
-        callback(null);
-      });
+      console.log(selector);
+      console.log(document);
+      console.log(options);
+      collection.update(selector, document, options);
+      callback(null);
     }
   });
 };

@@ -178,7 +178,7 @@ exports.createProfile = function (req, res) {
         throw (err);
       }
 
-      return res.redirect('/');
+      return res.redirect('https://apps.facebook.com/bang-on');
     }
   );
 
