@@ -171,7 +171,7 @@ exports.createProfile = function (req, res) {
         "profile" : formData
       }
 
-      mongodbprovider.update( { "fb.id": id }, "users", newProfile, null, this);
+      mongodbprovider.update( { "fb.id": id }, "users", { $set: { profile: newProfile } }, null, this);
     },
     function profileCreated(err) {
       if (err) {
