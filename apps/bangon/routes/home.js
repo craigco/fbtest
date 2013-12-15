@@ -167,11 +167,7 @@ exports.createProfile = function (req, res) {
       var id = formData["id"];
       delete formData["id"];
 
-      var newProfile = {
-        "profile" : formData
-      }
-
-      mongodbprovider.update( { "fb.id": id }, "users", { $set: { profile: newProfile } }, null, this);
+      mongodbprovider.update( { "fb.id": id }, "users", { $set: { profile: formData } }, null, this);
     },
     function profileCreated(err) {
       if (err) {
@@ -181,8 +177,6 @@ exports.createProfile = function (req, res) {
       return res.redirect('https://apps.facebook.com/bang-on');
     }
   );
-
-  res.end();
 };
 
 exports.loginCallback = function (req, res, next) {
