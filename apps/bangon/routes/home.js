@@ -168,7 +168,7 @@ exports.createProfile = function (req, res) {
       delete formData["id"];
 
       var newProfile = {
-        "profile" : formData.toLowerCase()
+        "profile" : formData
       }
 
       mongodbprovider.update( { "fb.id": req.body.id }, "users", newProfile, null, this);
