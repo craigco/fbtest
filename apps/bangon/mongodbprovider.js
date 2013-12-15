@@ -73,7 +73,7 @@ MongoDBProvider.prototype.find = function(key, collection, callback) {
     if (error) {
       callback(error);
     } else {
-      collection.find(key, collection).toArray(function(error, results) {
+      collection.find(key, collection, function(error, results) {
         if (error) {
           callback(error)
         } else {
