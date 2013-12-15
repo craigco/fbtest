@@ -164,14 +164,14 @@ exports.createProfile = function (req, res) {
       }
 
       var formData = req.body;
-
+      var id = formData["id"];
       delete formData["id"];
 
       var newProfile = {
         "profile" : formData
       }
 
-      mongodbprovider.update( { "fb.id": req.body.id }, "users", newProfile, null, this);
+      mongodbprovider.update( { "fb.id": id }, "users", newProfile, null, this);
     },
     function profileCreated(err) {
       if (err) {
