@@ -119,6 +119,10 @@
             bootbox.alert('Please select your visa situation');
             $('#input-visaSituation').focus();
             return false;
+          } else if (!$('#input-contractEndDate').val()) {
+            bootbox.alert('Please enter your current contract end date');
+            $('#input-contractEndDate').focus();
+            return false;
           } else {
             $('#formCreateProfile').submit();
           }
