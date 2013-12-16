@@ -206,7 +206,7 @@ exports.loginCallback = function (req, res, next) {
 
   Step(
     function exchangeCodeForAccessToken() {
-      console.log("exchangeCodeForAccessToken");
+      //console.log("exchangeCodeForAccessToken");
       FB.napi('oauth/access_token', {
         client_id: FB.options('appId'),
         client_secret: FB.options('appSecret'),
@@ -215,7 +215,7 @@ exports.loginCallback = function (req, res, next) {
       }, this);
     },
     function extendAccessToken(err, result) {
-      console.log("extendAccessToken");
+      //console.log("extendAccessToken");
       if (err) throw(err);
       FB.napi('oauth/access_token', {
         client_id: FB.options('appId'),
@@ -225,7 +225,7 @@ exports.loginCallback = function (req, res, next) {
       }, this);
     },
     function getUserData(err, result) {
-      console.log("getUserData");
+      //console.log("getUserData");
       if (err) {
         throw(err);
       }
@@ -240,7 +240,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('/me', 'get', parameters, this);
     },
     function checkExtendedPermissions(err, result) {
-      console.log("checkExtendedPermissions");
+      //console.log("checkExtendedPermissions");
       if (err) {
         throw(err);
       }
@@ -384,7 +384,7 @@ exports.dashboard = function(req, res) {
       } else {
         numUsers = count;
 
-        console.log(numUsers);
+        //console.log(numUsers);
       }
 
       mongodbprovider.getCollectionCount("sitevisits", this);
@@ -395,7 +395,7 @@ exports.dashboard = function(req, res) {
         throw(error);
       } else {
         numVisits = count;
-        console.log(numVisits);
+        //console.log(numVisits);
       }
 
       res.render('dashboard', {

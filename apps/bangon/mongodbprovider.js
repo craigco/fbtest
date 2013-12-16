@@ -118,9 +118,9 @@ MongoDBProvider.prototype.update = function(selector, collection, document, opti
     if (error) {
       callback(error);
     } else {
-      console.log(selector);
-      console.log(document);
-      console.log(options);
+      //console.log(selector);
+      //console.log(document);
+      //console.log(options);
       collection.update(selector, document, options, function(err, result) {
         callback(err);
       });
