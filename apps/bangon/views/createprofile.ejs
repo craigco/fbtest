@@ -224,6 +224,8 @@
       $(".datepicker").datepicker({
         format:'dd/mm/yyyy',
         autoclose: true
+      }).on('changeDate', function(ev) {
+        $('#input-contractEndDate').val($(this).val());
       });
     });
 
