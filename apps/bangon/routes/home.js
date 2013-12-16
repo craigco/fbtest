@@ -174,7 +174,9 @@ exports.createProfile = function (req, res) {
         throw (err);
       }
 
-      return res.redirect('https://apps.facebook.com/bang-on');
+      res.send('<script>window.top.location="https://apps.facebook.com/bang-on?newSignup=1"</script>');
+
+      res.end();
     }
   );
 };
