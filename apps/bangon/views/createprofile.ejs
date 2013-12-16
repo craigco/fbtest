@@ -8,6 +8,7 @@
     <link rel="stylesheet"  href="formhelpers/css/bootstrap-formhelpers.min.css" />
     <link rel="stylesheet"  href="bootstrap-switch/stylesheets/bootstrap-switch.css" />
     <link rel="stylesheet"  href="bootstrap-multiselect/css/bootstrap-multiselect.css" />
+    <link rel="stylesheet"  href="bootstrap-datepicker/css/datepicker.css" />
 
   </head>
   <body>
@@ -83,6 +84,7 @@
   <script src="bootstrap-switch/js/bootstrap-switch.min.js"></script>
   <script src="bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
   <script src="js/main.js"></script>
+  <script src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 
   <script>
 
@@ -212,6 +214,13 @@
       var value = $(this).find('a').html();
       $('#visaSituationTitle').html(value);
       $('#input-visaSituation').val(value);
+    });
+
+    $(function() {
+      $(".datepicker").datepicker({
+        format:'dd/mm/yyyy',
+        autoclose: true
+      });
     });
 
   </script>

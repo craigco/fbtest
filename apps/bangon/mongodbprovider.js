@@ -119,7 +119,7 @@ MongoDBProvider.prototype.update = function(selector, collection, document, opti
       callback(error);
     } else {
       //console.log(selector);
-      //console.log(document);
+      console.log(document);
       //console.log(options);
       collection.update(selector, document, options, function(err, result) {
         callback(err);
