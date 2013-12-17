@@ -112,7 +112,11 @@ exports.indexPost = function (req, res) {
           console.log(error);
           throw(error);
         } else {
-          if (document.profile == null) {
+          if (document == null) {
+            // no entry
+            res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
+            return;
+          } else if (document.profile == null) {
             // no profile
             console.log("redirecting " + userInfo.id + " to get profile information");
 
@@ -182,8 +186,9 @@ exports.createProfile = function (req, res) {
 };
 
 exports.loginCallback = function (req, res, next) {
-  //console.log('loginCallback');
+  console.log('loginCallback');
   var code            = req.query.code;
+  console.log(code);
 
   if (req.query.error) {
     // user might have disallowed the app
