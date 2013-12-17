@@ -87,7 +87,7 @@ exports.indexPost = function (req, res) {
   }
 
   if (!accessToken) {
-    //console.log("!accessToken");
+    console.log("!accessToken");
     res.render('index', {
       title: 'bang.on'
     });
