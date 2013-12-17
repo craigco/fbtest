@@ -87,7 +87,7 @@ exports.indexPost = function (req, res) {
   }
 
   if (!accessToken) {
-    console.log("!accessToken");
+    //console.log("!accessToken");
     res.render('index', {
       title: 'bang.on'
     });
@@ -118,7 +118,7 @@ exports.indexPost = function (req, res) {
             return;
           } else if (document.profile == null) {
             // no profile
-            console.log("redirecting " + userInfo.id + " to get profile information");
+            //console.log("redirecting " + userInfo.id + " to get profile information");
 
             res.render('createprofile', {
               title: 'bang.on',
@@ -186,9 +186,9 @@ exports.createProfile = function (req, res) {
 };
 
 exports.loginCallback = function (req, res, next) {
-  console.log('loginCallback');
+  //console.log('loginCallback');
   var code            = req.query.code;
-  console.log(code);
+  //console.log(code);
 
   if (req.query.error) {
     // user might have disallowed the app
@@ -269,7 +269,7 @@ exports.loginCallback = function (req, res, next) {
 
       // if publish_actions permission is missing - go to login dialog
       if (!result.data[0] || !result.data[0].publish_actions || result.data[0].publish_actions == 0) {
-        console.log("publish_actions: " + result.data[0].publish_actions);
+        //console.log("publish_actions: " + result.data[0].publish_actions);
         req.session = null; // clear session
         return res.redirect('/');
       }
