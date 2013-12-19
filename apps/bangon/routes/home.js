@@ -27,9 +27,9 @@ exports.indexPost = function (req, res) {
   var accessToken;
 
   if (signedRequest) {
-    //console.log("signedRequest");
+    console.log("signedRequest");
     if (!signedRequest.oauth_token) {
-      //console.log("!oauth_token");
+      console.log("!oauth_token");
       // uninstalled user
       // log given user information
 
@@ -82,7 +82,8 @@ exports.indexPost = function (req, res) {
       });
     }
   } else {
-    //console.log("!signedRequest");
+    console.log("!signedRequest");
+
     accessToken = req.session.access_token;
     //console.log("accessToken= " + accessToken);
   }
@@ -121,6 +122,7 @@ exports.indexPost = function (req, res) {
             res.send("<script>window.top.location='" + FB.getLoginUrl({ scope: config.facebook.scope }) + "'</script>");
             return;
           } else if (document.profile == null) {
+
             // no profile
             //console.log("redirecting " + userInfo.id + " to get profile information");
 
