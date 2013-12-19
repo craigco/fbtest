@@ -13,13 +13,13 @@
     <!-- Facebook JavaScript -->
     <div id="fb-root"></div>
     <script>
-      FB.Event.subscribe('auth.statusChange', function(response) {
-        if (response.status == 'connected') {
-          console.log("FACEBOOK CONNECTED");
-        }
-      });
-
       window.fbAsyncInit = function() {
+        FB.Event.subscribe('auth.statusChange', function(response) {
+          if (response.status == 'connected') {
+            console.log("FACEBOOK CONNECTED");
+          }
+        });
+        
         // init the FB JS SDK
         FB.init({
           appId      : '<%- appID %>',                        // App ID from the app dashboard
