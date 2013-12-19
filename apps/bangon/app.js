@@ -9,6 +9,7 @@ var express       = require('express'),
 
     fb_api        = require('./routes/fb_api'),
     home          = require('./routes/home'),
+    mobile        = require('./routes/mobile'),
     tracking      = require('./routes/tracking');
 
 //    https         = require('https');
