@@ -54,6 +54,7 @@ app.get('/tos',              home.tos);
 app.get('/mobile',           mobile.indexGet);
 app.post('/mobilelogin',    mobile.loginCallback);
 app.get('/mobilegetprofileinfo', mobile.getProfileInfo);
+app.get('/mobilesignedup', mobile.signedUp);
 
 app.post('/invitefriends/callback', home.invitefriendsCallback);
 

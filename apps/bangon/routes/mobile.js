@@ -232,24 +232,21 @@ exports.loginCallback = function (req, res) {
           req.session.firstName = user.fb.first_name;
           req.session.lastName = user.fb.last_name;
           req.session.fbid = user.fb.id;
+          req.session.isMobile = true;
 
           res.send({redirect: '/mobilegetprofileinfo'});
           res.end();
           return;
         } else {
-          res.render('signedup', {
-            title: 'bang.on',
-            user_first_name: user.fb.first_name,
-            user_last_name: user.fb.last_name,
-            appID: config.facebook.appId,
-            uid: user.fb.id
-          });
 
-          tracking.logReturningUser(user.fb.id, function(error) {
-            if (error) {
-              throw(error);
-            }
-          });
+          req.session.firstName = user.fb.first_name;
+          req.session.lastName = user.fb.last_name;
+          req.session.fbid = user.fb.id;
+          req.session.isMobile = true;
+
+          res.send({redirect: '/mobilesignedup'});
+          res.end();
+          return;
         }
       }
     }
@@ -258,16 +255,28 @@ exports.loginCallback = function (req, res) {
 
 
 exports.getProfileInfo = function (req, res) {
-  console.log(req.session.firstName);
-  console.log(req.session.lastName);
-  console.log(req.session.fbid);
-
   res.render('createprofile', {
     title: 'bang.on',
     user_first_name: req.session.firstName,
     user_last_name: req.session.lastName,
     appID: config.facebook.appId,
     uid: req.session.fbid
+  });
+}
+
+exports.signedUp = function (req, res) {
+  res.render('signedup', {
+    title: 'bang.on',
+    user_first_name: req.session.firstName,
+    user_last_name: req.session.lastName,
+    appID: config.facebook.appId,
+    uid: req.session.fbid
+  });
+
+  tracking.logReturningUser(req.session.fbid, function(error) {
+    if (error) {
+      throw(error);
+    }
   });
 }
 
