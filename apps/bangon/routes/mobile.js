@@ -233,7 +233,9 @@ exports.loginCallback = function (req, res) {
           req.session.lastName = user.fb.last_name;
           req.session.fbid = user.fb.id;
 
-          return res.redirect('/mobile/getprofileinfo');
+          res.send({redirect: '/mobile/getprofileinfo'});
+          res.end();
+          return;
         } else {
           res.render('signedup', {
             title: 'bang.on',
