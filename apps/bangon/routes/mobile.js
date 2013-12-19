@@ -160,49 +160,20 @@ exports.indexGet = function (req, res) {
 exports.loginCallback = function (req, res, next) {
   console.log('loginCallback');
 
-  var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
-  var code          = signedRequest.code;
-  //console.log(code);
-
   var user;
 
   Step(
-    function exchangeCodeForAccessToken() {
-      console.log("exchangeCodeForAccessToken");
-      FB.napi('oauth/access_token', {
-        client_id: FB.options('appId'),
-        client_secret: FB.options('appSecret'),
-        redirect_uri: FB.options('redirectUri'),
-        code: code
-      }, this);
-    },
-    function extendAccessToken(err, result) {
-      console.log("extendAccessToken");
-      if (err) throw(err);
-      FB.napi('oauth/access_token', {
-        client_id: FB.options('appId'),
-        client_secret: FB.options('appSecret'),
-        grant_type: 'fb_exchange_token',
-        fb_exchange_token: result.access_token
-      }, this);
-    },
-    function getUserData(err, result) {
+    function getUserData() {
       console.log("getUserData");
-      if (err) {
-        throw(err);
-      }
-
-      req.session.access_token = result.access_token;
-      req.session.expires = result.expires || 0;
 
       var parameters = {
-        access_token: result.access_token
+        access_token: req.body.accessToken
       };
 
       FB.napi('/me', 'get', parameters, this);
     },
     function checkExtendedPermissions(err, result) {
-      //console.log("checkExtendedPermissions");
+      console.log("checkExtendedPermissions");
       if (err) {
         throw(err);
       }
@@ -216,6 +187,7 @@ exports.loginCallback = function (req, res, next) {
       FB.napi('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id, access_token: req.session.access_token }, this);
     },
     function saveNewUser(err, result) {
+      console.log("saveNewUser");
       if (err) {
         throw(err);
       }
@@ -238,14 +210,6 @@ exports.loginCallback = function (req, res, next) {
           throw(err);
         }
       });
-
-      mongodbprovider.findOne( { "fb.id": meAPIResult.id }, "users", this);
-    },
-    function checkForProfile(err, meAPIResult) {
-      console.log("checkForProfile");
-      if (err) {
-        throw(err);
-      }
 
       mongodbprovider.findOne( { "fb.id": user.fb.id }, "users", this);
     },

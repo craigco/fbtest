@@ -38,7 +38,7 @@
             $.post(
                 "/mobile/login",
                 {
-                  signed_request: response.authResponse.signedRequest
+                  accessToken: response.authResponse.accessToken
                 },
                 function(data) {
 
