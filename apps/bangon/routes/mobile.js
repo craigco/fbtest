@@ -157,8 +157,9 @@ exports.indexGet = function (req, res) {
     });
 };
 
-exports.loginCallback = function (req, res, next) {
+exports.loginCallback = function (req, res) {
   console.log('loginCallback');
+  console.log(req.body.accessToken);
 
   var user;
 
