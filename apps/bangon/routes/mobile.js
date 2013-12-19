@@ -157,6 +157,141 @@ exports.indexGet = function (req, res) {
     });
 };
 
+exports.loginCallback = function (req, res, next) {
+  //console.log('loginCallback');
+
+  var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
+  var code          = signedRequest.code;
+  //console.log(code);
+
+  var user;
+
+  Step(
+    function exchangeCodeForAccessToken() {
+      console.log("exchangeCodeForAccessToken");
+      FB.napi('oauth/access_token', {
+        client_id: FB.options('appId'),
+        client_secret: FB.options('appSecret'),
+        redirect_uri: FB.options('redirectUri'),
+        code: code
+      }, this);
+    },
+    function extendAccessToken(err, result) {
+      console.log("extendAccessToken");
+      if (err) throw(err);
+      FB.napi('oauth/access_token', {
+        client_id: FB.options('appId'),
+        client_secret: FB.options('appSecret'),
+        grant_type: 'fb_exchange_token',
+        fb_exchange_token: result.access_token
+      }, this);
+    },
+    function getUserData(err, result) {
+      console.log("getUserData");
+      if (err) {
+        throw(err);
+      }
+
+      req.session.access_token = result.access_token;
+      req.session.expires = result.expires || 0;
+
+      var parameters = {
+        access_token: result.access_token
+      };
+
+      FB.napi('/me', 'get', parameters, this);
+    },
+    function checkExtendedPermissions(err, result) {
+      //console.log("checkExtendedPermissions");
+      if (err) {
+        throw(err);
+      }
+
+      // wrap in facebook node
+      user = {
+        fb: result
+      };
+
+      // check if publish_actions is granted
+      FB.napi('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id, access_token: req.session.access_token }, this);
+    },
+    function saveNewUser(err, result) {
+      if (err) {
+        throw(err);
+      }
+
+      if (!result || result.error) {
+        console.log(!result ? 'error occurred' : result.error);
+      }
+
+      // if publish_actions permission is missing - go to login dialog
+      if (!result.data[0] || !result.data[0].publish_actions || result.data[0].publish_actions == 0) {
+        //console.log("publish_actions: " + result.data[0].publish_actions);
+        req.session = null; // clear session
+        return res.redirect('/mobile');
+      }
+
+      mongodbprovider.save(user, "users", function(error) {
+        if (error) {
+          console.log(error);
+
+          throw(err);
+        }
+      });
+
+      mongodbprovider.findOne( { "fb.id": meAPIResult.id }, "users", this);
+    },
+    function checkForProfile(err, meAPIResult) {
+      console.log("checkForProfile");
+      if (err) {
+        throw(err);
+      }
+
+      mongodbprovider.findOne( { "fb.id": user.fb.id }, "users", this);
+    },
+    function getProfileInformationOrRenderView(error, document) {
+      console.log("getProfileInformationOrRenderView");
+      if (error) {
+        console.log(error);
+        throw(error);
+      } else {
+        if (document == null) {
+          // no entry
+          console.log("no doc found");
+          return;
+        } else if (document.profile == null) {
+
+          // no profile
+          //console.log("redirecting " + userInfo.id + " to get profile information");
+
+          res.render('createprofile', {
+            title: 'bang.on',
+            user_first_name: user.fb.first_name,
+            user_last_name: user.fb.last_name,
+            appID: config.facebook.appId,
+            uid: user.fb.id
+          });
+
+        } else {
+          res.render('signedup', {
+            title: 'bang.on',
+            user_first_name: user.fb.first_name,
+            user_last_name: user.fb.last_name,
+            appID: config.facebook.appId,
+            uid: user.fb.id
+          });
+
+          tracking.logReturningUser(user.fb.id, function(error) {
+            if (error) {
+              throw(error);
+            }
+          });
+        }
+      }
+    }
+  );
+};
+
 
 exports.createProfile = function (req, res) {
   Step(

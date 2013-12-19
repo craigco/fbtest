@@ -52,6 +52,7 @@ app.get('/og/*',             home.opengraph);
 app.get('/tos',              home.tos);
 
 app.get('/mobile',           mobile.indexGet);
+app.post('/mobile/login',    mobile.loginCallback);
 
 app.post('/invitefriends/callback', home.invitefriendsCallback);
 
