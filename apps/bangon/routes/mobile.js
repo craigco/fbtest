@@ -227,16 +227,13 @@ exports.loginCallback = function (req, res) {
         } else if (document.profile == null) {
 
           // no profile
-          //console.log("redirecting " + userInfo.id + " to get profile information");
+          console.log("redirecting " + userInfo.id + " to get profile information");
 
-          res.render('createprofile', {
-            title: 'bang.on',
-            user_first_name: user.fb.first_name,
-            user_last_name: user.fb.last_name,
-            appID: config.facebook.appId,
-            uid: user.fb.id
-          });
+          req.session.firstName = user.fb.first_name;
+          req.session.lastName = user.fb.last_name;
+          req.session.fbid = user.fb.id;
 
+          return res.redirect('/mobile/getprofileinfo');
         } else {
           res.render('signedup', {
             title: 'bang.on',
@@ -256,6 +253,21 @@ exports.loginCallback = function (req, res) {
     }
   );
 };
+
+
+exports.getProfileInfo = function (req, res) {
+  console.log(req.session.firstName);
+  console.log(req.session.lastName);
+  console.log(req.session.fbid);
+
+  res.render('createprofile', {
+    title: 'bang.on',
+    user_first_name: req.session.firstName,
+    user_last_name: req.session.lastName,
+    appID: config.facebook.appId,
+    uid: req.session.fbid
+  });
+}
 
 
 exports.createProfile = function (req, res) {

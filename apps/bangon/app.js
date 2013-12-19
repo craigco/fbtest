@@ -53,6 +53,7 @@ app.get('/tos',              home.tos);
 
 app.get('/mobile',           mobile.indexGet);
 app.post('/mobile/login',    mobile.loginCallback);
+app.get('/mobile/getprofileinfo', mobile.getProfileInfo);
 
 app.post('/invitefriends/callback', home.invitefriendsCallback);
 
