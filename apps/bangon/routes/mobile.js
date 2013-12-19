@@ -227,7 +227,7 @@ exports.loginCallback = function (req, res) {
         } else if (document.profile == null) {
 
           // no profile
-          console.log("redirecting " + userInfo.id + " to get profile information");
+          console.log("redirecting " + user.fb.id + " to get profile information");
 
           req.session.firstName = user.fb.first_name;
           req.session.lastName = user.fb.last_name;
