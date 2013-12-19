@@ -20,7 +20,9 @@ var mongodbprovider = new MongoDBProvider();
 tracking.setDB(mongodbprovider);
 
 exports.indexPost = function (req, res) {
-  //console.log("indexPost");
+  console.log("indexPost");
+  console.log(req.body.signed_request);
+  console.log(req.signed_request);
   var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
   var accessToken;
