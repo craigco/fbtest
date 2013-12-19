@@ -44,16 +44,21 @@
 
   <!-- Main menu page -->
   <div class="container">
-    <h3>Thank you <%-user_first_name %>!</h3>
-    <div class="span12">
-      <img src="images/logos/bang.on_128x128.png">
-      <p>
-        <div class="fb-like" data-href="https://www.facebook.com/bangonapp/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
-      </p>
+    <div class="row">
+      <div class="span3">
+        <img src="images/logos/bang.on_128x128.png">
+      </div>
+      <div class="span9">
+        <h2>Want to win a free ipad mini?</h2>
+      </div>
     </div>
-    <p>Help us find you help</p>
-    <p><a id="invitefriends_button" href="#" class="btn btn-primary btn-large">Invite your friends &raquo;</a></p>
-    <p>bang.on will launch as soon as we have enough signed up!</p>
+    <p><%- user_first_name %>, below simply like us, share us on your timeline and invite your friends and we'll put you in a draw to win a brand new ipad mini in 2014</p>
+    <p>
+      <div class="fb-like" data-href="https://www.facebook.com/bangonapp/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+    </p>
+    <p>
+      <a id="invitefriends_button" href="#" class="btn btn-primary btn-large">Invite your friends &raquo;</a>
+    </p>
   </div>
 
   <%- include js-common %>

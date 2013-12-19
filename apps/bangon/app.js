@@ -9,6 +9,7 @@ var express       = require('express'),
 
     fb_api        = require('./routes/fb_api'),
     home          = require('./routes/home'),
+    mobile        = require('./routes/mobile'),
     tracking      = require('./routes/tracking');
 
 //    https         = require('https');
@@ -49,6 +50,9 @@ app.post('/login/callback',  home.loginCallback);
 app.get('/logout',           home.logout);
 app.get('/og/*',             home.opengraph);
 app.get('/tos',              home.tos);
+
+app.get('/mobile',           mobile.indexGet);
+app.post('/mobile/login',    mobile.loginCallback);
 
 app.post('/invitefriends/callback', home.invitefriendsCallback);
 
