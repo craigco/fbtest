@@ -21,8 +21,7 @@ tracking.setDB(mongodbprovider);
 
 exports.indexPost = function (req, res) {
   console.log("indexPost");
-  console.log(req.body.signed_request);
-  console.log(req.signed_request);
+
   var signedRequest = FB.parseSignedRequest(req.body.signed_request, config.facebook.appSecret);
 
   var accessToken;
@@ -66,7 +65,7 @@ exports.indexPost = function (req, res) {
     } else {
       // this user has installed the app
       accessToken = signedRequest.oauth_token;
-      //console.log("oauth_token");
+      console.log("oauth_token");
 
       // check if publish_actions is granted
       FB.api('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + signedRequest.user_id, access_token: accessToken }, function(queryResponse) {
@@ -89,7 +88,7 @@ exports.indexPost = function (req, res) {
   }
 
   if (!accessToken) {
-    //console.log("!accessToken");
+    console.log("!accessToken");
     res.render('index', {
       title: 'bang.on'
     });
@@ -98,9 +97,11 @@ exports.indexPost = function (req, res) {
 
     Step(
       function getUserDataFromGraphAPI() {
+        console.log("getUserDataFromGraphAPI");
         FB.napi('/me', 'get', { access_token: accessToken }, this);
       },
       function checkForProfile(err, meAPIResult) {
+        console.log("checkForProfile");
         if (err) {
           throw(err);
         }
@@ -110,6 +111,7 @@ exports.indexPost = function (req, res) {
         mongodbprovider.findOne( { "fb.id": meAPIResult.id }, "users", this);
       },
       function getProfileInformationOrRenderView(error, document) {
+        console.log("getProfileInformationOrRenderView");
         if (error) {
           console.log(error);
           throw(error);
