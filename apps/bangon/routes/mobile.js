@@ -149,9 +149,10 @@ exports.indexPost = function (req, res) {
 };
 
 exports.indexGet = function (req, res) {
-  console.log("indexGet");
-  res.render('index', {
-    title: 'bang.on'
+  //console.log("indexGet");
+  res.render('mobile_index', {
+    title: 'bang.on',
+    appID: config.facebook.appId
     });
 };
 
