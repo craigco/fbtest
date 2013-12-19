@@ -12,13 +12,6 @@
     <div id="fb-root"></div>
     <script>
       window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '<%- appID %>',
-          status     : true, // check login status
-          cookie     : true, // enable cookies to allow the server to access the session
-          frictionlessRequests : true,
-          xfbml      : true  // parse XFBML
-        });
 
         // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
         // for any authentication related change, such as login, logout or session refresh. This means that
@@ -49,6 +42,16 @@
             FB.login();
           }
         });
+
+        FB.init({
+          appId      : '<%- appID %>',
+          status     : true, // check login status
+          cookie     : true, // enable cookies to allow the server to access the session
+          frictionlessRequests : true,
+          xfbml      : true  // parse XFBML
+        });
+
+
       };
 
       // Load the SDK asynchronously
