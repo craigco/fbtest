@@ -12,7 +12,6 @@ FB.options({
     redirectUri:    config.facebook.redirectUri
 });
 
-
 var verbose = true;
 
 var mongodbprovider = new MongoDBProvider();
