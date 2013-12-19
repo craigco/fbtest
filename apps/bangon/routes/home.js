@@ -27,7 +27,7 @@ exports.indexPost = function (req, res) {
   var accessToken;
 
   if (signedRequest) {
-    console.log("signedRequest");
+    console.log(signedRequest);
     if (!signedRequest.oauth_token) {
       console.log("!oauth_token");
       // uninstalled user
