@@ -50,6 +50,8 @@ app.get('/logout',           home.logout);
 app.get('/og/*',             home.opengraph);
 app.get('/tos',              home.tos);
 
+app.get('/mobile'.           mobile.indexGet);
+
 app.post('/invitefriends/callback', home.invitefriendsCallback);
 
 app.post('/tracking/invitessent',   tracking.invitesSent);
