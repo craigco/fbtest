@@ -66,6 +66,10 @@
           }
         });
 
+        FB.Event.subscribe('auth.authResponseChange', function(response) {
+          alert('The status of the session is: ' + response.status);
+        });
+
 
       };
 
