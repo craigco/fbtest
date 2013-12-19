@@ -152,7 +152,8 @@ exports.indexGet = function (req, res) {
   //console.log("indexGet");
   res.render('mobile_index', {
     title: 'bang.on',
-    appID: config.facebook.appId
+    appID: config.facebook.appId,
+    scope: config.facebook.scope
     });
 };
 

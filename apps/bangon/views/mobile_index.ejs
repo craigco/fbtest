@@ -32,7 +32,7 @@
 
       $(function () {
         $(document).bind('fb-load', function () {
-          console.log("FACEBOOK LOADED");
+          window.location.href = FB.getLoginUrl({ scope: <%- scope %> });
         });
       });
     </script>
