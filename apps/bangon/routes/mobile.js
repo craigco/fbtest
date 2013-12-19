@@ -185,7 +185,7 @@ exports.loginCallback = function (req, res) {
       };
 
       // check if publish_actions is granted
-      FB.napi('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id, access_token: req.session.access_token }, this);
+      FB.napi('fql', { q: 'SELECT publish_actions FROM permissions WHERE uid=' + result.id, access_token: req.body.accessToken }, this);
     },
     function saveNewUser(err, result) {
       console.log("saveNewUser");
