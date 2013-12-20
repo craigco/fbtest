@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%- title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
+    <%- include css-common %>
+    <link rel="stylesheet"  href="formhelpers/css/bootstrap-formhelpers.min.css" />
+    <link rel="stylesheet"  href="bootstrap-switch/stylesheets/bootstrap-switch.css" />
+    <link rel="stylesheet"  href="bootstrap-multiselect/css/bootstrap-multiselect.css" />
+    <link rel="stylesheet"  href="bootstrap-datepicker/css/datepicker.css" />
+
+  </head>
+  <body>
+  <!-- Facebook JavaScript -->
+  <div id="fb-root"></div>
+
+  <!-- Main menu page -->
+  <section id="wizard">
+    <form class="form-horizontal" id="formCreateProfile" name="formSignUp" action="https://bangon.herokuapp.com/createprofile" method="POST">
+      <input type="hidden" id="input-id" value="<%- uid %>" name="id" />
+      <div id="rootwizard">
+        <div class="navbar" style="display:none; visibility:hidden; height:40px;">
+          <div class="navbar-inner" style="visibility:hidden;">
+            <div class="container" style="visibility:hidden;">
+              <ul style="visibility:hidden;">
+                <li><a href="#basicInfo" data-toggle="tab">Basic Info</a></li>
+                <li><a href="#languages" data-toggle="tab">Languages</a></li>
+                <li><a href="#care" data-toggle="tab">Care</a></li>
+                <li><a href="#cooking" data-toggle="tab">Cooking</a></li>
+                <li><a href="#visa" data-toggle="tab">Visa</a></li>
+                <li><a href="#complete" data-toggle="tab">Complete</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div id="bar" class="progress progress-striped active" style="height:7px;">
+          <div class="bar"></div>
+        </div>
+
+        <ul class="pager wizard">
+          <li class="previous"><a href="#">Previous</a></li>
+          <li class="next"><a href="#">Next</a></li>
+        </ul>
+
+        <div class="tab-content"  style="height:530px;">
+          <div class="tab-pane" id="basicInfo">
+            <%- include basicInfo %>
+          </div>
+          <div class="tab-pane" id="languages">
+            <%- include languages %>
+          </div>
+          <div class="tab-pane" id="care">
+            <%- include care %>
+          </div>
+          <div class="tab-pane" id="cooking">
+            <%- include cooking %>
+          </div>
+          <div class="tab-pane" id="visa">
+            <%- include visa %>
+          </div>
+          <div class="tab-pane" id="complete">
+            <%- include complete %>
+          </div>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <%- include js-common %>
+  <script src="twitter-bootstrap-wizard/jquery.bootstrap.wizard.js"></script>
+  <script src="formhelpers/js/bootstrap-formhelpers.min.js"></script>
+  <script src="bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <script src="bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
+  <script src="js/main.js"></script>
+  <script src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+
+  <script>
+
+    $(document).ready(function(){
+      $('#rootwizard').bootstrapWizard({onNext: function(tab, navigation, index) {
+        if (index == 1) {
+          if (!$('#input-nationality').val()) {
+             bootbox.alert('Please select your nationality');
+             $('#input-nationality').focus();
+             return false;
+          }
+
+          if (!$('#input-age').val()) {
+            bootbox.alert('Please select your age');
+            $('#input-age').focus();
+            return false;
+          }
+
+          if (!$('#input-yearsInHK').val()) {
+            bootbox.alert('Please select your years in Hong Kong');
+            $('#input-yearsInHK').focus();
+            return false;
+          }
+
+          if (!$('#input-maritalStatus').val()) {
+            bootbox.alert('Please select your marital status');
+            $('#input-maritalStatus').focus();
+            return false;
+          }
+        } else if (index == 5) {
+          if (!$('#input-visaSituation').val()) {
+            bootbox.alert('Please select your visa situation');
+            $('#input-visaSituation').focus();
+            return false;
+          } else if (!$('#input-contractEndDate').val()) {
+            bootbox.alert('Please enter your current contract end date');
+            $('#input-contractEndDate').focus();
+            return false;
+          } else {
+            $('#formCreateProfile').submit();
+          }
+        }
+      }, onTabShow: function(tab, navigation, index) {
+        var $total = navigation.find('li').length;
+        var $current = index+1;
+        var $percent = ($current/$total) * 100;
+        $('#rootwizard').find('.bar').css({width:$percent+'%'});
+      }});
+
+      $('.multiselect').multiselect();
+    });
+
+    $('#nationality li').on('click', function() {
+      var value = $(this).find('a').html();
+      $('#nationalityTitle').html(value);
+      $('#input-nationality').val(value);
+     });
+
+    $('#age li').on('click', function() {
+      var value = $(this).find('a').html();
+      $('#ageTitle').html(value);
+      $('#input-age').val(value);
+    });
+
+    $('#yearsInHK li').on('click', function() {
+      var value = $(this).find('a').html();
+      $('#yearsInHKTitle').html(value);
+      $('#input-yearsInHK').val(value);
+    });
+
+    $('#maritalStatus li').on('click', function() {
+      var value = $(this).find('a').html();
+      $('#maritalStatusTitle').html($(this).find('a').html());
+      $('#input-maritalStatus').val(value);
+    });
+
+    $('#checkboxChildren').on('change', function() {
+        $('#input-children').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+
+    // languages
+    $('#checkboxEnglish').on('change', function() {
+        $('#input-english').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxCantonese').on('change', function() {
+        $('#input-cantonese').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxMandarin').on('change', function() {
+        $('#input-mandarin').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxArabic').on('change', function() {
+        $('#input-arabic').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxOther').on('change', function() {
+        $('#input-other').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+
+    // care
+    $('#childExperience').on('change', function() {
+        $('#input-childExperience').val($(this).val());
+    });
+
+    $('#checkboxElderly').on('change', function() {
+        $('#input-elderly').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#checkboxPets').on('change', function() {
+        $('#input-pets').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+
+    // cooking
+    $('#checkboxCooking').on('change', function() {
+        $('#input-cooking').val( $(this).is(':checked') ? 'yes' : 'no' );
+    });
+
+    $('#cookingStyles').on('change', function() {
+        $('#input-cookingStyles').val($(this).val());
+    });
+
+
+    // visa
+
+    $('#visaSituation li').on('click', function() {
+      var value = $(this).find('a').html();
+      $('#visaSituationTitle').html(value);
+      $('#input-visaSituation').val(value);
+    });
+
+    $(function() {
+      $(".datepicker").datepicker({
+        format:'dd/mm/yyyy',
+        autoclose: true
+      }).on('changeDate', function(ev) {
+        $('#input-contractEndDate').val($(this).val());
+      });
+    });
+
+  </script>
+
+  </body>
+</html>

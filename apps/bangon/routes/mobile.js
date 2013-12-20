@@ -255,7 +255,7 @@ exports.loginCallback = function (req, res) {
 
 
 exports.getProfileInfo = function (req, res) {
-  res.render('createprofile', {
+  res.render('mobile_createprofile', {
     title: 'bang.on',
     user_first_name: req.session.firstName,
     user_last_name: req.session.lastName,
