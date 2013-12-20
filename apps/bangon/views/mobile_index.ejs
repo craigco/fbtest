@@ -21,9 +21,16 @@
     <div id="startbutton">
       <center>
         <h4>Help us help you!</h4>
-        <img src="images/start_button.png">
+        <div id="infoloading">
+          Loading...
+        </div>
+        <div id="startbutton" style="display:none;">
+          <img src="images/start_button.png">
+        </div>
       </center>
     </div>
+    <script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.2.0.js"></script>
     <script>
       window.fbAsyncInit = function() {
 
@@ -35,6 +42,8 @@
           xfbml      : true  // parse XFBML
         });
 
+        $("div#infoloading").hide();
+        $("div#startbutton").show();
 
 
         /*FB.getLoginStatus(function(response) {
