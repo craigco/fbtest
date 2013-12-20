@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title><%- title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8;" />
+    <%- include css-common %>
+  </head>
+  <body>
+  <!-- Facebook JavaScript -->
+  <div id="fb-root"></div>
+  <script>
+    window.fbAsyncInit = function() {
+      // init the FB JS SDK
+      FB.init({
+        appId      : '<%- appID %>',                        // App ID from the app dashboard
+        status     : true,                                 // Check Facebook Login status
+        frictionlessRequests : true,
+        xfbml      : true                                  // Look for social plugins on the page
+      });
+
+      // Additional initialization code such as adding Event Listeners goes here
+    };
+
+    // Load the SDK asynchronously
+    (function(){
+      // If we've already installed the SDK, we're done
+      if (document.getElementById('facebook-jssdk')) {return;}
+
+      // Get the first script element, which we'll use to find the parent node
+      var firstScriptElement = document.getElementsByTagName('script')[0];
+
+      // Create a new script element and set its id
+      var facebookJS = document.createElement('script');
+      facebookJS.id = 'facebook-jssdk';
+
+      // Set the new script's source to the source of the Facebook JS SDK
+      facebookJS.src = '//connect.facebook.net/en_US/all.js';
+
+      // Insert the Facebook JS SDK into the DOM
+      firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
+    }());
+  </script>
+
+  <!-- Main menu page -->
+  <div class="container">
+    <div class="row">
+      <div class="span3">
+        <img src="images/logos/bang.on_75x75.png">
+      </div>
+      <div class="span9">
+        <h3>Want to win a free ipad mini?</h3>
+      </div>
+    </div>
+    <p><%- user_first_name %>, below simply like us, share us on your timeline and invite your friends and we'll put you in a draw to win a brand new ipad mini in 2014</p>
+    <p>
+      <div class="fb-like" data-href="https://www.facebook.com/bangonapp/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+    </p>
+    <p>
+      <a id="invitefriends_button" href="#" class="btn btn-primary btn-large">Invite your friends &raquo;</a>
+    </p>
+  </div>
+
+  <%- include js-common %>
+
+  <script>
+      $('#invitefriends_button').on('click', function(e) {
+        FB.ui({method: 'apprequests',
+        title: 'Join bang.on with me!',
+        message: 'I just joined bang.on, We help helpers find employers with no fees, sign up!'
+        }, function(res) {
+          var numInvites = 0;
+          if (res && res.request && res.to) {
+            var request_ids=[];
+            numInvites = res.to.length;
+            for (i = 0; i < res.to.length; ++i) {
+              var temp = res.request + '_' + res.to[i];
+              request_ids.push(temp);
+            }
+            var requests = request_ids.join(',');
+            $.post('/invitefriends/callback', {uid: <%- uid %>, request_ids: requests}, function(response) {
+
+            });
+          }
+
+          if (numInvites > 0) {
+            $.post('/tracking/invitessent', {uid: <%- uid %>, invites_sent: numInvites}, function(response) {
+
+            });
+          }
+        });
+      });
+  </script>
+
+  </body>
+</html>

@@ -265,7 +265,7 @@ exports.getProfileInfo = function (req, res) {
 }
 
 exports.signedUp = function (req, res) {
-  res.render('signedup', {
+  res.render('mobile_signedup', {
     title: 'bang.on',
     user_first_name: req.session.firstName,
     user_last_name: req.session.lastName,
