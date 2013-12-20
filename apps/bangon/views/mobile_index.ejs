@@ -23,14 +23,14 @@
     </div>
     <center>
       <h4>Help us help you!</h4>
-      <input type="image" src="images/start_button.png" class="btnClaim" src="websitebuttonimage" onclick="alert('buttonclicked');">
+      <img src="images/start_button.png">
     </center>
     <script>
       window.fbAsyncInit = function() {
 
         FB.init({
           appId      : '<%- appID %>',
-          status     : true, // check login status
+          status     : false, // check login status
           cookie     : true, // enable cookies to allow the server to access the session
           frictionlessRequests : true,
           xfbml      : true  // parse XFBML
