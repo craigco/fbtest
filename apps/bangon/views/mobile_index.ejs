@@ -77,7 +77,19 @@
 
       $(function() {
         $("#startbutton").click(function() {
-          alert("CLICKED");
+          FB.login(function(response) {
+            if (response.status === 'connected') {
+              if (response.authResponse) {
+                $.post("/mobilelogin",
+                  {
+                    accessToken: response.authResponse.accessToken
+                  },
+                  function(data) {
+                    window.location = data.redirect;
+                  });
+              }
+            }
+          }, {scope: '<%- scope %>'});
         });
       });
     </script>
