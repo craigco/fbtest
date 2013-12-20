@@ -75,43 +75,9 @@
         ref.parentNode.insertBefore(js, ref);
       }(document));
 
-      $(function(){
+      $(function() {
         $("#startbutton").click(function() {
-          FB.Event.subscribe('auth.statusChange', function(response) {
-            if (response.status === 'connected') {
-              if (response.authResponse) {
-                $.post("/mobilelogin",
-                    {
-                      accessToken: response.authResponse.accessToken
-                    },
-                    function(data) {
-                      window.location = data.redirect;
-                    });
-              }
-            } else {
-              FB.login(function(response) {
-                console.log(response);
-              }, {scope: '<%- scope %>'});
-            }
-          });
-
-          FB.getLoginStatus(function(response) {
-            if (response.status === 'connected') {
-              if (response.authResponse) {
-                $.post("/mobilelogin",
-                    {
-                      accessToken: response.authResponse.accessToken
-                    },
-                    function(data) {
-                      window.location = data.redirect;
-                    });
-              }
-            } else {
-              FB.login(function(response) {
-                console.log(response);
-              }, {scope: '<%- scope %>'});
-            }
-          }
+          alert("CLICKED");
         });
       });
     </script>
