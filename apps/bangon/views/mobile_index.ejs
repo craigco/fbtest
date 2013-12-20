@@ -23,7 +23,7 @@
     </div>
     <center>
       <h4>Help us help you!</h4>
-      Loading...
+      <input type="image" src="images/start_button.png" class="btnClaim" src="websitebuttonimage" onclick="alert('buttonclicked');">
     </center>
     <script>
       window.fbAsyncInit = function() {
@@ -50,7 +50,7 @@
           }
         });
 
-        FB.getLoginStatus(function(response) {
+        /*FB.getLoginStatus(function(response) {
           if (response.status === 'connected') {
             if (response.authResponse) {
               $.post("/mobilelogin",
@@ -66,8 +66,9 @@
               console.log(response);
             }, {scope: '<%- scope %>'});
           }
-        });
+        });*/
       };
+
 
       // Load the SDK asynchronously
       (function(d){
