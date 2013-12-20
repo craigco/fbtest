@@ -74,6 +74,28 @@
         js.src = "//connect.facebook.net/en_US/all.js";
         ref.parentNode.insertBefore(js, ref);
       }(document));
+
+      $(function(){
+        $("startbutton").click(function() {
+          FB.Event.subscribe('auth.statusChange', function(response) {
+            if (response.status === 'connected') {
+              if (response.authResponse) {
+                $.post("/mobilelogin",
+                    {
+                      accessToken: response.authResponse.accessToken
+                    },
+                    function(data) {
+                      window.location = data.redirect;
+                    });
+              }
+            } else {
+              FB.login(function(response) {
+                console.log(response);
+              }, {scope: '<%- scope %>'});
+            }
+          });
+        });
+      });
     </script>
 
     <script type="text/javascript" src="bootstrap/2.3.2/js/bootstrap.min.js"></script>
