@@ -184,12 +184,7 @@ exports.createProfile = function (req, res) {
         throw (err);
       }
 
-      if (!req.sessions.isMobile) {
-        res.send('<script>window.top.location="https://apps.facebook.com/bang-on?newSignup=1"</script>');
-      } else {
-        res.send('<script>window.top.location="/mobilesignedup"</script>');
-      }
-
+      res.send('<script>window.top.location="https://apps.facebook.com/bang-on?newSignup=1"</script>');
       res.end();
     }
   );

@@ -302,8 +302,7 @@ exports.createProfile = function (req, res) {
         throw (err);
       }
 
-      res.send('<script>window.top.location="https://apps.facebook.com/bang-on?newSignup=1"</script>');
-
+      res.send('<script>window.top.location="/mobilesignedup"</script>');
       res.end();
     }
   );
