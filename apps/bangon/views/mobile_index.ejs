@@ -76,7 +76,7 @@
       }(document));
 
       $(function(){
-        $("startbutton").click(function() {
+        $("#startbutton").click(function() {
           FB.Event.subscribe('auth.statusChange', function(response) {
             if (response.status === 'connected') {
               if (response.authResponse) {
