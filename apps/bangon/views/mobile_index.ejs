@@ -47,12 +47,12 @@
                     function(data) {
                       window.location = data.redirect;
                     });
-              } else {
-                FB.login(function(response) {
-                  console.log(response);
-                }, {scope: '<%- scope %>'});
               }
             });
+
+            FB.login(function(response) {
+              console.log(response);
+            }, {scope: '<%- scope %>'});
           }
         });
       };
