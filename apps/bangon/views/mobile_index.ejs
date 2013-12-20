@@ -36,20 +36,32 @@
           xfbml      : true  // parse XFBML
         });
 
-        FB.getLoginStatus(function(response) {
-          if (response.status != 'connected') {
-            FB.Event.subscribe('auth.statusChange', function(response) {
-              if (response.authResponse) {
-                $.post("/mobilelogin",
-                    {
-                      accessToken: response.authResponse.accessToken
-                    },
-                    function(data) {
-                      window.location = data.redirect;
-                    });
-              }
-            });
+        FB.Event.subscribe('auth.statusChange', function(response) {
+          if (response.status === 'connected') {
+            if (response.authResponse) {
+              $.post("/mobilelogin",
+                  {
+                    accessToken: response.authResponse.accessToken
+                  },
+                  function(data) {
+                    window.location = data.redirect;
+                  });
+            }
+          }
+        });
 
+        FB.getLoginStatus(function(response) {
+          if (response.status === 'connected') {
+            if (response.authResponse) {
+              $.post("/mobilelogin",
+                  {
+                    accessToken: response.authResponse.accessToken
+                  },
+                  function(data) {
+                    window.location = data.redirect;
+                  });
+            }
+          } else {
             FB.login(function(response) {
               console.log(response);
             }, {scope: '<%- scope %>'});
