@@ -37,33 +37,23 @@
         });
 
         FB.getLoginStatus(function(response) {
-          if (response.status === 'connected') {
-            console.log(response);
-            // the user is logged in and has authenticated your
-            // app, and response.authResponse supplies
-            // the user's ID, a valid access token, a signed
-            // request, and the time the access token
-            // and signed request each expire
-            $.post(
-              "/mobilelogin",
-              {
-                accessToken: response.authResponse.accessToken
-              },
-              function(data) {
-                window.location = data.redirect;
-              })
-            } else if (response.status === 'not_authorized') {
-              console.log("not_authorized");
-              // the user is logged in to Facebook,
-              // but has not authenticated your app
-              FB.login(function(response) {
-                console.log(response);
-              }, {scope: '<%- scope %>'});
-            } else {
-              // the user isn't logged in to Facebook.
-              FB.login(function(response) {
-              });
-            }
+          if (response.status != 'connected') {
+            FB.Event.subscribe('auth.statusChange', function(response) {
+              if (response.authResponse) {
+                $.post("/mobilelogin",
+                    {
+                      accessToken: response.authResponse.accessToken
+                    },
+                    function(data) {
+                      window.location = data.redirect;
+                    });
+              } else {
+                FB.login(function(response) {
+                  console.log(response);
+                }, {scope: '<%- scope %>'});
+              }
+            });
+          }
         });
       };
 
@@ -75,16 +65,6 @@
         js.src = "//connect.facebook.net/en_US/all.js";
         ref.parentNode.insertBefore(js, ref);
       }(document));
-
-      // Here we run a very simple test of the Graph API after login is successful.
-      // This testAPI() function is only called in those cases.
-      function testAPI() {
-        console.log('Welcome!  Fetching your information.... ');
-        FB.api('/me', function(response) {
-          console.log('Good to see you, ' + response.name + '.');
-        });
-      }
-
     </script>
   </body>
 </html>
